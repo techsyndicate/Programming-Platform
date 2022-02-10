@@ -1,0 +1,32 @@
+{
+  "name": "front-end-programming-platform",
+  "version": "1.0.0",
+  "description": "The Front End For The Programming Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gamer-1478/Programming-Platform.git"
+  },
+  "author": "gamer-1478",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gamer-1478/Programming-Platform/issues"
+  },
+  "homepage": "https://github.com/gamer-1478/Programming-Platform#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-flash": "^0.0.2",
+    "moment": "^2.29.1",
+    "mongoose": "^6.2.1",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
+  }
+}
