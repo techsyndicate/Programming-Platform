@@ -8,7 +8,7 @@ const bloat_router = express.Router();
 bloat_router.use(express.static('public'));
 
 //cors middleware
-const whitelist = ['http://localhost:3000', 'http://localhost:3200', 'https://ts-prog.herokuapp.com/'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3200', 'https://ts-prog.herokuapp.com'];
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || whitelist.indexOf(origin) !== -1) {
