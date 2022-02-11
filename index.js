@@ -6,12 +6,17 @@ const express = require('express'),
     session = require("cookie-session"),
     path = require('path'),
     cookieParser = require("cookie-parser"),
+    fs = require('fs'),
     passport = require('passport');
 
 const port = process.env.PORT || 3200,
     passport_init = require('./passport'),
     bloatRouter = require('./routers/bloat'),
+    adminRouter = require('./routers/admin'),
     authRouter = require("./routers/auth");
+
+//ejs
+app.set('view engine', 'ejs');
 
 //mongo
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD
@@ -38,6 +43,7 @@ app.use(express.static(path.resolve(__dirname, './react-app/build')));
 
 app.use(bloatRouter);
 app.use("/auth", authRouter)
+app.use('/admin', adminRouter)
 app.get('*', (req,res,next)=> res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
