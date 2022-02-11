@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import './Login.css';
+import { Notyf } from 'notyf';
 import { Link } from 'react-router-dom';
+import { getUser } from '../../Components/reuse/Misc';
+
+import './Login.css';
 
 function Login() {
+    // Create an instance of Notyf
+    var notyf = new Notyf();
+
     const [loginPassword, setLoginPassword] = useState("");
     const [loginEmail, setLoginEmail] = useState("");
 
@@ -16,7 +22,16 @@ function Login() {
             },
             withCredentials: true,
             url: "http://localhost:3200/auth/login",
-        }).then((res) => console.log(res));
+        }).then((res) => {
+            console.log(res);
+            if (res.data[0].sucess === true){
+                notyf.success('Login Successful');
+                getUser();
+            }
+            else {
+                notyf.error(res.data[0].msg);
+            }
+        });
     };
 
     return (

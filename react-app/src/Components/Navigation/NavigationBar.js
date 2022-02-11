@@ -8,9 +8,11 @@ import './NavigationBar.css'
 function NavigationBar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const [logged, setlogged] = useState(false);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
+
     const showButton = () => {
         if (window.innerWidth <= 960) {
             setButton(false);
@@ -19,10 +21,16 @@ function NavigationBar() {
         }
     };
     window.addEventListener('resize', showButton);
-    
+
+    const listenStorage = () => {
+        localStorage.getItem('User') ? setlogged(true) : setlogged(false);
+    }
+    window.onstorage = () => { listenStorage()};
     useEffect(() => {
         showButton();
+        listenStorage();
     }, []);
+
 
     return (
         <nav className="navbar">
@@ -51,14 +59,27 @@ function NavigationBar() {
                         </NavHashLink>
                     </li>
 
-                    <li>
-                        <HashLink to='/login'
-                            className='nav-links-mobile' onClick={closeMobileMenu}>
-                            SingIn/SingUp
-                        </HashLink>
-                    </li>
+                    {logged ? (
+                        <li>
+                            <HashLink to='/Profile'
+                                className='nav-links-mobile' onClick={closeMobileMenu}>
+                                Profile
+                            </HashLink>
+                        </li>
+                    ) : (
+                        <li>
+                            <HashLink to='/login'
+                                className='nav-links-mobile' onClick={closeMobileMenu}>
+                                SingIn/SingUp
+                            </HashLink>
+                        </li>
+                    )}
                 </ul>
-                {button && <Button buttonStyle='btn--outline' offset='80' path='/login'>SignIn/SignUp</Button>}
+                {logged ?
+                    button && <Button buttonStyle='btn--outline' offset='80' path='/Profile'>Profile</Button>
+                    :
+                    button && <Button buttonStyle='btn--outline' offset='80' path='/login'>SignIn/SignUp</Button>
+                }
             </div>
         </nav>
     )
