@@ -14,6 +14,7 @@ auth_router.post("/register", async (req, res, next) => {
     const { username, email, password } = req.body
     if (!username || !email || !password) {
         errors.push({ msg: "Please Fill in all the fields" })
+        return res.send(errors);
     }
     if (username.length < 3 || username.length > 64) {
         errors.push({ msg: "username should be in between 4 and 64 characters" })
@@ -78,7 +79,7 @@ function loginUser(req, res, next) {
         else {
             req.logIn(user, (err) => {
                 if (err) throw err;
-                res.send("Successfully Authenticated");
+                res.send([{ msg: "Successfully Authenticated", sucess: true }]);
             });
         }
     })(req, res, next);
