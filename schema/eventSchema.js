@@ -8,18 +8,15 @@ const reqString = { type: String, required: true },
     dateStringWithTime = moment(new Date()).format('YYYY-MM-DD HH:MM:SS');
 
 // Schema
-const userSchema = new mongoose.Schema({
-    email: reqString,
-    username: reqString,
-    password: reqString,
+const eventSchema = new mongoose.Schema({
+    name: reqString,
     date: {
         type: String,
         default: dateStringWithTime
     },
-    solvedQuestions: [reqString],
-    solvedAnswers: [reqString],
-    admin: reqBool
+    questions: [{ type: String, required: false }],
+    leaderboard: [{type:String, required:false}]
 })
 
 // Export Schema
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("Event", eventSchema);

@@ -7,19 +7,28 @@ const reqString = { type: String, required: true },
     reqBool = { type: Boolean, required: true, default: false },
     dateStringWithTime = moment(new Date()).format('YYYY-MM-DD HH:MM:SS');
 
-// Schema
-const userSchema = new mongoose.Schema({
-    email: reqString,
-    username: reqString,
-    password: reqString,
+const testCaseSchema = new mongoose.Schema({
+    input: reqString,
+    output: reqString,
     date: {
         type: String,
         default: dateStringWithTime
     },
-    solvedQuestions: [reqString],
-    solvedAnswers: [reqString],
-    admin: reqBool
+    passed: reqBool,
+    output: reqString
 })
 
+// Schema
+const ansSchema = new mongoose.Schema({
+    date: {
+        type: String,
+        default: dateStringWithTime
+    },
+    testcases: [testCaseSchema],
+    answerCode: reqString
+})
+
+var AnsSchema = mongoose.model("Answer", ansSchema);
+
 // Export Schema
-module.exports = mongoose.model("User", userSchema)
+module.exports = AnsSchema
