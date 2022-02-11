@@ -4,6 +4,7 @@ const express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
     session = require("cookie-session"),
+    path = require('path'),
     cookieParser = require("cookie-parser"),
     passport = require('passport');
 
@@ -33,10 +34,11 @@ passport_init(passport);
 //initializing passport
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(express.static(path.resolve(__dirname, './react-app/build')));
 
 app.use(bloatRouter);
 app.use("/auth", authRouter)
+app.get('*', (req,res,next)=> res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
     useNewUrlParser: true,
