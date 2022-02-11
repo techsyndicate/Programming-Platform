@@ -1,0 +1,59 @@
+.register-container {
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Railway', sans-serif;
+}
+
+.register-form-div {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+}
+
+.register-input {
+    height: 2.5vw;
+    border: 0.1vh solid #d3d3d3;
+    border-radius: 0.4vw;
+    font-size: 1.2rem;
+    margin-bottom: 1.5vw;
+}
+
+.register-input-text {
+    margin-bottom: 0.5vw;
+    font-size: 1.2rem;
+}
+
+.register-submit {
+    margin-top: 1.2vw;
+    height: 3.5vw;
+    background-color: #1569C7;
+    border-radius: 0.4vw;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+}
+
+@media screen and (max-width: 960px) {
+    .register-input {
+        height: 8vw;
+        border-radius: 2vw;
+    }
+
+    .register-form {
+        width: 70vw;
+    }
+
+    .register-submit {
+        height: 10vw;
+    }
+}
