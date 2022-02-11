@@ -1,0 +1,42 @@
+<div class="formmy">
+    <label for="ques">QuesId: </label>
+    <input type="text" placeholder="ques" id="ques" class="ques">
+
+    <label for="input">TestCase Input: </label>
+    <input type="text" placeholder="TestCase Input" id="input" class="input">
+
+    <label for="output_compare">output_compare: </label>
+    <input type="text" placeholder="output_compare" id="output_compare" class="output_compare">
+
+    <button onclick="submitQues()">submit</button>
+</div>
+
+<script>
+    async function submitQues() {
+        var ques = document.getElementById('ques').value;
+        var input = document.getElementById('input').value;
+        var output_compare = document.getElementById('output_compare').value;
+        var data = {
+            id: ques,
+            input: input,
+            output_compare: output_compare
+        };
+        await fetch('/admin/question/testcase', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(async function (response) {
+            console.log(await response.json());
+        });
+    }
+</script>
+
+<style>
+    .formmy {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+    }
+</style>
