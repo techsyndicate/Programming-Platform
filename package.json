@@ -4,7 +4,10 @@
   "description": "The Front End For The Programming Platform",
   "main": "index.js",
   "scripts": {
-    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\"",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "\"echo \\\"Error: no build specified\\\" && exit 1\""
   },
   "repository": {
     "type": "git",
