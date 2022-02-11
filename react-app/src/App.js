@@ -10,8 +10,9 @@ import "./App.css";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import NavigationBar from "./Components/Navigation/NavigationBar";
+import Fourzerofour from './Components/404/404';
 import Profile from "./Pages/Profile/Profile";
-import { getUser, logout } from './Components/reuse/Misc';
+import { getUser } from './Components/reuse/Misc';
 
 function App() {
   const [data, setData] = useState(null);
@@ -30,20 +31,7 @@ function App() {
           <button onClick={getUserButton}>Submit</button>
           {data ? <h1>Welcome Back {data.username}</h1> : null}
         </div>
-
-        <div>
-          <h1>Logout User</h1>
-          <button onClick={logout}>Logout</button>
-        </div>
-
-      </div>
-    )
-  }
-
-  function Fourzerofour() {
-    return (
-      <div>
-        <h1>404</h1>
+        
       </div>
     )
   }

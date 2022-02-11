@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Notyf } from 'notyf';
 
 import './Register.css';
+import { getUser } from '../../Components/reuse/Misc';
 
 function Register() {
     const [registerUsername, setRegisterUsername] = useState("");
@@ -10,6 +12,9 @@ function Register() {
     const [registerEmail, setRegisterEmail] = useState("");
 
     const register = () => {
+        // Create an instance of Notyf
+        var notyf = new Notyf();
+
         Axios({
             method: "POST",
             data: {
@@ -19,7 +24,18 @@ function Register() {
             },
             withCredentials: true,
             url: "http://localhost:3200/auth/register",
-        }).then((res) => console.log(res));
+        }).then((res) => {
+            console.log(res);
+            if (res.data[0].sucess === true) {
+                notyf.success('Login Successful');
+                getUser().then((res) => {
+                    window.location.href = '/profile';
+                });
+            }
+            else {
+                notyf.error(res.data[0].msg);
+            }
+        });
     };
 
     return (

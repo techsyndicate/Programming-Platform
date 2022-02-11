@@ -2,7 +2,7 @@ import React from 'react';
 import './Button.css';
 import { HashLink } from 'react-router-hash-link';
 
-const STYLES = ['btn--primary', 'btn--outline', 'btn--test'];
+const STYLES = ['btn--primary', 'btn--primary--black', 'btn--outline', 'btn--test'];
 
 const SIZES = ['btn--medium', 'btn--large'];
 

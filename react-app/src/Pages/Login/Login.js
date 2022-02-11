@@ -26,7 +26,9 @@ function Login() {
             console.log(res);
             if (res.data[0].sucess === true){
                 notyf.success('Login Successful');
-                getUser();
+                getUser().then((res) => {
+                    window.location.href = '/profile';
+                });
             }
             else {
                 notyf.error(res.data[0].msg);

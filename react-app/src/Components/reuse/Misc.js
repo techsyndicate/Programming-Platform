@@ -26,5 +26,6 @@ export const logout = () => {
         console.log(res)
         localStorage.removeItem("User");
         window.dispatchEvent(new Event('storage'))
+        window.location.href = '/login';
     });
 }
