@@ -28,10 +28,11 @@ answer_router.post('/run/python', checkAuthenticated, async (req, res) => {
                 data.data.success = true;
                 res.send(data.data)
             })
-        } catch {
+        } catch(err) {
             res.send({
                 "success": false,
-                "error": "Server Error Try Again in a few minutes"
+                "msg": "Server Error Try Again in a few minutes",
+                err
             })
         }
     }
