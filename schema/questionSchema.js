@@ -22,6 +22,9 @@ const testCaseSchema = new mongoose.Schema({
 const quesSchema = new mongoose.Schema({
     name: reqString,
     ques: reqString,
+    practise: reqBool,
+    prac_evenid: reqString,
+    prac_even_name: reqString,
     date: {
         type: String,
         default: dateStringWithTime
