@@ -13,6 +13,7 @@ const port = process.env.PORT || 3200,
     passport_init = require('./passport'),
     bloatRouter = require('./routers/bloat'),
     adminRouter = require('./routers/admin'),
+    questionRouter = require('./routers/question'),
     authRouter = require("./routers/auth");
 
 //ejs
@@ -44,6 +45,7 @@ app.use(express.static(path.resolve(__dirname, './react-app/build')));
 app.use(bloatRouter);
 app.use("/auth", authRouter)
 app.use('/admin', adminRouter)
+app.use('/question', questionRouter)
 app.get('*', (req,res,next)=> res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
