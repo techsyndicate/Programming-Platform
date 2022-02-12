@@ -21,7 +21,7 @@ function Login() {
                 email: loginEmail
             },
             withCredentials: true,
-            url: "http://localhost:3200/auth/login",
+            url: "/auth/login",
         }).then((res) => {
             console.log(res);
             if (res.data[0].sucess === true){

@@ -1,6 +1,6 @@
 // Import Packages
 import React, { useState } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useParams } from 'react-router-dom';
 import { Route, Routes } from 'react-router'
 
 // Import Files
@@ -12,6 +12,7 @@ import Register from "./Pages/Register/Register";
 import NavigationBar from "./Components/Navigation/NavigationBar";
 import Fourzerofour from './Components/404/404';
 import Profile from "./Pages/Profile/Profile";
+import Question from "./Pages/Question/Question";
 import { getUser } from './Components/reuse/Misc';
 
 function App() {
@@ -31,9 +32,14 @@ function App() {
           <button onClick={getUserButton}>Submit</button>
           {data ? <h1>Welcome Back {data.username}</h1> : null}
         </div>
-        
+
       </div>
     )
+  }
+
+  function QuesRedirect() {
+    const { questionid } = useParams();
+    window.location.href = '/question/' + questionid +'/problem';
   }
 
   return (
@@ -45,6 +51,8 @@ function App() {
           <Route path={process.env.PUBLIC_URL + '/login'} element={<Login />} />
           <Route path={process.env.PUBLIC_URL + '/register'} element={<Register />} />
           <Route path={process.env.PUBLIC_URL + '/profile'} element={<Profile />} />
+          <Route path={process.env.PUBLIC_URL + '/question/:questionid'} element={<QuesRedirect />} />
+          <Route path={process.env.PUBLIC_URL + '/question/:questionid/:questPart'} element={<Question />} />
           <Route path="*" element={<Fourzerofour />} />
         </Routes>
       </Router>

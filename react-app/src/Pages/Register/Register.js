@@ -23,7 +23,7 @@ function Register() {
                 username: registerUsername
             },
             withCredentials: true,
-            url: "http://localhost:3200/auth/register",
+            url: "/auth/register",
         }).then((res) => {
             console.log(res);
             if (res.data[0].sucess === true) {
