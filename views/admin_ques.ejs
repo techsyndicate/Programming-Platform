@@ -5,6 +5,12 @@
     <label for="ques">Ques: </label>
     <textarea cols="30" rows="10" type="text" placeholder="ques" id="ques" class="ques"></textarea>
 
+    <label for="checkbox">Practise</label>
+    <input type="checkbox" id="checkbox" class="checkbox">
+
+    <label for="id">ID Input: </label>
+    <input type="text" placeholder="ID Input" id="id" class="id">
+
     <label for="input">TestCase Input: </label>
     <input type="text" placeholder="TestCase Input" id="input" class="input">
 
@@ -15,13 +21,19 @@
 </div>
 
 <script>
-    async function submitQues(){
+    async function submitQues() {
         var name = document.getElementById('name').value;
         var ques = document.getElementById('ques').value;
+
+        var checkbox = document.getElementById('checkbox').checked;
+        var id = document.getElementById('id').value;
+
         var input = document.getElementById('input').value;
         var output_compare = document.getElementById('output_compare').value;
         var data = {
             name: name,
+            practise: checkbox,
+            prac_evenid: id,
             ques: ques,
             input: input,
             output_compare: output_compare
@@ -32,7 +44,7 @@
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(async function(response){
+        }).then(async function (response) {
             console.log(await response.json());
         });
     }
