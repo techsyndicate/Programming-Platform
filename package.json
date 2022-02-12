@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/gamer-1478/Programming-Platform#readme",
   "dependencies": {
+    "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
