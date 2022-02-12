@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 import { Notyf } from 'notyf';
 import { Link } from 'react-router-dom';
-import { getUser } from '../../Components/reuse/Misc';
+import { getUser, urlPrefix } from '../../Components/reuse/Misc';
 
 import './Login.css';
 
@@ -21,7 +21,7 @@ function Login() {
                 email: loginEmail
             },
             withCredentials: true,
-            url: "/auth/login",
+            url: urlPrefix() +"auth/login",
         }).then((res) => {
             console.log(res);
             if (res.data[0].sucess === true){

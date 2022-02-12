@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Notyf } from 'notyf';
 
 import './Register.css';
-import { getUser } from '../../Components/reuse/Misc';
+import { getUser, urlPrefix } from '../../Components/reuse/Misc';
 
 function Register() {
     const [registerUsername, setRegisterUsername] = useState("");
@@ -23,7 +23,7 @@ function Register() {
                 username: registerUsername
             },
             withCredentials: true,
-            url: "/auth/register",
+            url: urlPrefix() +"auth/register",
         }).then((res) => {
             console.log(res);
             if (res.data[0].sucess === true) {

@@ -1,0 +1,16 @@
+.base {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    flex-direction: column;
+    display: flex;
+}
+
+.h-r-ts {
+    width: 80vw;
+    align-self: flex-start;
+    color: #16e16e;
+}

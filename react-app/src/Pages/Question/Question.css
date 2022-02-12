@@ -45,7 +45,6 @@ h5 {
 
 .question-navbar {
     font-size: 1.2rem;
-    position: sticky;
     top: 0;
     z-index: 999;
     font-family: 'Roboto', 'PT sans', sans-serif;
@@ -107,5 +106,27 @@ h5 {
 
 .code-editor {
     width: 80vw;
+}
 
+.question-title {
+    width: 80vw;
+}
+
+.question-buttons {
+    margin-top: 1vw;
+    width: 80vw;
+}
+
+.question-buttons Button {
+    margin-right: 1vw;
+}
+
+.question-input {
+    width: 80vw;
+}
+
+.problem-outputs {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
 }

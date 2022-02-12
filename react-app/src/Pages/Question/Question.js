@@ -1,34 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
-import CodeMirror from '@uiw/react-codemirror';
-import { python } from '@codemirror/lang-python';
 import Editor from "@monaco-editor/react";
+import { Button } from '../../Components/button/Button';
+import { checkLoggedIn, urlPrefix } from '../../Components/reuse/Misc';
+import Axios from 'axios';
 
 import './Question.css'
+import { Notyf } from 'notyf';
 
 function Question() {
+    const notyf = new Notyf();
     const { questionid, questPart } = useParams();
     const [questionExist, setQuestionExist] = useState(false);
     const [data, setData] = useState(null);
     const [loaded, setLoaded] = useState(false);
     const [code, setCode] = useState(`#write ur code here`);
-    
-    const editorRef = useRef(null);
 
-    function handleEditorDidMount(editor, monaco) {
-        editorRef.current = editor;
-    }
+    const [practise, setPractise] = useState('Practice');
 
     function showValue() {
-        alert(editorRef.current.getValue());
+        alert(code);
     }
 
     const checkQuestion = async () => {
-        await fetch('/question/', {
+        await fetch(urlPrefix() + 'question/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,8 +40,12 @@ function Question() {
             if (res.success) {
                 setData(res);
                 window.onload = setQuestionExist(true);
-            }
-            else {
+                if (res.hasOwnProperty('practise') && res.practise) {
+                    setPractise('Practice');
+                } else {
+                    setPractise('Event');
+                }
+            } else {
                 window.location.href = '/404';
             }
         })
@@ -70,6 +73,46 @@ function Question() {
     function hideProblem() {
         if (loaded === true) {
             document.getElementById('question-container').style.display = 'none';
+        }
+    }
+
+    function verifyLogged() {
+        if (checkLoggedIn() !== null) {
+            return true;
+        }
+        else {
+            window.location.href = '/login';
+        }
+    }
+
+    async function runCode() {
+        if (verifyLogged() === true) {
+            var input = document.getElementById('custom-inputs').value;
+            console.log(input.toString(), code.toString());
+            Axios({
+                url: urlPrefix() + 'ans/run/python',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+                data: {
+                    code: code.toString(),
+                    input: input.toString(),
+                }
+            }).then(async data => {
+                console.log(await data.data);
+                if (data.data.success) {
+                    document.getElementById('output-text').value = data.data.data.join('\n');
+                    document.getElementById('output-errors').value = data.data.err.join('\n');
+                    if (data.data.exit.code !== 0) {
+                        notyf.error(`Exit code: ${data.data.exit.code}, Likely Time Ran Out, or Code Failed.`);
+                    }
+                }
+                else {
+                    notyf.error(data.data.msg);
+                }
+            })
         }
     }
 
@@ -123,7 +166,12 @@ function Question() {
                             default: return <p>problem</p>;
                         }
                     })()}
+                    <br></br>
+                    <br></br>
                     <div id='question-container' className='question-container'>
+                        <p className='question-input'><a href={'/' + practise}>{practise} </a> {'>'} <a href={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </a> {'>'} <a href={'/question/' + questionid}>{data.name}</a></p>
+                        <h1 className='question-title'>{data.name}</h1>
+                        <br></br>
                         <div className='question-problem-markdown' id='question-problem-markdown'>
                             <div className='question-markdown-comp'>
                                 <ReactMarkdown children={data.ques} remarkPlugins={[remarkGfm]} />
@@ -133,29 +181,30 @@ function Question() {
                         <br></br>
                         <h2>Code Editor Python 3</h2>
                         <div className='code-editor'>
-                                <Editor
-                                    height="50vh"
-                                    defaultLanguage="python"
-                                    defaultValue={code}
-                                    onMount={handleEditorDidMount}
-                                    onChange={handleEditorChange}
-                                    theme="vs-dark"
-                                />
+                            <Editor
+                                height="70vh"
+                                defaultLanguage="python"
+                                defaultValue={code}
+                                onChange={handleEditorChange}
+                                theme="vs-dark"
+                            />
                         </div>
-                        <button onClick={showValue}>Run Code</button>
+                        <div className='question-input'>
+                            <h3>Custom Input</h3>
+                            <textarea id='custom-inputs' cols={50} rows={10}></textarea>
+                        </div>
+                        <div className='question-buttons'>
+                            <Button onClick={runCode} buttonStyle='btn--primary--black'>Run Code</Button>
+                            <Button onClick={showValue} buttonStyle='btn--primary--black'>Submit Code</Button>
+                        </div>
+                        <div className='problem-outputs'>
+                            <p>Output</p>
+                            <textarea rows={7} id='output-text'></textarea>
+                            <p>Error</p>
+                            <textarea rows={7} id='output-errors'></textarea>
+                        </div>
                         <br></br>
                         <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-
                     </div>
 
                 </>

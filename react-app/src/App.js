@@ -13,30 +13,11 @@ import NavigationBar from "./Components/Navigation/NavigationBar";
 import Fourzerofour from './Components/404/404';
 import Profile from "./Pages/Profile/Profile";
 import Question from "./Pages/Question/Question";
-import { getUser } from './Components/reuse/Misc';
+import Index from "./Pages/Index/Index";
+import Practise from "./Pages/Practise/Practise";
+import PractiseQuestions from "./Pages/PractiseQuestions/PractiseQuestions";
 
 function App() {
-  const [data, setData] = useState(null);
-  const getUserButton = async () => {
-    var hmm = await getUser();
-    setData(hmm);
-    console.log(hmm)
-  };
-
-  function IndexApp() {
-    return (
-      <div className="App">
-
-        <div>
-          <h1>Get User</h1>
-          <button onClick={getUserButton}>Submit</button>
-          {data ? <h1>Welcome Back {data.username}</h1> : null}
-        </div>
-
-      </div>
-    )
-  }
-
   function QuesRedirect() {
     const { questionid } = useParams();
     window.location.href = '/question/' + questionid +'/problem';
@@ -47,10 +28,12 @@ function App() {
       <Router>
         <NavigationBar />
         <Routes>
-          <Route path={process.env.PUBLIC_URL + '/'} element={<IndexApp />} />
+          <Route path={process.env.PUBLIC_URL + '/'} element={< Index />} />
           <Route path={process.env.PUBLIC_URL + '/login'} element={<Login />} />
           <Route path={process.env.PUBLIC_URL + '/register'} element={<Register />} />
           <Route path={process.env.PUBLIC_URL + '/profile'} element={<Profile />} />
+          <Route path={process.env.PUBLIC_URL + '/practice'} element={<Practise />} />
+          <Route path={process.env.PUBLIC_URL + '/practice/:practiceid'} element={<PractiseQuestions />} />
           <Route path={process.env.PUBLIC_URL + '/question/:questionid'} element={<QuesRedirect />} />
           <Route path={process.env.PUBLIC_URL + '/question/:questionid/:questPart'} element={<Question />} />
           <Route path="*" element={<Fourzerofour />} />
