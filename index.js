@@ -14,6 +14,7 @@ const port = process.env.PORT || 3200,
     bloatRouter = require('./routers/bloat'),
     adminRouter = require('./routers/admin'),
     questionRouter = require('./routers/question'),
+    practiseRouter = require('./routers/practise'),
     answerRouter = require('./routers/answer'),
     authRouter = require("./routers/auth");
 
@@ -48,6 +49,7 @@ app.use("/auth", authRouter)
 app.use('/admin', adminRouter)
 app.use('/question', questionRouter)
 app.use('/ans', answerRouter)
+app.use('/practise-back', practiseRouter)
 
 app.get('*', (req,res,next)=> res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
