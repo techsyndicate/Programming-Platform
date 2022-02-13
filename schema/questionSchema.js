@@ -15,7 +15,7 @@ const testCaseSchema = new mongoose.Schema({
         default: dateStringWithTime
     },
     passed: reqBool,
-    output: { type: String, required: false }
+    output: [{ type: String, required: false, default: "" }]
 })
 
 // Schema

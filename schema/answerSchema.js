@@ -9,13 +9,13 @@ const reqString = { type: String, required: true },
 
 const testCaseSchema = new mongoose.Schema({
     input: reqString,
-    output: reqString,
+    output_compare: reqString,
     date: {
         type: String,
         default: dateStringWithTime
     },
     passed: reqBool,
-    output: reqString
+    output: [{ type: String, required: false, default: "" }]
 })
 
 // Schema
@@ -25,7 +25,11 @@ const ansSchema = new mongoose.Schema({
         default: dateStringWithTime
     },
     testcases: [testCaseSchema],
-    answerCode: reqString
+    quesid: reqString,
+    userid: reqString,
+    quesName: reqString,
+    ansPython: reqString,
+    accepted: reqBool
 })
 
 var AnsSchema = mongoose.model("Answer", ansSchema);
