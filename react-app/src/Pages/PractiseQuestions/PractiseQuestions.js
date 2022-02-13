@@ -19,7 +19,7 @@ function PractiseQuestions() {
     }
     useEffect(() => {
         getPractises()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

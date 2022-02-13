@@ -31,6 +31,20 @@ export const logout = () => {
     });
 }
 
+export const logoutWNRedirect = () => {
+    console.log(urlPrefix() + "auth/logout")
+    Axios({
+        method: "GET",
+        withCredentials: true,
+        url: urlPrefix() + "auth/logout",
+    }).then((res) => {
+        console.log(res)
+        localStorage.removeItem("User");
+        window.dispatchEvent(new Event('storage'))
+    });
+}
+
+
 export const urlPrefix = () => {
     if (window.location.origin.includes("localhost")) {
         return "http://localhost:3200/"
@@ -52,13 +66,12 @@ export const checkLoggedIn = () => {
                 window.dispatchEvent(new Event('storage'))
                 return true;
             } else {
-                logout();
+                logoutWNRedirect();
                 return null;
             }
         });
     }
     else {
-        logout();
         return null;
     }
 }
