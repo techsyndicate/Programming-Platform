@@ -9,7 +9,7 @@
     display: flex;
 }
 
-.h-r-ts {
+.base-header {
     width: 80vw;
     align-self: flex-start;
     color: #16e16e;

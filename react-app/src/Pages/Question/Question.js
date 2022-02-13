@@ -272,7 +272,7 @@ function Question() {
                                         <div className='submissions-card'>
                                             <div className='submissions-card-header'>
                                                 <h4>Submission {index + 1}</h4>
-                                                <Button onClick={() => { window.location.href = '/submissions/' + submission._id }} buttonStyle='btn--primary--black'>View Submission</Button>
+                                                <Button onClick={() => { window.open('/submissions/' + submission._id, "_blank") }} buttonStyle='btn--primary--black'>View Submission</Button>
                                             </div>
                                             {submission.accepted ? (<p>Accepted</p>) : (<p>Not Accepted</p>)}
                                         </div>

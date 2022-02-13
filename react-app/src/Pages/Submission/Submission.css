@@ -1,0 +1,55 @@
+.code-ans>pre>code {
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    display: block;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+    word-wrap: normal;
+    color: #000;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    text-align: left;
+    white-space: pre;
+    word-break: normal;
+    word-spacing: normal;
+}
+
+.Submission-top-level-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle-contain-submission {
+    background-color: #d6d3d3;
+    display: flex;
+    width: 80vw;
+    flex-direction: column;
+}
+
+.code-ans {
+    margin-left: 3vw;
+    margin-right: 3vw;
+}
+
+.Submission-top-level-container h1 {
+    width: 80vw;
+}
+
+.accepted-container {
+    display: flex;
+    width: 80vw;
+}
+
+.Accepted{
+    color: green;
+}
+
+.Not-Accepted {
+    color: red;
+}

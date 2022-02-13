@@ -16,6 +16,8 @@ import Question from "./Pages/Question/Question";
 import Index from "./Pages/Index/Index";
 import Practise from "./Pages/Practise/Practise";
 import PractiseQuestions from "./Pages/PractiseQuestions/PractiseQuestions";
+import Event from "./Pages/Event/Event";
+import Submission from "./Pages/Submission/Submission";
 
 function App() {
   function QuesRedirect() {
@@ -33,6 +35,8 @@ function App() {
           <Route path={process.env.PUBLIC_URL + '/register'} element={<Register />} />
           <Route path={process.env.PUBLIC_URL + '/profile'} element={<Profile />} />
           <Route path={process.env.PUBLIC_URL + '/practice'} element={<Practise />} />
+          <Route path={process.env.PUBLIC_URL + '/events'} element={<Event />} />
+          <Route path={process.env.PUBLIC_URL + '/submissions/:submissionid'} element={<Submission />} />
           <Route path={process.env.PUBLIC_URL + '/practice/:practiceid'} element={<PractiseQuestions />} />
           <Route path={process.env.PUBLIC_URL + '/question/:questionid'} element={<QuesRedirect />} />
           <Route path={process.env.PUBLIC_URL + '/question/:questionid/:questPart'} element={<Question />} />

@@ -1,0 +1,12 @@
+.base-event {
+    font-family: 'Roboto', sans-serif;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.base-header-event {
+    padding: 20px;
+    margin: 20px;
+}
