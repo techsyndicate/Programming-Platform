@@ -16,3 +16,7 @@ body {
     width: 100%;
     filter: blur(1px);
 }
+
+.min-height {
+    min-height: 92vh;
+}
