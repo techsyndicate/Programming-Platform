@@ -6,6 +6,14 @@ const PractiseSchema = require('../schema/practiseSchema'),
     { QuesSchema, TestCaseSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
+admin_router.get('/', checkAuthenticated, checkAdmin, (req, res) => {
+    res.render('admin');
+})
+
+admin_router.get('/practise', checkAuthenticated, checkAdmin, (req, res) => {
+    res.render('admin_practise.ejs')
+})
+
 admin_router.get('/question', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('admin_ques.ejs')
 })
@@ -74,10 +82,6 @@ admin_router.post('/practise', checkAuthenticated, checkAdmin, (req, res) => {
     }).catch(err => {
         res.send(err)
     })
-})
-
-admin_router.get('/practise', checkAuthenticated, checkAdmin, (req, res) => {
-    res.render('admin_practise.ejs')
 })
 
 module.exports = admin_router;

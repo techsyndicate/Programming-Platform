@@ -62,7 +62,9 @@ auth_router.post('/login', (req, res, next) => {
 
 // Send User Data
 auth_router.get("/user", (req, res) => {
-    res.send(req.user);
+    var user = JSON.parse(JSON.stringify(req.user));
+    delete user.password;
+    res.send(user);
 });
 
 // Logout User

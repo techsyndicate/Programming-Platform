@@ -7,13 +7,13 @@ const AnsSchema = require('../schema/answerSchema');
 const { QuesSchema, TestCaseSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
-answer_router.post('/run/python', checkAuthenticated, async (req, res) => {
+answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var input = req.body.input;
-    if (text != '#write ur code here' && text) {
+    if (text) {
         try {
             await Axios({
-                url: 'http://40.122.201.43:3000/language/python',
+                url: 'http://40.122.201.43:3000/language/'+req.params.id,
                 withCredentials: true,
                 method: 'POST',
                 headers: {
@@ -41,11 +41,11 @@ answer_router.post('/run/python', checkAuthenticated, async (req, res) => {
     }
 })
 
-answer_router.post('/submit/python', checkAuthenticated, async (req, res) => {
+answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;
     var userid = req.user.id;
-    if (text != '#write ur code here' && text) {
+    if (text) {
         QuesSchema.findById(quesid, async (err, ques) => {
             var ans_schema = new AnsSchema({
                 quesid: quesid,
@@ -57,7 +57,7 @@ answer_router.post('/submit/python', checkAuthenticated, async (req, res) => {
                 return new Promise(async (resolve, reject) => {
                     try {
                         await Axios({
-                            url: 'http://40.122.201.43:3000/language/python',
+                            url: 'http://40.122.201.43:3000/language/'+req.params.id,
                             withCredentials: true,
                             method: 'POST',
                             headers: {
