@@ -18,14 +18,12 @@ function Question() {
     const [questionExist, setQuestionExist] = useState(false);
     const [data, setData] = useState(null);
     const [loaded, setLoaded] = useState(false);
-    const [code, setCode] = useState(`#write ur code here`);
-
+    const [code, setCode] = useState('');
     const [logged, setLogged] = useState(false);
     const [practise, setPractise] = useState('Practice');
-
     const [executing, setExecuting] = useState(true);
-
     const [submissionData, setSubmissionData] = useState(null);
+    const [language, setLanguage] = useState('python');
 
     const checkQuestion = async () => {
         await fetch(urlPrefix() + 'question/', {
@@ -103,7 +101,7 @@ function Question() {
             setExecuting(false);
             var input = document.getElementById('custom-inputs').value;
             Axios({
-                url: urlPrefix() + 'ans/run/python',
+                url: urlPrefix() + 'ans/run/' + document.getElementById('editor').value,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -116,10 +114,24 @@ function Question() {
             }).then(async data => {
                 setExecuting(true);
                 if (data.data.success) {
-                    document.getElementById('output-text').value = data.data.data.join('\n');
-                    document.getElementById('output-errors').value = data.data.err.join('\n');
+                    console.log(data.data)
+                    console.log((data.data.data !== undefined))
+
+                    if (data.data.err !== undefined && data.data.err.length > 0) {
+                        document.getElementById('output-errors').value = '';
+                        document.getElementById('output-errors').value = data.data.err.join('\n');
+                    }
+                    else {
+                        document.getElementById('output-errors').value = '';
+                    }
                     if (data.data.exit.code !== 0) {
                         notyf.error(`Exit code: ${data.data.exit.code}, Likely Time Ran Out, or Code Failed.`);
+                    }
+                    if (data.data.data !== undefined && data.data.data.length > 0) {
+                        document.getElementById('output-text').value = data.data.data.join('\n');
+                    }
+                    else {
+                        document.getElementById('output-text').value = '';
                     }
                 }
                 else {
@@ -133,7 +145,7 @@ function Question() {
         if (verifyLogged(true) === true) {
             setExecuting(false);
             Axios({
-                url: urlPrefix() + 'ans/submit/python',
+                url: urlPrefix() + 'ans/submit/' + document.getElementById('editor').value,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -146,7 +158,7 @@ function Question() {
             }).then(async data => {
                 console.log(await data.data);
                 setExecuting(true);
-                window.location.href = '/submission/' + data.data.data._id;
+                window.location.href = '/submissions/' + data.data.data._id;
             })
         }
     }
@@ -164,6 +176,20 @@ function Question() {
                 console.log(await data.data);
                 setSubmissionData(await data.data);
             })
+        }
+    }
+
+    function getLanguage() {
+        const val = document.getElementById('editor').value;
+        console.log(val);
+        if (val === 'python3' || val==='python2'){
+            setLanguage('python');
+        }
+        else if (val === 'gpp'){
+            setLanguage('cpp');
+        }
+        else if (val === 'gcc'){
+            setLanguage('c');
         }
     }
 
@@ -222,11 +248,22 @@ function Question() {
                         </div>
                         <br></br>
                         <br></br>
-                        <h2>Code Editor Python 3</h2>
+                        <h2>Code Editor</h2>
+                        <div className='select-container'>
+                            <div className="select" onChange={getLanguage}>
+                                <select name="editor" id="editor">
+                                    <option value="python3">Python 3</option>
+                                    <option value="python2">Python 2</option>
+                                    <option value="gpp">C++</option>
+                                    <option value="gcc">C</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br></br>
                         <div className='code-editor'>
                             <Editor
                                 height="70vh"
-                                defaultLanguage="python"
+                                language={language}
                                 defaultValue={code}
                                 onChange={handleEditorChange}
                                 theme="vs-dark"

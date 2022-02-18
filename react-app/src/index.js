@@ -4,9 +4,9 @@ import App from './App';
 //import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  //<React.StrictMode>
-    <App />, //Remove comma if you want to use Strict Mode
-  //</React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
