@@ -14,6 +14,10 @@ admin_router.get('/practise', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('admin_practise.ejs')
 })
 
+admin_router.get('/event', checkAuthenticated, checkAdmin, (req, res) => {
+    res.render('admin_event.ejs')
+})
+
 admin_router.get('/question', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('admin_ques.ejs')
 })

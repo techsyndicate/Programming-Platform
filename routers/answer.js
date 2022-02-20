@@ -45,13 +45,15 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;
     var userid = req.user.id;
+    var language = req.body.language;
     if (text) {
         QuesSchema.findById(quesid, async (err, ques) => {
             var ans_schema = new AnsSchema({
                 quesid: quesid,
                 userid: userid,
                 quesName: ques.name,
-                ansPython: text
+                ansPython: text,
+                language: language
             })
             await Promise.all(ques.testcases.map(testcase => {
                 return new Promise(async (resolve, reject) => {
@@ -114,6 +116,7 @@ answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req
                     return ({
                         quesName: item.quesName,
                         accepted: item.accepted,
+                        language: item.language,
                         _id: item._id
                     })
                 })
