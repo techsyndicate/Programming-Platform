@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
 import Editor from "@monaco-editor/react";
 import { Button } from '../../Components/button/Button';
-import { checkLoggedIn, urlPrefix } from '../../Components/reuse/Misc';
+import { langParser, checkLoggedIn, urlPrefix, langParserForSubmission } from '../../Components/reuse/Misc';
 import Axios from 'axios';
 
 import './Question.css'
@@ -47,10 +47,6 @@ function Question() {
                 window.location.href = '/404';
             }
         })
-    }
-
-    function handleEditorChange(newValue, e) {
-        setCode(newValue);
     }
 
     useEffect(() => {
@@ -114,9 +110,6 @@ function Question() {
             }).then(async data => {
                 setExecuting(true);
                 if (data.data.success) {
-                    console.log(data.data)
-                    console.log((data.data.data !== undefined))
-
                     if (data.data.err !== undefined && data.data.err.length > 0) {
                         document.getElementById('output-errors').value = '';
                         document.getElementById('output-errors').value = data.data.err.join('\n');
@@ -143,6 +136,7 @@ function Question() {
 
     async function submitCode() {
         if (verifyLogged(true) === true) {
+            const val = document.getElementById('editor').value;
             setExecuting(false);
             Axios({
                 url: urlPrefix() + 'ans/submit/' + document.getElementById('editor').value,
@@ -153,10 +147,10 @@ function Question() {
                 withCredentials: true,
                 data: {
                     code: code.toString(),
-                    quesid: questionid
+                    quesid: questionid,
+                    language: val
                 }
             }).then(async data => {
-                console.log(await data.data);
                 setExecuting(true);
                 window.location.href = '/submissions/' + data.data.data._id;
             })
@@ -173,7 +167,6 @@ function Question() {
                 },
                 withCredentials: true
             }).then(async data => {
-                console.log(await data.data);
                 setSubmissionData(await data.data);
             })
         }
@@ -181,16 +174,7 @@ function Question() {
 
     function getLanguage() {
         const val = document.getElementById('editor').value;
-        console.log(val);
-        if (val === 'python3' || val==='python2'){
-            setLanguage('python');
-        }
-        else if (val === 'gpp'){
-            setLanguage('cpp');
-        }
-        else if (val === 'gcc'){
-            setLanguage('c');
-        }
+        setLanguage(langParser(val));
     }
 
     if (questPart.toLowerCase() === "problem") {
@@ -256,6 +240,7 @@ function Question() {
                                     <option value="python2">Python 2</option>
                                     <option value="gpp">C++</option>
                                     <option value="gcc">C</option>
+                                    <option value="mcs">C#</option>
                                 </select>
                             </div>
                         </div>
@@ -265,7 +250,7 @@ function Question() {
                                 height="70vh"
                                 language={language}
                                 defaultValue={code}
-                                onChange={handleEditorChange}
+                                onChange={(newValue) => { setCode(newValue); }}
                                 theme="vs-dark"
                             />
                         </div>
@@ -308,7 +293,7 @@ function Question() {
                                     return (
                                         <div className='submissions-card'>
                                             <div className='submissions-card-header'>
-                                                <h4>Submission {index + 1}</h4>
+                                                <h4>Submission {index + 1} In {langParserForSubmission(submission.language)}</h4>
                                                 <Button onClick={() => { window.open('/submissions/' + submission._id, "_blank") }} buttonStyle='btn--primary--black'>View Submission</Button>
                                             </div>
                                             {submission.accepted ? (<p>Accepted</p>) : (<p>Not Accepted</p>)}

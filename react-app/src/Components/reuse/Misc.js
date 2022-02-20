@@ -75,3 +75,38 @@ export const checkLoggedIn = () => {
         return null;
     }
 }
+
+export const langParser = (val) => {
+    if (val === 'python3' || val === 'python2') {
+        return ('python');
+    }
+    else if (val === 'gpp') {
+        return ('cpp');
+    }
+    else if (val === 'gcc') {
+        return ('c');
+    }
+    else if (val === 'mcs') {
+        return ('csharp');
+    }
+    else return (val);
+}
+
+export const langParserForSubmission = (val) => {
+    if (val === 'python3') {
+        return ('Python 3');
+    }
+    else if (val === 'python2') {
+        return ('Python 2');
+    }
+    else if (val === 'gpp'){
+        return ('C++');
+    }
+    else if (val === 'gcc') {
+        return ('C');
+    }
+    else if (val === 'mcs') {
+        return ('C#');
+    }
+    else return (val);
+}
