@@ -61,7 +61,8 @@ export const checkLoggedIn = () => {
             withCredentials: true,
             url: urlPrefix() + "auth/user",
         }).then((res) => {
-            if (res.data) {
+            console.log(res.data)
+            if (res.data && res.data.sucess) {
                 localStorage.setItem("User", JSON.stringify(res.data));
                 window.dispatchEvent(new Event('storage'))
                 return true;

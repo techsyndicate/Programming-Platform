@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
 import Editor from "@monaco-editor/react";
 import { Button } from '../../Components/button/Button';
-import { langParser, checkLoggedIn, urlPrefix, langParserForSubmission } from '../../Components/reuse/Misc';
+import { langParser, urlPrefix, langParserForSubmission, checkLoggedIn } from '../../Components/reuse/Misc';
 import Axios from 'axios';
 
 import './Question.css'

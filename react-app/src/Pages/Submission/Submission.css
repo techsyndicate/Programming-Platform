@@ -17,16 +17,32 @@
     word-spacing: normal;
 }
 
+.Submission-top-level-container h3 {
+    color: #fff;
+}
+
+.Submission-top-level-container a {
+    color: #16e16e;
+    text-decoration: none;
+}
+
+.Submission-top-level-container a:hover {
+    color: #16e16e;
+    text-decoration: underline;
+}
+
+
 .Submission-top-level-container {
     display: flex;
     flex-direction: column;
-    width: 100vw;
     justify-content: center;
     align-items: center;
+    background-color: #010101;
 }
 
 .middle-contain-submission {
-    background-color: #d6d3d3;
+    border-radius: 1vw;
+    background-color: #fff;
     display: flex;
     width: 80vw;
     flex-direction: column;
@@ -46,10 +62,46 @@
     width: 80vw;
 }
 
-.Accepted{
+.Accepted {
     color: green;
 }
 
 .Not-Accepted {
     color: red;
+}
+
+.testcase-container {
+    line-height: 0.5;
+    margin: 0;
+    display: flex;
+    width: 80vw;
+}
+
+.testcase-card>pre>code {
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    display: block;
+    font-size: 85%;
+    padding-left: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #000;
+    text-align: left;
+}
+
+.download {
+    color: #097bbf;
+    font-size: 1rem;
+}
+
+.download-accepted-container {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    width: 80vw;
+}
+
+.download:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
