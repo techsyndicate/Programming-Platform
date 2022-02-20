@@ -41,7 +41,7 @@ function Submission() {
         if (!checkLoggedIn()) {
             window.location.href = "/login"
         }
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

@@ -14,6 +14,9 @@ const eventSchema = new mongoose.Schema({
         type: String,
         default: dateStringWithTime
     },
+    startTime: {type: String, required: false},
+    endTime: {type: String, required: false},
+    public: reqBool,
     questions: [{ type: String, required: false }],
     leaderboard: [{type:String, required:false}]
 })
