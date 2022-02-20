@@ -75,6 +75,7 @@
     margin: 0;
     display: flex;
     width: 80vw;
+    flex-direction: column;
 }
 
 .testcase-card>pre>code {
