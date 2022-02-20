@@ -51,7 +51,7 @@ app.use('/question', questionRouter)
 app.use('/ans', answerRouter)
 app.use('/practise-back', practiseRouter)
 
-app.get('*', (req,res,next)=> res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
+app.get('*', (req, res, next) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
     useNewUrlParser: true,
