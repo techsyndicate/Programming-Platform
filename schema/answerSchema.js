@@ -29,7 +29,8 @@ const ansSchema = new mongoose.Schema({
     userid: reqString,
     quesName: reqString,
     ansPython: reqString,
-    accepted: reqBool
+    accepted: reqBool,
+    language: {type:String, required:false, default:"python3"}
 })
 
 var AnsSchema = mongoose.model("Answer", ansSchema);
