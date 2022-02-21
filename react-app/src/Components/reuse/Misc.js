@@ -44,10 +44,9 @@ export const logoutWNRedirect = () => {
     });
 }
 
-
 export const urlPrefix = () => {
     if (window.location.origin.includes("localhost")) {
-        return "http://localhost:3200/"
+        return "http://192.168.1.33:3200/"
     }
     else {
         return "https://ts-prog.herokuapp.com/"

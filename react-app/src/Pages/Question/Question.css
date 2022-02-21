@@ -30,6 +30,10 @@ td>code {
     width: 75vw;
 }
 
+.navar-min-80 {
+    width: 80vw;
+}
+
 .question-all-root h3 {
     font-size: 1.5rem;
     color: #fff;
@@ -124,6 +128,8 @@ td>code {
 
 .question-input {
     width: 80vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .problem-outputs {
@@ -135,7 +141,6 @@ td>code {
 .submissions-card {
     width: 80vw;
     display: flex;
-    flex-direction: column;
     background-color: #111111;
     border-radius: 1vw;
     margin-bottom: 2vw;
@@ -143,10 +148,11 @@ td>code {
 
 .submissions-card-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     width: 100%;
-    margin-left: 2vw;
+    margin-left: 2vw !important;
+    margin: 0;
+    padding: 0;
 }
 
 .submissions-card-header Button {
@@ -158,13 +164,24 @@ td>code {
     font-size: 1.2rem;
 }
 
+.submissions-card-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 80vw;
+    margin-right: 2vw !important;
+}
+
 .submissions-card p {
-    margin-left: 2vw;
     color: #fff;
 }
 
 .submission-card-status {
     display: flex;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1vw;
 }
 
 select {
@@ -255,4 +272,10 @@ select,
 
 textarea {
     border-radius: 0.3vw !important;
+}
+
+@media screen and (max-width: 760px) {
+    .select {
+        width: 100%;
+    }
 }

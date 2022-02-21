@@ -222,7 +222,7 @@ function Question() {
                     <br></br>
                     <br></br>
                     <div id='question-container' className='question-container'>
-                        <p className='question-input'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
+                        <p className='navar-min-80'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
                             {'>'} <Link className='question-quicknav-link' to={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </Link>
                             {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link></p>
                         <h1 className='question-title'>{data.name}</h1>
@@ -261,7 +261,7 @@ function Question() {
                         </div>
                         <div className='question-input'>
                             <h3>Custom Input</h3>
-                            <textarea id='custom-inputs' cols={50} rows={10}></textarea>
+                            <textarea id='custom-inputs' rows={10}></textarea>
                         </div>
                         {executing ? (
                             <>
@@ -286,7 +286,7 @@ function Question() {
                     <div id='submissions-container' className='question-container'>
                         {submissionData ? (
                             <div>
-                                <p className='question-input'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
+                                <p className='navar-min-80'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
                                     {'>'} <Link className='question-quicknav-link' to={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </Link>
                                     {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link></p>
                                 <br></br>
@@ -304,9 +304,12 @@ function Question() {
                                         <div className='submissions-card'>
                                             <div className='submissions-card-header'>
                                                 <h4>Submission {index + 1} In {langParserForSubmission(submission.language)}</h4>
+                                                <p className='submission-card-status'>Staus: &nbsp; {submission.accepted ? (<div className='Accepted'>Accepted</div>) : (<div className='Not-Accepted'>Not Accepted</div>)}</p>
+                                            </div>
+                                            <div className='submissions-card-button'>
                                                 <Button onClick={() => { window.open('/submissions/' + submission._id, "_blank") }} buttonStyle='btn--primary--black'>View Submission</Button>
                                             </div>
-                                            <p className='submission-card-status'>Staus: &nbsp; {submission.accepted ? (<div className='Accepted'>Accepted</div>) : (<div className='Not-Accepted'>Not Accepted</div>)}</p>
+
                                         </div>
                                     )
                                 })}

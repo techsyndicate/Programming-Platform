@@ -63,11 +63,11 @@
 }
 
 .Accepted {
-    color: green;
+    color: #16e163;
 }
 
 .Not-Accepted {
-    color: red;
+    color: #f80101;
 }
 
 .testcase-container {
