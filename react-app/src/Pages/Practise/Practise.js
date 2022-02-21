@@ -37,7 +37,7 @@ function Practise() {
                     }</div>
                 ) : (
                     <div className='loading'>
-                        <Oval color="#000" secondaryColor="#000" ariaLabel='loading' height={100} width={100} />
+                            <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                     </div >
                 )
             }

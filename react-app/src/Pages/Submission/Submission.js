@@ -44,7 +44,7 @@ function Submission() {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
+        <div className='submission-question-root'>
             {loaded ? (
                 <>
                     {forofor ? (
@@ -93,7 +93,7 @@ function Submission() {
 
             ) : (
                 <div className='loading'>
-                    <Oval color="#000" secondaryColor="#000" ariaLabel='loading' height={100} width={100} />
+                        <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                 </div>
             )}
 

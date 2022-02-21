@@ -106,3 +106,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.submission-question-root {
+    background-color: #000;
+}

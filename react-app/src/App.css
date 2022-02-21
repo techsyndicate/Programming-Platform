@@ -3,6 +3,10 @@
     font-family: 'PT Sans', sans-serif;
 }
 
+html {
+    --loading: #00ae40
+}
+
 body {
     margin: 0;
     padding: 0;

@@ -1,5 +1,5 @@
 .question-markdown-comp>pre>code {
-    background-color: #f6f8fa;
+    background-color: #d3d4d6;
     border-radius: 6px;
     display: block;
     font-size: 85%;
@@ -21,7 +21,7 @@ p>code,
 li>code,
 dd>code,
 td>code {
-    background: #f6f8fa;
+    background: #d3d4d6;
     color: #131212;
     word-wrap: break-word;
     box-decoration-break: clone;
@@ -30,15 +30,16 @@ td>code {
     width: 75vw;
 }
 
-h3 {
+.question-all-root h3 {
     font-size: 1.5rem;
+    color: #fff;
 }
 
-h4 {
+.question-all-root h4 {
     font-size: 1.2rem;
 }
 
-h5 {
+.question-all-root h5 {
     font-size: 1rem;
 }
 
@@ -73,7 +74,7 @@ h5 {
 }
 
 .question-nav-links {
-    color: #000;
+    color: #fff;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -82,7 +83,7 @@ h5 {
 }
 
 .question-nav-links:hover {
-    border-bottom: 4px solid #000;
+    border-bottom: 4px solid #16e16e;
     transition: all 0.2s ease-out;
 }
 
@@ -93,10 +94,11 @@ h5 {
 }
 
 .question-problem-markdown {
-    background-color: #d6d3d3;
+    background-color: #fff;
     width: 80vw;
     display: flex;
     justify-content: center;
+    border-radius: 1vw;
 }
 
 .question-markdown-comp {
@@ -134,7 +136,8 @@ h5 {
     width: 80vw;
     display: flex;
     flex-direction: column;
-    background-color: #d6d3d3;
+    background-color: #111111;
+    border-radius: 1vw;
     margin-bottom: 2vw;
 }
 
@@ -150,8 +153,18 @@ h5 {
     margin-right: 4vw;
 }
 
+.submissions-card-header h4 {
+    color: #fff;
+    font-size: 1.2rem;
+}
+
 .submissions-card p {
     margin-left: 2vw;
+    color: #fff;
+}
+
+.submission-card-status {
+    display: flex;
 }
 
 select {
@@ -210,4 +223,36 @@ select::-ms-expand {
 select,
 .select:after {
     grid-area: select;
+}
+
+.question-all-root {
+    background-color: #090909;
+    min-height: 100vh;
+}
+
+.question-all-root h2 {
+    color: #fff;
+}
+
+.question-all-root h1 {
+    color: #16e16e;
+}
+
+.question-all-root p {
+    color: #fff;
+}
+
+.question-quicknav-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.question-quicknav-link:hover {
+    color: #16e16e;
+    text-decoration: underline;
+    text-underline-offset: 1vw;
+}
+
+textarea {
+    border-radius: 0.3vw !important;
 }

@@ -196,7 +196,7 @@ function Question() {
     }
 
     return (
-        <div>
+        <div className='question-all-root'>
             {questionExist ? (
                 <>
                     <nav className="question-navbar">
@@ -222,12 +222,16 @@ function Question() {
                     <br></br>
                     <br></br>
                     <div id='question-container' className='question-container'>
-                        <p className='question-input'><a href={'/' + practise}>{practise} </a> {'>'} <a href={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </a> {'>'} <a href={'/question/' + questionid}>{data.name}</a></p>
+                        <p className='question-input'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
+                            {'>'} <Link className='question-quicknav-link' to={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </Link>
+                            {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link></p>
                         <h1 className='question-title'>{data.name}</h1>
                         <br></br>
                         <div className='question-problem-markdown' id='question-problem-markdown'>
                             <div className='question-markdown-comp'>
                                 <ReactMarkdown children={data.ques} remarkPlugins={[remarkGfm]} />
+                                <br></br>
+                                <br></br>
                             </div>
                         </div>
                         <br></br>
@@ -252,6 +256,7 @@ function Question() {
                                 defaultValue={code}
                                 onChange={(newValue) => { setCode(newValue); }}
                                 theme="vs-dark"
+                                style={{ borderRadius: '5px' }}
                             />
                         </div>
                         <div className='question-input'>
@@ -281,7 +286,12 @@ function Question() {
                     <div id='submissions-container' className='question-container'>
                         {submissionData ? (
                             <div>
-                                <p className='question-input'><a href={'/' + practise}>{practise} </a> {'>'} <a href={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </a> {'>'} <a href={'/question/' + questionid}>{data.name}</a></p>
+                                <p className='question-input'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
+                                    {'>'} <Link className='question-quicknav-link' to={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </Link>
+                                    {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link></p>
+                                <br></br>
+                                <h1 className='question-title'>Submissions</h1>
+                                <br></br>
                                 {(() => {
                                     if (submissionData.length === 0) {
                                         return (
@@ -296,7 +306,7 @@ function Question() {
                                                 <h4>Submission {index + 1} In {langParserForSubmission(submission.language)}</h4>
                                                 <Button onClick={() => { window.open('/submissions/' + submission._id, "_blank") }} buttonStyle='btn--primary--black'>View Submission</Button>
                                             </div>
-                                            {submission.accepted ? (<p>Accepted</p>) : (<p>Not Accepted</p>)}
+                                            <p className='submission-card-status'>Staus: &nbsp; {submission.accepted ? (<div className='Accepted'>Accepted</div>) : (<div className='Not-Accepted'>Not Accepted</div>)}</p>
                                         </div>
                                     )
                                 })}
@@ -304,7 +314,7 @@ function Question() {
                             </div>
                         ) : (
                             <div className='loading'>
-                                <Oval color="#000" secondaryColor="#000" ariaLabel='loading' height={100} width={100} />
+                                <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                             </div>
                         )}
 
@@ -313,7 +323,7 @@ function Question() {
                 </>
             ) : (
                 <div className='loading'>
-                    <Oval color="#000" secondaryColor="#000" ariaLabel='loading' height={100} width={100} />
+                    <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                 </div>
             )}
 
