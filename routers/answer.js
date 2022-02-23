@@ -31,8 +31,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
         } catch (err) {
             res.send({
                 "success": false,
-                "msg": "Server Error Try Again in a few minutes",
-                err
+                "msg": "Server Error Try Again in a few minutes"+err,
             })
         }
     }
@@ -106,7 +105,6 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
 })
 
 answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req, res) => {
-    console.log(req.params.questionid)
     var quesid = req.params.questionid;
     if (isValidObjectId(quesid)) {
         AnsSchema.find({ quesid: quesid, userid: req.user.id }).then(answers => {
@@ -130,7 +128,6 @@ answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req
 
 answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, res) => {
     var submissionid = req.params.submissionid;
-    console.log(submissionid)
     AnsSchema.findById(submissionid).then(answers => {
         if (answers.userid == req.user.id) {
             answers = JSON.parse(JSON.stringify(answers));
