@@ -57,13 +57,15 @@ function Submission() {
                             <div className='middle-contain-submission'>
                                 <div className='code-ans'>
                                     <h4>Your Code In {langParserForSubmission(data.language)}</h4>
-                                    <Editor
-                                        height="70vh"
-                                        defaultLanguage={langParser(data.language)}
-                                        defaultValue={data.ansPython}
-                                        theme="vs-dark"
-                                        options={{ readOnly: true }}
-                                    />
+                                    <div className='Editor-Parent'>
+                                        <Editor
+                                            height="70vh"
+                                            defaultLanguage={langParser(data.language)}
+                                            defaultValue={data.ansPython}
+                                            theme="vs-dark"
+                                            options={{ readOnly: true }}
+                                        />
+                                    </div>
                                     <br></br>
                                     <br></br>
                                     <br></br>
@@ -93,7 +95,7 @@ function Submission() {
 
             ) : (
                 <div className='loading'>
-                        <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
+                    <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                 </div>
             )}
 

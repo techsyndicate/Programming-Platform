@@ -20,6 +20,7 @@
   background-color: #242424;
   color: #fff;
   border: 1px solid #242424;
+  border-radius: 0.2vw;
 }
 
 .btn--outline {

@@ -1,5 +1,5 @@
 .question-markdown-comp>pre>code {
-    background-color: #d3d4d6;
+    background-color: #1e1e1e;
     border-radius: 6px;
     display: block;
     font-size: 85%;
@@ -7,7 +7,7 @@
     overflow: auto;
     padding: 16px;
     word-wrap: normal;
-    color: #000;
+    color: #f9f9f9f9;
     -webkit-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
@@ -21,8 +21,8 @@ p>code,
 li>code,
 dd>code,
 td>code {
-    background: #d3d4d6;
-    color: #131212;
+    background: #1e1e1e;
+    color: #f9f9f9f9;
     word-wrap: break-word;
     box-decoration-break: clone;
     padding: .1rem .3rem .2rem;
@@ -98,7 +98,8 @@ td>code {
 }
 
 .question-problem-markdown {
-    background-color: #fff;
+    background-color: #111111;
+    color: #f1f1f1;
     width: 80vw;
     display: flex;
     justify-content: center;
@@ -111,6 +112,9 @@ td>code {
 
 .code-editor {
     width: 80vw;
+    padding: 1.5vw;
+    border-radius: 1vw;
+    background-color: #1e1e1e;
 }
 
 .question-title {
@@ -196,7 +200,8 @@ select {
     font-size: inherit;
     cursor: inherit;
     line-height: inherit;
-    border: #777;
+    border: #16e16e;
+    color: #fff;
 }
 
 select::-ms-expand {
@@ -211,8 +216,8 @@ select::-ms-expand {
     font-size: 1.25rem;
     cursor: pointer;
     line-height: 1.1;
-    background-color: #fff;
-    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+    color: #f1f1f1;
+    background-image: linear-gradient(to top, #111111, #111111 33%);
     display: grid;
     grid-template-areas: "select";
     align-items: center;
@@ -240,6 +245,12 @@ select::-ms-expand {
 select,
 .select:after {
     grid-area: select;
+}
+
+option {
+    background-color: #111111;
+    color: #fff;
+    margin-left: 1vw;
 }
 
 .question-all-root {
@@ -272,6 +283,9 @@ select,
 
 textarea {
     border-radius: 0.3vw !important;
+    background-color: #121212;
+    color: #f1f1f1;
+    padding: 1vw;
 }
 
 @media screen and (max-width: 760px) {
