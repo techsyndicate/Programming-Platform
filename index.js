@@ -42,11 +42,13 @@ app.use(cookieParser("secretcode1"));
 passport_init(passport);
 
 app.use((req, res, next) => {
-    console.log(req.headers);
-    // if (req.protocol.toString() !== 'https' && process.env.NODE_ENV === 'production') {
-    //     res.redirect('https://' + req.headers.host + req.url);
-    // }
-    next();
+    if (req.headers['x-forwarded-proto'].toString() !== 'https' && process.env.NODE_ENV === 'production') {
+        console.log(req.headers);
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+    else {
+        next();
+    }
 })
 
 //initializing passport
