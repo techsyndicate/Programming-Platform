@@ -4,8 +4,9 @@ const express = require('express'),
 
 const { isValidObjectId } = require('mongoose');
 const AnsSchema = require('../schema/answerSchema');
+const EventSchema = require('../schema/eventSchema');
 const { QuesSchema } = require('../schema/questionSchema'),
-    { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
+    { checkAuthenticated } = require('../utilities/passportReuse');
 
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
@@ -26,7 +27,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
                 }
             }).then(data => {
                 data.data.success = true;
-                if (data.data.data.length==0) {
+                if (data.data.data.length == 0) {
                     data.data.data = [("No Ouput On STDOUT")];
                 }
                 res.send(data.data)
@@ -93,6 +94,8 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                     }
                 })
             })).then(async data => {
+                ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
+                ques.save()
                 ans_schema.testcases = await data;
                 if (ans_schema.testcases.every(item => item.passed)) {
                     ans_schema.accepted = true;

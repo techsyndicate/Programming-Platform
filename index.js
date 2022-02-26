@@ -21,7 +21,7 @@ const port = process.env.PORT || 3200,
     authRouter = require("./routers/auth");
 
 app.use((req, res, next) => {
-    if (req.headers['x-forwarded-proto'].toString() !== 'https' && process.env.NODE_ENV === 'production') {
+    if (req.headers.hasOwnProperty('x-forwarded-proto') && req.headers['x-forwarded-proto'].toString() !== 'https' && process.env.NODE_ENV === 'production') {
         res.redirect('https://' + req.headers.host + req.url);
     }
     else {

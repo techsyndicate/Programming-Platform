@@ -24,26 +24,29 @@ event_router.get('/', (req, res) => {
 event_router.get('/:id', async (req, res) => {
     eventSchema.findOne({ name: req.params.id }).then(async event => {
         if (event) {
-            var eventof = event.questions.map(item => {
-                return new Promise(async (resolve, reject) => {
+            var eventof = event.questions.map(async item => {
+                var data = await new Promise(async (resolve, reject) => {
                     await QuesSchema.findById(item.questionid).then(question => {
                         question = question.toObject();
                         question.id = question['_id'].toString();
                         question['_id'] = undefined;
                         question.testcases = undefined;
                         question.ques = undefined;
-                        resolve(question)
-                    })
-                }).then(data => {
-                    return data
-                })
+                        resolve(question);
+                    });
+                });
+
+                data.accepted_code = Object.keys(data.accepted_submissions).some((k) => {
+                    return data.accepted_submissions[k].userid === req.user.id;
+                });
+                return data;
             })
             let to_return = {
+                success: true,
                 event: event,
                 questions: await Promise.all(eventof)
             }
-            console.log(await to_return)
-            res.send(await to_return)
+            res.send(to_return)
         }
         else {
             res.send({ "success": false, msg: "Event not found" })

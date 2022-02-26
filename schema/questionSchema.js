@@ -4,6 +4,7 @@ const mongoose = require("mongoose"),
 
 // constant variables
 const reqString = { type: String, required: true },
+    reqStringFalse = { type: String, required: false },
     reqBool = { type: Boolean, required: true, default: false },
     dateStringWithTime = moment(new Date()).format('YYYY-MM-DD HH:MM:SS');
 
@@ -29,7 +30,8 @@ const quesSchema = new mongoose.Schema({
         type: String,
         default: dateStringWithTime
     },
-    testcases: [testCaseSchema]
+    testcases: [testCaseSchema],
+    accepted_submissions: [{submissionid: reqStringFalse, userid: reqStringFalse}]
 })
 
 var QuesSchema = mongoose.model("Question", quesSchema);
