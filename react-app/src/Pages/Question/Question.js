@@ -193,8 +193,10 @@ function Question() {
             showSubmission()
             getSubmissions()
         } else {
-            return window.location.href = `/question/${questionid}/Problem`;
+            window.location.href = `/question/${questionid}/Problem`;
         }
+    } else {
+        window.location.href = `/question/${questionid}/Problem`;
     }
 
     return (

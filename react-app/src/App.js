@@ -24,7 +24,7 @@ import EventQuestions from "./Pages/EventQuestions/EventQuestions";
 function App() {
   function QuesRedirect() {
     const { questionid } = useParams();
-    window.location.href = '/question/' + questionid + '/problem';
+    window.location.href = '/question/' + questionid + '/Problem';
   }
 
   return (
