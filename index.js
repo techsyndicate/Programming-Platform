@@ -42,7 +42,7 @@ app.use(cookieParser("secretcode1"));
 passport_init(passport);
 
 app.use((req, res, next) => {
-    console.log(process.env.NODE_ENV);
+    console.log(req.protocol.toString() !== 'https', process.env.NODE_ENV, req.protocol.toString() !== 'https' && process.env.NODE_ENV === 'production');
     if (req.protocol.toString() !== 'https' && process.env.NODE_ENV === 'production') {
         res.redirect('https://' + req.headers.host + req.url);
     }
