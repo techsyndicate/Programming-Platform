@@ -2,6 +2,9 @@
     <label for="name">Name Of the Question: </label>
     <input type="text" placeholder="ques name" id="name" class="name">
 
+    <label for="points">Points: </label>
+    <input type="text" placeholder="points" id="points" class="points">
+
     <label for="ques">Ques In MarkDown: </label>
     <textarea cols="30" rows="10" type="text" placeholder="ques" id="ques" class="ques"></textarea>
 
@@ -12,18 +15,26 @@
     <input type="text" placeholder="ID Input" id="id" class="id">
 
     <label for="input">TestCase Input: </label>
-    <input type="text" placeholder="TestCase Input" id="input" class="input">
+    <textarea cols="30" rows="10" type="text" placeholder="TestCase Input" id="input" class="input"></textarea>
 
     <label for="output_compare">TestCase Ouput: </label>
-    <input type="text" placeholder="output_compare" id="output_compare" class="output_compare">
+    <textarea cols="30" rows="10" type="text" placeholder="output_compare" id="output_compare"
+        class="output_compare"></textarea>
     <br><br>
     <button onclick="submitQues()">submit</button>
+    <style>
+        .formmy {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </div>
 
 <script>
     async function submitQues() {
         var name = document.getElementById('name').value;
         var ques = document.getElementById('ques').value;
+        var points = document.getElementById('points').value;
 
         var checkbox = document.getElementById('checkbox').checked;
         var id = document.getElementById('id').value;
@@ -31,12 +42,13 @@
         var input = document.getElementById('input').value;
         var output_compare = document.getElementById('output_compare').value;
         var data = {
-            name: name,
+            name,
             practise: checkbox,
             prac_evenid: id,
-            ques: ques,
-            input: input,
-            output_compare: output_compare
+            ques,
+            input,
+            output_compare,
+            points
         };
         await fetch('/admin/question/submit', {
             method: 'POST',
@@ -49,11 +61,3 @@
         });
     }
 </script>
-
-<style>
-    .formmy {
-        display: flex;
-        flex-direction: column;
-        width: 50vw;
-    }
-</style>

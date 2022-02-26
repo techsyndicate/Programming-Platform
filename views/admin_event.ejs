@@ -2,6 +2,9 @@
     <label for="name">Event Name: </label>
     <input type="text" placeholder="Event Name" id="name" class="name">
 
+    <label for="checkbox">Public Event</label>
+    <input type="checkbox" id="checkbox" class="checkbox">
+
     <label for="start_time">Event Start Time: </label>
     <input step="1" type="datetime-local" id="start_time" class="start_time">
 
@@ -15,8 +18,15 @@
 <script>
     async function submitQues() {
         var name = document.getElementById('name').value;
+        var checkbox = document.getElementById('checkbox').checked;
+        var start_time = new Date(document.getElementById('start_time').value).toString();
+        var end_time = new Date(document.getElementById('end_time').value).toString();
+
         var data = {
-            name: name
+            name: name,
+            public: checkbox,
+            start_time: start_time,
+            end_time: end_time
         };
         await fetch('/admin/event', {
             method: 'POST',
