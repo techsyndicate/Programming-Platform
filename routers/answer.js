@@ -94,11 +94,11 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                     }
                 })
             })).then(async data => {
-                ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
-                ques.save()
                 ans_schema.testcases = await data;
                 if (ans_schema.testcases.every(item => item.passed)) {
                     ans_schema.accepted = true;
+                    ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
+                    ques.save()
                 }
                 ans_schema.save().then((ans_submit) => {
                     res.send({ "success": true, data: ans_submit })

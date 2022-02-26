@@ -4,6 +4,7 @@ const express = require('express'),
 
 const eventSchema = require('../schema/eventSchema'),
     { QuesSchema } = require('../schema/questionSchema');
+const { checkAuthenticated } = require('../utilities/passportReuse');
 
 
 event_router.get('/', (req, res) => {
@@ -21,7 +22,7 @@ event_router.get('/', (req, res) => {
     })
 })
 
-event_router.get('/:id', async (req, res) => {
+event_router.get('/:id', checkAuthenticated, async (req, res) => {
     eventSchema.findOne({ name: req.params.id }).then(async event => {
         if (event) {
             var eventof = event.questions.map(async item => {

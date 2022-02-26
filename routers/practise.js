@@ -4,6 +4,7 @@ const express = require('express'),
 
 const practiseSchema = require('../schema/practiseSchema'),
     { QuesSchema } = require('../schema/questionSchema');
+const { checkAuthenticated } = require('../utilities/passportReuse');
 
 
 practise_router.get('/', (req, res) => {
@@ -18,25 +19,36 @@ practise_router.get('/', (req, res) => {
     })
 })
 
-practise_router.get('/:id', async (req, res) => {
+practise_router.get('/:id', checkAuthenticated, async (req, res) => {
     practiseSchema.findOne({ name: req.params.id }).then(async practise => {
         if (practise) {
-            var practice = practise.questions.map(item => {
-                return new Promise(async (resolve, reject) => {
+            var practice = practise.questions.map(async item => {
+                const data_1 = await new Promise(async (resolve, reject) => {
                     await QuesSchema.findById(item).then(question => {
                         var data = {
                             name: question.name,
                             id: question.id,
-                        }
-                        resolve(data)
-                    })
-                }).then(data => {
-                    return data
-                })
+                            accepted_submissions: question.accepted_submissions,
+                            prac_even_name: question.prac_even_name,
+                            accepted_code: Object.keys(question.accepted_submissions).some((k) => {
+                                return question.accepted_submissions[k].userid === req.user.id;
+                            })
+                        };
+                        resolve(data);
+                    });
+                });
+                return data_1;
             })
-            let to_return = Promise.all(practice);
+            let practice_data = await Promise.all(practice);
+            practice_data.sort(function (x, y) {
+                return (x.accepted_code === y.accepted_code) ? 0 : x.accepted_code ? 1 : -1;
+            });
+            let to_return = {
+                success: true,
+                data: practice_data
+            }
             //console.log(await to_return)
-            res.send(await to_return)
+            res.send(to_return)
         }
         else {
             res.send({ "success": false, msg: "Practise not found" })
