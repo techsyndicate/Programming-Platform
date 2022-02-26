@@ -16,7 +16,7 @@ function Event() {
     })
   }
   useEffect(() => {
-    getPractises()
+      getPractises()
   }, [])
 
   return (

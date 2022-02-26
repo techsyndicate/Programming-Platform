@@ -4,7 +4,7 @@ import { Oval } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import { Button } from '../../Components/button/Button';
 import { urlPrefix } from '../../Components/reuse/Misc';
-
+import './PractiseQuestions.css'
 function PractiseQuestions() {
     const [data, setData] = useState(null);
     const [loaded, setLoaded] = useState(false);
@@ -22,22 +22,28 @@ function PractiseQuestions() {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
+        <div className='practise-questions-root'>
             {
                 loaded ? (
-                    <div className='submission-container'>{
-                        data.map((item, index) => {
+                    <div className='submission-container'>
+                        <br></br>
+                        {data.data.map((item, index) => {
                             return (
-                                <div className='submission-card'>
-                                    <h1>{item.name}</h1>
-                                    <Button onClick={() => { window.location.href = '/question/' + item.id }} buttonStyle='btn--primary--black'>Solve!</Button>
+                                <div className='submissions-card white'>
+                                    <div className='submissions-card-header'>
+                                        <h2>{item.name}</h2>
+                                        <p className='submission-card-status'>Staus: &nbsp; {item.accepted_code ? (<div className='Accepted'>Solved</div>) : (<div className='Not-Accepted'>Pending Solution</div>)}</p>
+                                    </div>
+                                    <div className='submissions-card-button'>
+                                        <Button onClick={() => { window.location.href = '/question/' + item.id }} buttonStyle='btn--primary--black'>{item.accepted_code ? 'Solved!' : 'Solve!'}</Button>
+                                    </div>
                                 </div>
                             )
-                        })
-                    }</div>
+                        })}
+                    </div>
                 ) : (
                     <div className='loading'>
-                            <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
+                        <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                     </div >
                 )
             }

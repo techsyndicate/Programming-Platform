@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Oval } from 'react-loader-spinner';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../Components/button/Button';
-import { urlPrefix } from '../../Components/reuse/Misc';
+import { checkLoggedIn, urlPrefix } from '../../Components/reuse/Misc';
 import './EventQuestions.css'
 
 function EventQuestions() {
@@ -14,7 +14,7 @@ function EventQuestions() {
     function getPractises() {
         Axios({ url: urlPrefix() + 'event-back/' + eventid, withCredentials: true }).then(res => {
             console.log(res.data);
-            if (res.data.success!==true){
+            if (res.data.success !== true) {
                 alert(res.data.msg);
                 window.location.href = '/Events'
             }
@@ -23,7 +23,11 @@ function EventQuestions() {
         })
     }
     useEffect(() => {
-        getPractises()
+        if (!checkLoggedIn()) {
+            window.location.href = '/login'
+        } else {
+            getPractises()
+        }
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
@@ -63,7 +67,11 @@ function EventQuestions() {
                                             <p className='submission-card-status'>Staus: &nbsp; {item.accepted_code ? (<div className='Accepted'>Solved</div>) : (<div className='Not-Accepted'>Pending Solution</div>)}</p>
                                         </div>
                                         <div className='submissions-card-button'>
-                                            <Button onClick={() => { window.location.href = '/question/' + item.id }} buttonStyle='btn--primary--black'>Solve!</Button>
+                                            <Button
+                                                onClick={() => { window.location.href = '/question/' + item.id }}
+                                                buttonStyle='btn--primary--black'>
+                                                {item.accepted_code ? 'Solved!' : 'Solve!'}
+                                            </Button>
                                         </div>
                                     </div>
                                 )
