@@ -1,3 +1,5 @@
+const event_router = require('./routers/event');
+
 require('dotenv').config()
 
 const express = require('express'),
@@ -50,6 +52,7 @@ app.use('/admin', adminRouter)
 app.use('/question', questionRouter)
 app.use('/ans', answerRouter)
 app.use('/practise-back', practiseRouter)
+app.use('/event-back', event_router)
 
 app.get('*', (req, res, next) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
