@@ -41,7 +41,7 @@ function Question() {
                 if (res.hasOwnProperty('practise') && res.practise) {
                     setPractise('Practice');
                 } else {
-                    setPractise('Event');
+                    setPractise('Events');
                 }
             } else {
                 window.location.href = '/404';
@@ -96,6 +96,8 @@ function Question() {
         if (verifyLogged(true) === true) {
             setExecuting(false);
             var input = document.getElementById('custom-inputs').value;
+            document.getElementById('output-errors').value = '';
+            document.getElementById('output-text').value = '';
             Axios({
                 url: urlPrefix() + 'ans/run/' + document.getElementById('editor').value,
                 method: 'POST',
@@ -117,8 +119,8 @@ function Question() {
                     else {
                         document.getElementById('output-errors').value = '';
                     }
-                    if (data.data.exit.code !== 0) {
-                        notyf.error(`Exit code: ${data.data.exit.code}, Likely Time Ran Out, or Code Failed.`);
+                    if (data.data.exit.code !== 0 && data.data.exit.code === null) {
+                        notyf.error({ dismissible: true, duration: 0, message: `Exit code: ${data.data.exit.code}, CODE DIDN'T EXECUTE IN GIVEN TIMELIMIT OF 15 SECONDS` });
                     }
                     if (data.data.data !== undefined && data.data.data.length > 0) {
                         document.getElementById('output-text').value = data.data.data.join('\n');
@@ -271,7 +273,11 @@ function Question() {
                                 </div>
                             </>
                         ) : (
-                            <Oval color="#000" secondaryColor="#000" ariaLabel='loading' height={30} width={30} />
+                            <>
+                                <br></br>
+                                <br></br>
+                                <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={60} width={60} />
+                            </>
                         )}
                         <div className='problem-outputs'>
                             <p>Output</p>
