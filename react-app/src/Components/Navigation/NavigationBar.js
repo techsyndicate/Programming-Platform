@@ -8,19 +8,10 @@ import './NavigationBar.css'
 
 function NavigationBar() {
     const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
     const [logged, setlogged] = useState(false);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
-    const showButton = () => {
-        if (window.innerWidth <= 960) {
-            setButton(false);
-        } else {
-            setButton(true);
-        }
-    };
-    window.addEventListener('resize', showButton);
 
     const listenStorage = () => {
         localStorage.getItem('User') ? setlogged(true) : setlogged(false);
@@ -31,7 +22,6 @@ function NavigationBar() {
     })
     //window.onstorage = () => { listenStorage() };
     useEffect(() => {
-        showButton();
         listenStorage();
         checkLoggedIn();
     }, []);
@@ -80,9 +70,13 @@ function NavigationBar() {
                     )}
                 </ul>
                 {logged ?
-                    button && <Button buttonStyle='btn--outline' offset='80' path='/Profile'>Profile</Button>
+                    <div className='button-show-mobile'>
+                        <Button buttonStyle='btn--primary--black' offset='80' path='/Profile'>Profile</Button>
+                    </div>
                     :
-                    button && <Button buttonStyle='btn--outline' offset='80' path='/login'>SignIn/SignUp</Button>
+                    <div className='button-show-mobile'>
+                        <Button buttonStyle='btn--primary--black' offset='80' path='/login'>SignIn/SignUp</Button>
+                    </div>
                 }
             </div>
         </nav>
