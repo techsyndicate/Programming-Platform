@@ -44,9 +44,8 @@ passport_init(passport);
 app.use((req, res, next) => {
     if (req.protocol.toString() !== 'https' && process.env.NODE_ENV === 'production') {
         return res.redirect('https://' + req.headers.host + req.url);
-    } else {
-        next();
     }
+    next();
 })
 
 //initializing passport
