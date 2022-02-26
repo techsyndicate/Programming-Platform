@@ -4,7 +4,7 @@ const express = require('express'),
 
 const { isValidObjectId } = require('mongoose');
 const AnsSchema = require('../schema/answerSchema');
-const { QuesSchema, TestCaseSchema } = require('../schema/questionSchema'),
+const { QuesSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
@@ -13,7 +13,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     if (text) {
         try {
             await Axios({
-                url: 'http://40.122.201.43:3000/language/'+req.params.id,
+                url: 'http://40.122.201.43:3000/language/' + req.params.id,
                 withCredentials: true,
                 method: 'POST',
                 headers: {
@@ -26,12 +26,15 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
                 }
             }).then(data => {
                 data.data.success = true;
+                if (data.data.data.length==0) {
+                    data.data.data = [("No Ouput On STDOUT")];
+                }
                 res.send(data.data)
             })
         } catch (err) {
             res.send({
                 "success": false,
-                "msg": "Server Error Try Again in a few minutes"+err,
+                "msg": "Server Error Try Again in a few minutes" + err,
             })
         }
     }
@@ -58,7 +61,7 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                 return new Promise(async (resolve, reject) => {
                     try {
                         await Axios({
-                            url: 'http://40.122.201.43:3000/language/'+req.params.id,
+                            url: 'http://40.122.201.43:3000/language/' + req.params.id,
                             withCredentials: true,
                             method: 'POST',
                             headers: {
@@ -70,13 +73,13 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                                 authString: process.env.SERVER_AUTH_STRING
                             }
                         }).then(data => {
-                            var newTestcase = new TestCaseSchema({
+                            if (data.data.data.length == 0) {
+                                data.data.data.push("No Ouput On STDOUT");
+                            }
+                            var newTestcase = {
                                 input: testcase.input,
                                 output: data.data.data,
                                 output_compare: testcase.output_compare,
-                            })
-                            if (newTestcase.output = []) {
-                                newTestcase.output = [""];
                             }
                             if (data.data.data.join('\n') === testcase.output_compare) {
                                 newTestcase.passed = true;

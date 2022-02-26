@@ -3,7 +3,7 @@ const express = require('express'),
     question_router = express.Router();
 
 const { isValidObjectId } = require('mongoose');
-const { QuesSchema, TestCaseSchema } = require('../schema/questionSchema'),
+const { QuesSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
 question_router.post('/', (req, res) => {

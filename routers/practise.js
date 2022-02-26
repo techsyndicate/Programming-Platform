@@ -3,13 +3,18 @@ const express = require('express'),
     practise_router = express.Router();
 
 const practiseSchema = require('../schema/practiseSchema'),
-    { checkAuthenticated } = require('../utilities/passportReuse');
-const { QuesSchema } = require('../schema/questionSchema');
+    { QuesSchema } = require('../schema/questionSchema');
 
 
 practise_router.get('/', (req, res) => {
     practiseSchema.find({}).then(practises => {
-        res.send(practises)
+        let to_return = practises.map(practise => {
+            return {
+                name: practise.name
+            }
+        })
+        //console.log(to_return)
+        res.send(to_return)
     })
 })
 
@@ -29,9 +34,9 @@ practise_router.get('/:id', async (req, res) => {
                     return data
                 })
             })
-            res.send(await Promise.all(
-                practice
-            ))
+            let to_return = Promise.all(practice);
+            //console.log(await to_return)
+            res.send(await to_return)
         }
         else {
             res.send({ "success": false, msg: "Practise not found" })

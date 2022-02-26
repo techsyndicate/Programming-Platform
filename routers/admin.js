@@ -3,7 +3,8 @@ const express = require('express'),
     admin_router = express.Router();
 
 const PractiseSchema = require('../schema/practiseSchema'),
-    { QuesSchema, TestCaseSchema } = require('../schema/questionSchema'),
+    EventSchema = require('../schema/eventSchema'),
+    { QuesSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
 admin_router.get('/', checkAuthenticated, checkAdmin, (req, res) => {
@@ -37,10 +38,10 @@ admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res)
                     prac_even_name: prac.name,
                     name: req.body.name,
                     ques: req.body.ques,
-                    testcases: new TestCaseSchema({
+                    testcases: {
                         input: req.body.input,
                         output_compare: req.body.output_compare
-                    })
+                    }
                 });
                 testQues.save().then((ques) => {
                     prac.questions.push(ques._id);
@@ -57,17 +58,41 @@ admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res)
         })
     }
     else {
-        //FIXEME: ADD EVENT HANDLING
-        res.send('FIXME: ADD EVENT HANDLING')
+        EventSchema.findById(req.body.prac_evenid, (err, prac) => {
+            if (prac) {
+                var testQues = new QuesSchema({
+                    practise: req.body.practise,
+                    prac_evenid: req.body.prac_evenid,
+                    prac_even_name: prac.name,
+                    name: req.body.name,
+                    ques: req.body.ques,
+                    testcases: {
+                        input: req.body.input,
+                        output_compare: req.body.output_compare
+                    }
+                });
+                testQues.save().then((ques) => {
+                    prac.questions.push({ questionid: ques._id, points: req.body.points });
+                    prac.save().then(() => {
+                        res.send({ "success": true, ques })
+                    })
+                }).catch(err => {
+                    res.send(err)
+                })
+            } else {
+                console.log('error', err)
+                res.send({ "success": false })
+            }
+        })
     }
 })
 
 admin_router.post('/question/testcase', checkAuthenticated, checkAdmin, (req, res) => {
     QuesSchema.findById(req.body.id).then(ques => {
-        ques.testcases.push(new TestCaseSchema({
+        ques.testcases.push({
             input: req.body.input,
             output_compare: req.body.output_compare
-        }))
+        })
         ques.save().then((ques) => {
             res.send({ "success": true, ques })
         }).catch(err => {
@@ -77,11 +102,24 @@ admin_router.post('/question/testcase', checkAuthenticated, checkAdmin, (req, re
 })
 
 admin_router.post('/practise', checkAuthenticated, checkAdmin, (req, res) => {
-    console.log(req.body)
-    var testQues = new practiseSchema({
+    var practise = new PractiseSchema({
         name: req.body.name
     });
-    testQues.save().then((ques) => {
+    practise.save().then((ques) => {
+        res.send({ "success": true, ques })
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
+admin_router.post('/event', checkAuthenticated, checkAdmin, (req, res) => {
+    var event = new EventSchema({
+        name: req.body.name,
+        startTime: req.body.start_time,
+        endTime: req.body.end_time,
+        public: req.body.public
+    });
+    event.save().then((ques) => {
         res.send({ "success": true, ques })
     }).catch(err => {
         res.send(err)
