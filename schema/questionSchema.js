@@ -29,13 +29,10 @@ const quesSchema = new mongoose.Schema({
         type: String,
         default: dateStringWithTime
     },
-    testcases: [testCaseSchema],
-    leaderboard: [{type: String, required: false}],
-    allSubmissions: [{ type: String, required: false }]
+    testcases: [testCaseSchema]
 })
 
 var QuesSchema = mongoose.model("Question", quesSchema);
-var TestCaseSchema = mongoose.model("TestCase", testCaseSchema);
 
 // Export Schema
-module.exports = { QuesSchema, TestCaseSchema };
+module.exports = { QuesSchema };
