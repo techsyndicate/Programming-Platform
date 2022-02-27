@@ -17,17 +17,16 @@ export const Button = ({
 }) => {
     const checkButtonStyle = STYLES.includes(buttonStyle)
         ? buttonStyle
-        : STYLES[0];
+        : STYLES[1];
 
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
     return (
-        <HashLink to={path||''} className='btn-mobile' smooth scroll={el => { el.scrollIntoView(true); window.scrollBy(0, -offset) }}>
+        <HashLink to={path || ''} smooth scroll={el => { el.scrollIntoView(true); window.scrollBy(0, -offset) }}>
             <button
                 className={`btn ${checkButtonStyle} ${checkButtonSize}`}
                 onClick={onClick}
-                type={type}
-            >
+                type={type}>
                 {children}
             </button>
         </HashLink>
