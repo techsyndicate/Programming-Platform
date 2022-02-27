@@ -28,7 +28,6 @@ admin_router.get('/question/testcase', checkAuthenticated, checkAdmin, (req, res
 })
 
 admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res) => {
-    console.log(req.body)
     if (req.body.practise === true) {
         PractiseSchema.findById(req.body.prac_evenid, (err, prac) => {
             if (prac) {
@@ -52,7 +51,6 @@ admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res)
                     res.send(err)
                 })
             } else {
-                console.log('error', err)
                 res.send({ "success": false })
             }
         })
@@ -80,7 +78,6 @@ admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res)
                     res.send(err)
                 })
             } else {
-                console.log('error', err)
                 res.send({ "success": false })
             }
         })

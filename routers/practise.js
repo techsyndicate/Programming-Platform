@@ -19,7 +19,7 @@ practise_router.get('/', (req, res) => {
     })
 })
 
-practise_router.get('/:id', checkAuthenticated, async (req, res) => {
+practise_router.get('/:id', async (req, res) => {
     practiseSchema.findOne({ name: req.params.id }).then(async practise => {
         if (practise) {
             var practice = practise.questions.map(async item => {
@@ -31,7 +31,11 @@ practise_router.get('/:id', checkAuthenticated, async (req, res) => {
                             accepted_submissions: question.accepted_submissions,
                             prac_even_name: question.prac_even_name,
                             accepted_code: Object.keys(question.accepted_submissions).some((k) => {
-                                return question.accepted_submissions[k].userid === req.user.id;
+                                if (req.user) {
+                                    return question.accepted_submissions[k].userid === req.user.id;
+                                } else {
+                                    return false;
+                                }
                             })
                         };
                         resolve(data);

@@ -98,6 +98,7 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                 if (ans_schema.testcases.every(item => item.passed)) {
                     ans_schema.accepted = true;
                     ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
+
                     ques.save()
                 }
                 ans_schema.save().then((ans_submit) => {

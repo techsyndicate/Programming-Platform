@@ -3,8 +3,7 @@ const express = require('express'),
     question_router = express.Router();
 
 const { isValidObjectId } = require('mongoose');
-const { QuesSchema } = require('../schema/questionSchema'),
-    { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
+const { QuesSchema } = require('../schema/questionSchema');
 
 question_router.post('/', (req, res) => {
     if (isValidObjectId(req.body.id)) {
@@ -13,11 +12,17 @@ question_router.post('/', (req, res) => {
                 ques = JSON.parse(JSON.stringify(ques));
                 delete ques.testcases;
                 ques['success'] = true;
-                return setTimeout(() => {
+                if (ques.practise) {
                     res.send(ques)
-                }, 1000)
+                } else if (!ques.practise && req.user) {
+                    res.send(ques)
+                } else {
+                    res.send({ "success": false, msg: "You are not allowed to view this question" })
+                }
             }
-            res.send({ "success": false })
+            else {
+                res.send({ "success": false })
+            }
         });
     }
     else {
