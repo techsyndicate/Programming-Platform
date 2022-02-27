@@ -4,7 +4,7 @@ const mongoose = require("mongoose"),
 
 // constant variables
 const reqString = { type: String, required: true },
-reqStringFalse = { type: String, required: false },
+    reqStringFalse = { type: String, required: false },
     reqBool = { type: Boolean, required: true, default: false },
     dateStringWithTime = moment(new Date()).format('YYYY-MM-DD HH:MM:SS');
 
@@ -18,8 +18,13 @@ const eventSchema = new mongoose.Schema({
     startTime: reqStringFalse,
     endTime: reqStringFalse,
     public: reqBool,
-    questions: [{questionid: reqString, points: reqString}],
-    leaderboard: [{userid: reqStringFalse, points: reqStringFalse, time: reqStringFalse}],
+    questions: [{ questionid: reqString, points: reqString }],
+    leaderboard: [{
+        userid: reqStringFalse,
+        points: reqStringFalse,
+        time: reqStringFalse,
+        name: reqStringFalse
+    }],
 })
 
 // Export Schema
