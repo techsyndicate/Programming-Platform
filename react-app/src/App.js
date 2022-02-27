@@ -27,6 +27,11 @@ function App() {
     window.location.href = '/question/' + questionid + '/Problem';
   }
 
+  function EvenRedirect() {
+    const { eventid } = useParams();
+    window.location.href = '/Events/' + eventid + '/Questions';
+  }
+
   return (
     <div>
       <Router>
@@ -39,7 +44,8 @@ function App() {
             <Route path={process.env.PUBLIC_URL + '/profile'} element={<Profile />} />
             <Route path={process.env.PUBLIC_URL + '/practice'} element={<Practise />} />
             <Route path={process.env.PUBLIC_URL + '/events'} element={<Event />} />
-            <Route path={process.env.PUBLIC_URL + '/events/:eventid'} element={<EventQuestions />} />
+            <Route path={process.env.PUBLIC_URL + '/events/:eventid/'} element={<EvenRedirect />} />
+            <Route path={process.env.PUBLIC_URL + '/events/:eventid/:eventpart'} element={<EventQuestions />} />
             <Route path={process.env.PUBLIC_URL + '/submissions/:submissionid'} element={<Submission />} />
             <Route path={process.env.PUBLIC_URL + '/practice/:practiceid'} element={<PractiseQuestions />} />
             <Route path={process.env.PUBLIC_URL + '/question/:questionid'} element={<QuesRedirect />} />
