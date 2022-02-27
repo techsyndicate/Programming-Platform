@@ -18,13 +18,11 @@ export const getUser = () => {
 };
 
 export const logout = () => {
-    console.log(urlPrefix() + "auth/logout")
     Axios({
         method: "GET",
         withCredentials: true,
         url: urlPrefix() + "auth/logout",
     }).then((res) => {
-        console.log(res)
         localStorage.removeItem("User");
         window.dispatchEvent(new Event('storage'))
         window.location.href = '/login';
@@ -32,13 +30,11 @@ export const logout = () => {
 }
 
 export const logoutWNRedirect = () => {
-    console.log(urlPrefix() + "auth/logout")
     Axios({
         method: "GET",
         withCredentials: true,
         url: urlPrefix() + "auth/logout",
     }).then((res) => {
-        console.log(res)
         localStorage.removeItem("User");
         window.dispatchEvent(new Event('storage'))
     });
@@ -60,7 +56,6 @@ export const checkLoggedIn = () => {
             withCredentials: true,
             url: urlPrefix() + "auth/user",
         }).then((res) => {
-            console.log(res.data)
             if (res.data && res.data.sucess) {
                 localStorage.setItem("User", JSON.stringify(res.data));
                 window.dispatchEvent(new Event('storage'))

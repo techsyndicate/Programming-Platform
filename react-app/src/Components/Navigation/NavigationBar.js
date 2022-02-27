@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
-//import FileSaver from 'file-saver';
 import { Button } from '../button/Button';
 import { checkLoggedIn } from '../reuse/Misc';
 import './NavigationBar.css'
@@ -17,16 +16,13 @@ function NavigationBar() {
         localStorage.getItem('User') ? setlogged(true) : setlogged(false);
     }
     window.addEventListener('storage', () => {
-        console.log("storage event")
         listenStorage();
     })
-    //window.onstorage = () => { listenStorage() };
     useEffect(() => {
         listenStorage();
         checkLoggedIn();
     }, []);
 
-    //var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" });
     return (
         <nav className="navbar">
             <div className="navbar-container">
