@@ -25,7 +25,6 @@ function Register() {
             withCredentials: true,
             url: urlPrefix() +"auth/register",
         }).then((res) => {
-            console.log(res);
             if (res.data[0].sucess === true) {
                 notyf.success('Login Successful');
                 getUser().then((res) => {

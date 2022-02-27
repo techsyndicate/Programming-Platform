@@ -1,6 +1,9 @@
 .event-question-root {
     background-color: #000;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .submissions-card-header p {
@@ -15,10 +18,6 @@
     margin: 0;
     padding: 0;
     color: #16e16e;
-}
-
-.event-title {
-    width: 91vw;
 }
 
 .flexbox-colom-center {

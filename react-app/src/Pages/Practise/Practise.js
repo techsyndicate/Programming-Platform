@@ -12,7 +12,6 @@ function Practise() {
     const [loaded, setLoaded] = useState(false);
     function getPractises() {
         Axios({ url: urlPrefix() + 'practise-back', withCredentials: true }).then(res => {
-            console.log(res.data)
             setData(res.data);
             setLoaded(true);
         })

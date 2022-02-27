@@ -28,6 +28,7 @@ function Question() {
     const checkQuestion = async () => {
         await fetch(urlPrefix() + 'question/', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -36,6 +37,12 @@ function Question() {
             })
         }).then(res => res.json()).then(res => {
             if (res.success) {
+                console.log(res)
+
+                if (!res.practise && !checkLoggedIn()) {
+                    window.location.href = '/login'
+                }
+
                 setData(res);
                 window.onload = setQuestionExist(true);
                 if (res.hasOwnProperty('practise') && res.practise) {
@@ -328,7 +335,6 @@ function Question() {
                                 <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                             </div>
                         )}
-
                     </div>
 
                 </>

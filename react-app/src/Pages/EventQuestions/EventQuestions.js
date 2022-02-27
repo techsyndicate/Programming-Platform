@@ -9,7 +9,67 @@ import './EventQuestions.css'
 function EventQuestions() {
     const [data, setData] = useState(null);
     const [loaded, setLoaded] = useState(false);
-    const { eventid } = useParams();
+    const { eventid, eventpart } = useParams();
+    const [logged, setLogged] = useState(false);
+
+    useEffect(() => {
+        if (!checkLoggedIn()) {
+            window.location.href = '/login'
+        } else {
+            getPractises()
+        }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    function showProblem() {
+        let interval = setInterval(() => {
+            if (loaded === true && document.getElementById('question-container') !== null) {
+                document.getElementById('question-container').style.display = 'flex';
+                clearInterval(interval);
+            }
+        }, 50)
+    }
+
+    function hideProblem() {
+        let interval = setInterval(() => {
+            if (loaded === true && document.getElementById('question-container') !== null) {
+                document.getElementById('question-container').style.display = 'none';
+                clearInterval(interval);
+            }
+        }, 50)
+    }
+
+    const openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
+    }
+
+    function showSubmission() {
+        let interval = setInterval(() => {
+            if (loaded === true && document.getElementById('submissions-container') !== null) {
+                document.getElementById('submissions-container').style.display = 'flex';
+                clearInterval(interval);
+            }
+        }, 50)
+    }
+
+    function hideSubmission() {
+        let interval = setInterval(() => {
+            if (loaded === true && document.getElementById('submissions-container') !== null) {
+                document.getElementById('submissions-container').style.display = 'none';
+                clearInterval(interval);
+            }
+        }, 50)
+    }
+
+    function verifyLogged(redirect) {
+        if (checkLoggedIn() !== null) {
+            setLogged(true);
+            return true;
+        }
+        else if (redirect === true && checkLoggedIn() === null) {
+            window.location.href = '/login';
+        }
+    }
 
     function getPractises() {
         Axios({ url: urlPrefix() + 'event-back/' + eventid, withCredentials: true }).then(res => {
@@ -22,13 +82,25 @@ function EventQuestions() {
             setLoaded(true);
         })
     }
-    useEffect(() => {
-        if (!checkLoggedIn()) {
-            window.location.href = '/login'
+
+    if (eventpart.toLowerCase() === "questions") {
+        showProblem()
+        hideSubmission()
+    } else if (eventpart.toLowerCase() === "leaderboard") {
+        if (logged === true) {
+            hideProblem()
+            showSubmission()
+            //setShowLeader(true)
+        } else if (verifyLogged(false) === true) {
+            hideProblem()
+            showSubmission()
+            //setShowLeader(true)
         } else {
-            getPractises()
+            window.location.href = `/Events/${eventid}/Questions`;
         }
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    } else {
+        window.location.href = `/Events/${eventid}/Questions`;
+    }
 
     return (
         <div className='event-question-root'>
@@ -55,7 +127,7 @@ function EventQuestions() {
                         </nav>
 
                         <br></br>
-                        <div className='question-container'>
+                        <div id='question-container' className='question-container'>
                             <h1 className='event-title'>Event: {data.event.name}</h1>
                             <br></br>
                             {data.questions.map((item, index) => {
@@ -71,6 +143,29 @@ function EventQuestions() {
                                                 onClick={() => { window.location.href = '/question/' + item.id }}
                                                 buttonStyle='btn--primary--black'>
                                                 {item.accepted_code ? 'Solved!' : 'Solve!'}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        <div id='submissions-container' className='submissions-container'>
+                            {data.event.leaderboard.map((item, index) => {
+                                return (
+                                    <div className='submissions-card white'>
+                                        <div className='submissions-card-header'>
+                                            <h2>User: {item.name}</h2>
+                                            <p className='submission-card-status'>
+                                                Points: &nbsp; <div className='white'>{item.points}</div>&nbsp; &nbsp;
+                                                TimeTaken: &nbsp; <div className='white'>{Math.abs(new Date(item.time) - new Date(data.event.startTime)) / 60000} Minutes</div>
+                                            </p>
+                                        </div>
+                                        <div className='submissions-card-button'>
+                                            <Button
+                                                onClick={() => { openInNewTab('/Profile/' + item.name) }}
+                                                buttonStyle='btn--primary--black'>
+                                                View Profile
                                             </Button>
                                         </div>
                                     </div>

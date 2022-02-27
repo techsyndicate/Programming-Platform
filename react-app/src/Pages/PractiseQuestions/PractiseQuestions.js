@@ -12,9 +12,12 @@ function PractiseQuestions() {
 
     function getPractises() {
         Axios({ url: urlPrefix() + 'practise-back/' + practiceid, withCredentials: true }).then(res => {
-            console.log(res.data)
-            setData(res.data);
-            setLoaded(true);
+            if (res.data.success !== true) {
+                window.location.href = '/Practice'
+            } else {
+                setData(res.data);
+                setLoaded(true);
+            }
         })
     }
     useEffect(() => {
@@ -26,6 +29,7 @@ function PractiseQuestions() {
             {
                 loaded ? (
                     <div className='submission-container'>
+                        <h1 className='title-ohk'>Practice {practiceid}!</h1>
                         <br></br>
                         {data.data.map((item, index) => {
                             return (
