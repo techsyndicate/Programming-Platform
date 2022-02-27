@@ -235,7 +235,8 @@ function Question() {
                     <div id='question-container' className='question-container'>
                         <p className='navar-min-80'><Link className='question-quicknav-link' to={'/' + practise}>{practise} </Link>
                             {'>'} <Link className='question-quicknav-link' to={'/' + practise + '/' + data.prac_even_name}> {data.prac_even_name} </Link>
-                            {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link></p>
+                            {'>'} <Link className='question-quicknav-link' to={'/question/' + questionid}>{data.name}</Link>
+                        </p>
                         <h1 className='question-title'>{data.name}</h1>
                         <br></br>
                         <div className='question-problem-markdown' id='question-problem-markdown'>
