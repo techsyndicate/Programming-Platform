@@ -1,3 +1,4 @@
+const discord_router = require('./routers/discord');
 const event_router = require('./routers/event');
 
 require('dotenv').config()
@@ -8,7 +9,6 @@ const express = require('express'),
     session = require("cookie-session"),
     path = require('path'),
     cookieParser = require("cookie-parser"),
-    fs = require('fs'),
     passport = require('passport');
 
 const port = process.env.PORT || 3200,
@@ -46,7 +46,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(cookieParser("secretcode1"));
+app.use(cookieParser(process.env.SECRET));
 
 passport_init(passport);
 
@@ -61,6 +61,7 @@ app.use('/question', questionRouter)
 app.use('/ans', answerRouter)
 app.use('/practise-back', practiseRouter)
 app.use('/event-back', event_router)
+app.use('/discord-back', discord_router)
 
 app.get('*', (req, res, next) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 

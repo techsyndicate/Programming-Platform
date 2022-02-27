@@ -4,6 +4,8 @@ const mongoose = require("mongoose"),
 
 // constant variables
 const reqString = { type: String, required: true },
+    reqStringFalseDefEmpty = { type: String, required: false, default: "" },
+    reqStringFalse = { type: String, required: false},
     reqBool = { type: Boolean, required: true, default: false },
     dateStringWithTime = moment(new Date()).format('YYYY-MM-DD HH:MM:SS');
 
@@ -18,7 +20,29 @@ const userSchema = new mongoose.Schema({
     },
     solvedQuestions: [reqString],
     solvedAnswers: [reqString],
-    admin: reqBool
+    admin: reqBool,
+    discord: {
+        access_token: reqStringFalse,
+        expires_in: reqStringFalse,
+        refresh_token: reqStringFalse,
+        scope: reqStringFalse,
+        token_type: reqStringFalse
+    },
+    discordUser: {
+        id: reqStringFalse,
+        username: reqStringFalse,
+        avatar: reqStringFalse,
+        discriminator: reqStringFalse,
+        public_flags: reqStringFalse,
+        flags: reqStringFalse,
+        banner: reqStringFalse,
+        banner_color: reqStringFalse,
+        accent_color: reqStringFalse,
+        locale: reqStringFalse,
+        mfa_enabled: reqStringFalse,
+        email: reqStringFalse,
+        verified: reqBool
+    }
 })
 
 // Export Schema

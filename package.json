@@ -31,6 +31,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.2.3",
     "passport": "^0.5.2",
+    "passport-discord": "^0.1.4",
     "passport-local": "^1.0.0"
   }
 }

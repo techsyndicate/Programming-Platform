@@ -14,7 +14,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     if (text) {
         try {
             await Axios({
-                url: 'http://40.122.201.43:3000/language/' + req.params.id,
+                url: 'http://'+process.env.SERVER_BACKEND_VM+'/language/' + req.params.id,
                 withCredentials: true,
                 method: 'POST',
                 headers: {
@@ -44,6 +44,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     }
 })
 
+//FIXME: on correct submission update LeaderBoard
 answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;
@@ -62,7 +63,7 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                 return new Promise(async (resolve, reject) => {
                     try {
                         await Axios({
-                            url: 'http://40.122.201.43:3000/language/' + req.params.id,
+                            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
                             withCredentials: true,
                             method: 'POST',
                             headers: {
