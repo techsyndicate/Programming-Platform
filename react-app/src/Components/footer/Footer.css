@@ -1,6 +1,6 @@
 .footer-container {
   background-color: #111111;
-  padding: 0 0 2rem 0;
+  padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
