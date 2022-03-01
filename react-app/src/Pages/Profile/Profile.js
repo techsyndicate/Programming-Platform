@@ -16,7 +16,7 @@ function Profile() {
 
         Axios({
             method: 'POST',
-            url: 'http://localhost:3200/auth/bio',
+            url: urlPrefix()+'auth/bio',
             withCreadentials: true,
             headers: {
                 'Content-Type': 'application/json'
@@ -33,6 +33,7 @@ function Profile() {
             console.log(err);
         })
     }
+    
     const listenStorage = () => {
         if (localStorage.getItem('User')) {
             setlogged(true);
