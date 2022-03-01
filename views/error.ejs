@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<h1><%= error %></h1><br><br>
+<h2>Redirecting in 5 Seconds</h2>
+<script>
+    setTimeout(() => {
+        window.location.href = '<%= redirect %>';
+    }, 5000);
+</script>
+</html>
