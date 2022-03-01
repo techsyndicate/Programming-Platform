@@ -6,11 +6,11 @@ const Axios = require('axios');
 const userSchema = require('../schema/userSchema');
 const { checkAuthenticated } = require('../utilities/passportReuse');
 const { getDiscordUser, refreshDiscordToken } = require('../utilities/misc');
-const fs = require('fs');
 
 var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
 var prompt = 'none';
 
+// discord auth
 discord_router.get('/auth', checkAuthenticated, (req, res) => {
     if (req.user.discord.access_token) {
         res.redirect('/profile');
@@ -21,10 +21,10 @@ discord_router.get('/auth', checkAuthenticated, (req, res) => {
     }
 });
 
+// discord auth callback
 discord_router.get('/callback', checkAuthenticated, async (req, res, next) => {
     // Callback url to get the access token, refresh token to get the new access token
     // https://discord.com/developers/docs/topics/oauth2#authorization-code-grant-redirect-url-example
-
     try {
         await Axios({
             url: `https://discord.com/api/oauth2/token`,
@@ -38,18 +38,25 @@ discord_router.get('/callback', checkAuthenticated, async (req, res, next) => {
                 res_dis.data.ISSUED_AT = new Date().toString();
                 user.discord = res_dis.data;
                 user.discordUser = await getDiscordUser(res_dis.data.access_token)
-                user.discordUser.ISSUED_AT = new Date().toString();
-                user.save().then(() => {
-                    res.redirect('/Profile');
+                userSchema.find({ 'discordUser.email': user.discordUser.email }).then(async (user_dis) => {
+                    if (user_dis.length > 0) {
+                        res.render('error', { error: "This Discord Account Is Already Linked With Another Account On Our Platform At The Moment!!", redirect: '/profile' });
+                    } else {
+                        user.discordUser.ISSUED_AT = new Date().toString();
+                        user.save().then(() => {
+                            res.redirect('/Profile');
+                        });
+                    }
                 });
             });
         })
     } catch (err) {
-        res.send(err.message);
+        res.render('error', { error: "This Discord Code Is Expired Or Invalid, Please Retry Auth!!!", redirect:'/profile' });
     }
 
 });
 
+// update current user's discord data
 discord_router.get('/current-user', checkAuthenticated, async (req, res, next) => {
     // get current user from discord, header(Authorization = Bearer <token>)
     // https://discord.com/api/users/@me
@@ -88,9 +95,12 @@ discord_router.get('/current-user', checkAuthenticated, async (req, res, next) =
     }
 })
 
+// discord user avatar
 discord_router.get('/avatar', checkAuthenticated, (req, res, next) => {
     // get avatar from discord
-
+    // cdn.discordapp.com/avatars/<user_id>/<avatar_hash>.<extension>
+    // https://discord.com/developers/docs/reference#image-formatting
+    
     if (req.user.discord.access_token) {
         if (Math.abs(new Date() - req.user.discordUser.ISSUED_AT) > 3600000) {
             // refresh token

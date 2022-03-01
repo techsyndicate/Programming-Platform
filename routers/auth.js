@@ -3,6 +3,7 @@ const express = require('express'),
     auth_router = express.Router(),
     bcrypt = require('bcrypt'),
     passport = require('passport');
+const { checkAuthenticated } = require('../utilities/passportReuse');
 
 // Import Files
 const User = require('./../schema/userSchema'),
@@ -11,13 +12,17 @@ const User = require('./../schema/userSchema'),
 // Register
 auth_router.post("/register", async (req, res, next) => {
     let errors = [];
-    const { username, email, password } = req.body
-    if (!username || !email || !password) {
+    const { username, email, password, school, name} = req.body
+    if (!username || !email || !password || !school || !name) {
         errors.push({ msg: "Please Fill in all the fields" })
         return res.send(errors);
     }
     if (username.length < 3 || username.length > 64) {
         errors.push({ msg: "username should be in between 4 and 64 characters" })
+    }
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~/\s/g]/;
+    if (specialChars.test(username)) {
+        errors.push({ msg: "username should not contain special characters or spaces" })
     }
     if (password.length < 5 || password.length > 64) {
         errors.push({ msg: "Password should be in between 6 and 64 characters" })
@@ -44,6 +49,8 @@ auth_router.post("/register", async (req, res, next) => {
             "username": username,
             "email": email,
             "password": password,
+            "school": school,
+            "name": name
         })
         bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err
@@ -77,6 +84,14 @@ auth_router.get("/user", (req, res) => {
 auth_router.get('/logout', (req, res) => {
     req.logout();
     res.send("Successfully Logged Out");
+})
+
+// Update User Bio
+auth_router.post('/bio', checkAuthenticated , (req,res,next)=>{
+    const {bio} = req.body;
+    User.findOneAndUpdate({email:req.user.email},{$set:{bio:bio}},{new:true}).then(_=>{
+        res.send({sucess:true});
+    })
 })
 
 // Login User Function
