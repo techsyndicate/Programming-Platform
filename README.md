@@ -28,5 +28,14 @@ GMAIL_PASSWORD = Gmail App Password <https://support.google.com/accounts/answer/
 5. Passport Js LocalAuth
 6. MongoDB -> Storing Data
 
+### Run Application
+After Setting in Various Strings as neeeded in .env, run the following commands to get your app up and running
+```
+npm install
+npm build
+npm run dev (to run in development)
+npm start (to run in production etc)
+```
+
 ### Contributors
 1. [@gamer-1478](https://aayushgarg.net)
