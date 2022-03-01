@@ -8,6 +8,7 @@ const EventSchema = require('../schema/eventSchema');
 const { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 
+//FIXME: Check Profile Completion, Give Error
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var input = req.body.input;
@@ -45,6 +46,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
 })
 
 //FIXME: on correct submission update LeaderBoard
+//FIXME: Check Profile Completion, Give Error
 answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;

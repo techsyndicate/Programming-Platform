@@ -62,7 +62,6 @@ function Profile() {
                             <div>
                                 <h3 className='ts-green flex'>Username: &nbsp;<div className='white'>{data.username}</div></h3>
                                 <h3 className='ts-green flex'>Email: &nbsp;<div className='white'>{data.email}</div></h3>
-                                {/* FIXME: ADD SEND VERIFICATION STUFF IN SERVER */}
                                 <h3 className='ts-green flex'>Email Verified: &nbsp;<div className='white'>{data.emailVerified ? <>Verified</> : <>Not Verified</>}</div></h3>
                                 <div className='profile-logout' style={{ visibility: data.emailVerified ? 'hidden' : 'visible' }}>
                                     <Button onClick={() => { window.location.href = urlPrefix() + 'email-back/send' }} buttonStyle='btn--primary--black'>Send Verification Email</Button>
@@ -80,25 +79,21 @@ function Profile() {
                     </div>
                     <div className='profile-bio'>
                         <div className='profile-bio-text'>
-                            {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE SCHOOL*/}
                             <h2 className='ts-green flex'>School: &nbsp;<div className='white'>{data.school}
                             </div></h2>
                         </div>
                         <div className='profile-bio-text'>
-                            {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE SCHOOL*/}
                             <h2 className='ts-green flex'>Name: &nbsp;<div className='white'>{data.name}
                             </div></h2>
                         </div>
 
                         <div className='profile-bio-text'>
                             <h2 className='ts-green'>Bio:</h2>
-                            {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE BIO*/}
                             {data.bio ? (
                                 <h2 style={{ width: '50vw', wordWrap: 'break-word', wordBreak: 'break-word' }}>{data.bio}</h2>
                             ) : (
                                 <div className='flex-center'>
                                     <textarea id='profile-bio' style={{ width: '50vw' }}></textarea>
-                                    {/*FIXME: ADD ONCLICK*/}
                                     <Button
                                         onClick={bio}
                                         buttonStyle='btn--primary--black'>Save</Button>
