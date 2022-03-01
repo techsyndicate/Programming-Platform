@@ -9,7 +9,7 @@ MONGO_USER = Mongo Atlas User
 MONGO_PASSWORD = Mongo Atlas User Password (must have admin/owner equivalent)
 MONGO_CLUSTER_URL = Mongo Atlas DB cluster Url
 MONGO_DATABASE_NAME = Mongo Atlas DB Database Name
-SERVER_AUTH_STRING = A Randomly Generated String, must be placed in env of instance of [Programming-Platform-backend-vm](https://github.com/techsyndicate/Programming-Platform-backend-vm)
+SERVER_AUTH_STRING = A Randomly Generated String, must be placed in env of instance of <https://github.com/techsyndicate/Programming-Platform-backend-vm>
 SERVER_BACKEND_VM = Ip Of Instance Of [Programming-Platform-backend-vm](https://github.com/techsyndicate/Programming-Platform-backend-vm)
 DISCORD_CLIENT_ID = <https://discord.com/developers/applications> New Application->Oauth2
 DISCORD_CLIENT_SECRET = <https://discord.com/developers/applications> New Application->Oauth2
@@ -23,7 +23,7 @@ GMAIL_PASSWORD = Gmail App Password <https://support.google.com/accounts/answer/
 ### Services Used
 1. Azure Load Balancer|Traffic Manager -> Manage Traffic between out multiple servers in various regions. 
 2. Azure VM B1s -> Virtual Machine (750 free hours), i.e instance of [Programming-Platform-backend-vm](https://github.com/techsyndicate/Programming-Platform-backend-vm) with pre installed, gcc,gpp,mono-devel,python3,python2
-3. ~~Twilo Sendgrid -> Sending Emails ~~
+3. ~~Twilo Sendgrid -> Sending Emails~~
 4. Discord Oauth2.0
 5. Passport Js LocalAuth
 6. MongoDB -> Storing Data
