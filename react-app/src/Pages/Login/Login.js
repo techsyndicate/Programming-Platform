@@ -42,10 +42,13 @@ function Login() {
                     <p className='login-input-text'>Email</p>
                     <input
                         className='login-input'
+                        type={'email'}
                         onChange={(e) => setLoginEmail(e.target.value)} />
+
                     <p className='login-input-text'>Password</p>
                     <input
                         className='login-input'
+                        type={'password'}
                         onChange={(e) => setLoginPassword(e.target.value)} />
                     <button className='login-submit' onClick={login}>Login</button>
                 </form>

@@ -1,6 +1,5 @@
 .register-container {
     display: flex;
-    height: 80vh;
     flex-direction: column;
     align-items: center;
     font-family: 'Railway', sans-serif;
@@ -9,7 +8,6 @@
 .register-form-div {
     display: flex;
     flex-direction: column;
-    height: 80vh;
     justify-content: center;
     align-items: center;
 }
@@ -25,7 +23,7 @@
     border: 0.1vh solid #d3d3d3;
     border-radius: 0.4vw;
     font-size: 1.2rem;
-    margin-bottom: 1.5vw;
+    margin-bottom: 0.5vw;
 }
 
 .register-input-text {
@@ -34,11 +32,12 @@
 }
 
 .register-submit {
-    margin-top: 1.2vw;
+    margin-top: 1.5rem;
     height: 3.5vw;
     background-color: #1569C7;
-    border-radius: 0.4vw;
+    border-radius: 0.5rem;
     border: none;
+    cursor: pointer;
     font-size: 1.2rem;
     color: white;
 }

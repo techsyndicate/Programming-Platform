@@ -14,7 +14,7 @@
 }
 
 .profile-bio {
-    width: 85vw;
+    width: 50vw;
     display: flex;
     flex-direction: column;
 }
@@ -24,7 +24,7 @@
 }
 
 .ts-green {
-    color: #16e16e
+    color: #16e16e;
 }
 
 .profile-bio-text {
@@ -34,11 +34,6 @@
 
 .profile-bio-text h2 {
     margin-right: 10px;
-}
-
-.profile-bio-text p {
-    width: 70vw;
-    margin-top: 22px;
 }
 
 .flex-center {
@@ -86,6 +81,10 @@
         max-width: 16vw;
         min-width: 16vw;
     }
+
+    .profile-bio {
+        width: 80vw;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -108,6 +107,10 @@
     .flex-center Button {
         margin-top: 10px;
         margin-left: 0px;
+    }
+
+    .profile-bio {
+        width: 75vw;
     }
 
 }

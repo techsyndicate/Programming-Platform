@@ -10,6 +10,8 @@ function Register() {
     const [registerUsername, setRegisterUsername] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
     const [registerEmail, setRegisterEmail] = useState("");
+    const [registerSchool, setRegisterSchool] = useState("");
+    const [registerName, setRegisterName] = useState("");
 
     const register = () => {
         // Create an instance of Notyf
@@ -20,10 +22,12 @@ function Register() {
             data: {
                 password: registerPassword,
                 email: registerEmail,
-                username: registerUsername
+                username: registerUsername,
+                name: registerName,
+                school: registerSchool
             },
             withCredentials: true,
-            url: urlPrefix() +"auth/register",
+            url: urlPrefix() + "auth/register",
         }).then((res) => {
             if (res.data[0].sucess === true) {
                 notyf.success('Login Successful');
@@ -44,19 +48,34 @@ function Register() {
 
                     <p className='register-input-text'>Username</p>
                     <input
+                        type={'text'}
                         className='register-input'
-                        onChange={(e) => setRegisterUsername(e.target.value)}/>
-                    
+                        onChange={(e) => setRegisterUsername(e.target.value)} />
+
+                    <p className='register-input-text'>Name</p>
+                    <input
+                        type={'text'}
+                        className='register-input'
+                        onChange={(e) => setRegisterName(e.target.value)} />
+
+                    <p className='register-input-text'>School</p>
+                    <input
+                        type={'text'}
+                        className='register-input'
+                        onChange={(e) => setRegisterSchool(e.target.value)} />
+
                     <p className='register-input-text'>Email</p>
                     <input
+                        type={'email'}
                         className='register-input'
-                        onChange={(e) => setRegisterEmail(e.target.value)}/>
+                        onChange={(e) => setRegisterEmail(e.target.value)} />
 
                     <p className='register-input-text'>Password</p>
                     <input
                         className='register-input'
-                        onChange={(e) => setRegisterPassword(e.target.value)}/>
-                    
+                        type={'password'}
+                        onChange={(e) => setRegisterPassword(e.target.value)} />
+
                     <button className='register-submit' onClick={register}>Submit</button>
                 </form>
             </div>

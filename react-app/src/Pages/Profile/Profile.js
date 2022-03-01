@@ -4,11 +4,35 @@ import { Oval } from 'react-loader-spinner'
 import './Profile.css'
 import { logout, urlPrefix } from '../../Components/reuse/Misc';
 import { Button } from '../../Components/button/Button';
+import Axios from 'axios';
 
 function Profile() {
     const [logged, setlogged] = useState(false);
     const [data, setData] = useState(null);
 
+    function bio() {
+        console.log(document.getElementById('profile-bio').value)
+        Axios.defaults.withCredentials = true;
+
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:3200/auth/bio',
+            withCreadentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                bio: document.getElementById('profile-bio').value
+            }
+        }).then(res => {
+            console.log(res)
+            if (res.data.sucess === true) {
+                setData({ ...data, bio: document.getElementById('profile-bio').value });
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
     const listenStorage = () => {
         if (localStorage.getItem('User')) {
             setlogged(true);
@@ -35,18 +59,18 @@ function Profile() {
                         <img alt='profile' className='profile-pfp' src={urlPrefix() + 'discord-back/avatar'}></img>
                         <div className='profile-info-div'>
                             <div>
-                                <h3>Username: {data.username}</h3>
-                                <h3>Email: {data.email}</h3>
+                                <h3 className='ts-green flex'>Username: &nbsp;<div className='white'>{data.username}</div></h3>
+                                <h3 className='ts-green flex'>Email: &nbsp;<div className='white'>{data.email}</div></h3>
                                 {/* FIXME: ADD SEND VERIFICATION STUFF IN SERVER */}
-                                <h3 className='flex'>Email Verified: {data.email_verified ? <>Verified</> : <>Not Verified</>}</h3>
-                                <div className='profile-logout' style={{ visibility: data.email_verified ? 'hidden' : 'visible' }}>
-                                    <Button onClick={() => { window.location.href = urlPrefix() + 'discord-back/auth' }} buttonStyle='btn--primary--black'>Send Verification Email</Button>
+                                <h3 className='ts-green flex'>Email Verified: &nbsp;<div className='white'>{data.emailVerified ? <>Verified</> : <>Not Verified</>}</div></h3>
+                                <div className='profile-logout' style={{ visibility: data.emailVerified ? 'hidden' : 'visible' }}>
+                                    <Button onClick={() => { window.location.href = urlPrefix() + 'email-back/send' }} buttonStyle='btn--primary--black'>Send Verification Email</Button>
                                 </div>
                             </div>
                             <div style={{ marginLeft: '10px' }}>
-                                <h3>Discord Username: {data.discordUser.username}</h3>
-                                <h3>Discord Email: {data.discordUser.email}</h3>
-                                <h3>Discord Email Verified: {data.discordUser.verified ? <>Verified</> : <>Not Verified</>}</h3>
+                                <h3 className='ts-green flex'>Discord Username: &nbsp;<div className='white'>{data.discordUser.username}</div></h3>
+                                <h3 className='ts-green flex'>Discord Email:  &nbsp;<div className='white'>{data.discordUser.email}</div></h3>
+                                <h3 className='ts-green flex'>Discord Email Verified: &nbsp;<div className='white'>{data.discordUser.verified ? <>Verified</> : <>Not Verified</>}</div></h3>
                                 <div className='profile-logout' style={{ visibility: data.discord ? 'hidden' : 'visible' }}>
                                     <Button onClick={() => { window.location.href = urlPrefix() + 'discord-back/auth' }} buttonStyle='btn--primary--black'>LinkDiscord</Button>
                                 </div>
@@ -56,28 +80,27 @@ function Profile() {
                     <div className='profile-bio'>
                         <div className='profile-bio-text'>
                             {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE SCHOOL*/}
-                            <h2 className='ts-green flex'>School: &nbsp;<div className='white'>{true ? (
-                                "Amity International School"
-                            ) : (
-                                <div className='flex-center'>
-                                    <textarea style={{ width: '70vw' }}></textarea>
-                                    {/*FIXME: ADD ONCLICK*/}
-                                    <Button buttonStyle='btn--primary--black'>Save</Button>
-                                </div>
-                            )}
+                            <h2 className='ts-green flex'>School: &nbsp;<div className='white'>{data.school}
                             </div></h2>
                         </div>
                         <div className='profile-bio-text'>
+                            {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE SCHOOL*/}
+                            <h2 className='ts-green flex'>Name: &nbsp;<div className='white'>{data.name}
+                            </div></h2>
+                        </div>
+
+                        <div className='profile-bio-text'>
                             <h2 className='ts-green'>Bio:</h2>
                             {/*FIXME: ADD THE PARTS TO ALLOW FOR USER TO SAVE BIO*/}
-                            {true ? (
-                                <p className='margin-left-10'>how long have you been smiling? it seems like its been too long some days i dont feel like trying so what the fuck are you on? oh-woah-oh-oh i think too much, we drink too much falling in love like its just nothing i want to know where do we.<br></br>
-                                    long. have you been smiling? it seems like its been too long some days i dont feel like trying so what the fuck are you on? oh-woah-oh-oh i think too much, we drink too much falling in love like its just nothing i want to know where long have. have you.been.</p>
+                            {data.bio ? (
+                                <h2 style={{ width: '50vw', wordWrap: 'break-word', wordBreak: 'break-word' }}>{data.bio}</h2>
                             ) : (
                                 <div className='flex-center'>
-                                    <textarea style={{ width: '70vw' }}></textarea>
+                                    <textarea id='profile-bio' style={{ width: '50vw' }}></textarea>
                                     {/*FIXME: ADD ONCLICK*/}
-                                    <Button buttonStyle='btn--primary--black'>Save</Button>
+                                    <Button
+                                        onClick={bio}
+                                        buttonStyle='btn--primary--black'>Save</Button>
                                 </div>
                             )
                             }
