@@ -1,4 +1,5 @@
 const discord_router = require('./routers/discord');
+const email_router = require('./routers/email');
 const event_router = require('./routers/event');
 
 require('dotenv').config()
@@ -62,6 +63,7 @@ app.use('/ans', answerRouter)
 app.use('/practise-back', practiseRouter)
 app.use('/event-back', event_router)
 app.use('/discord-back', discord_router)
+app.use('/email-back', email_router)
 
 app.get('*', (req, res, next) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
