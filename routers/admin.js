@@ -4,6 +4,7 @@ const express = require('express'),
 
 const PractiseSchema = require('../schema/practiseSchema'),
     EventSchema = require('../schema/eventSchema'),
+    userSchema = require('../schema/userSchema'),
     { QuesSchema } = require('../schema/questionSchema'),
     { checkAdmin, checkAuthenticated } = require('../utilities/passportReuse');
 
@@ -27,7 +28,37 @@ admin_router.get('/question/testcase', checkAuthenticated, checkAdmin, (req, res
     res.render('admin_testcase.ejs')
 })
 
-admin_router.post('/question/submit', checkAuthenticated, checkAdmin, (req, res) => {
+admin_router.get('/user/all', checkAuthenticated, checkAdmin, (req, res) => {
+    userSchema.find().then((all_users) => {
+        res.render('admin_allUsers.ejs', { users: all_users })
+    })
+})
+
+admin_router.get('/user/ban', checkAuthenticated, checkAdmin, (req, res) => {
+    res.render('admin_ban.ejs')
+})
+
+admin_router.get('/user/ban/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    userSchema.findById(req.params.id).then((user) => {
+        res.render('admin_userBan.ejs', { userid: req.params.id, user })
+    })
+})
+
+admin_router.get('/user/ban_confirmed/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    userSchema.findByIdAndUpdate(req.params.id, { $set: { banned: true } }, { new: true }, (err, user) => {
+        res.redirect('/admin/user/all')
+    })
+})
+
+admin_router.get('/user/unban_confirmed/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    userSchema.findByIdAndUpdate(req.params.id, { $set: { banned: false } }, { new: true }, (err, user) => {
+        res.redirect('/admin/user/all')
+    })
+})
+
+/* Post Requests */
+
+admin_router.post('/question', checkAuthenticated, checkAdmin, (req, res) => {
     if (req.body.practise === true) {
         PractiseSchema.findById(req.body.prac_evenid, (err, prac) => {
             if (prac) {

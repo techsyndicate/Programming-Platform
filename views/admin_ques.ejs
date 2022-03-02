@@ -26,6 +26,7 @@
         .formmy {
             display: flex;
             flex-direction: column;
+            width: 720px;
         }
     </style>
 </div>
@@ -50,7 +51,7 @@
             output_compare,
             points
         };
-        await fetch('/admin/question/submit', {
+        await fetch('/admin/question', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

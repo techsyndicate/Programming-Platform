@@ -13,7 +13,8 @@ const reqString = { type: String, required: true },
 
 // Schema
 const userSchema = new mongoose.Schema({
-    emailVerified: reqBool,
+    banned: reqBoolFalse,
+    emailVerified: reqBoolFalse,
     name: reqStringFalse,
     username: reqString,
     school: reqStringFalse,

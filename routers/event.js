@@ -3,8 +3,8 @@ const express = require('express'),
     event_router = express.Router();
 
 const eventSchema = require('../schema/eventSchema'),
-    { QuesSchema } = require('../schema/questionSchema');
-const { checkAuthenticated } = require('../utilities/passportReuse');
+    { QuesSchema } = require('../schema/questionSchema'),
+    { checkAuthenticated } = require('../utilities/passportReuse');
 
 
 event_router.get('/', (req, res) => {

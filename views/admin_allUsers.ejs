@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<% for(var i=0; i<users.length; i++){ %>
+<div class="cards">
+    <div class="flex">
+        <p class="ts-green">Admin:</p> &nbsp;<p><%= users[i].admin %></p>
+    </div>
+    <div class="flex">
+        <p class="ts-green">Banned:</p> &nbsp;<p><%= users[i].banned %></p>
+    </div>
+    <div class="flex">
+        <p class="ts-green">School:</p> &nbsp;<%= users[i].school %>
+    </div>
+    <div class="flex">
+        <p class="ts-green">UserName:</p> &nbsp;<%= users[i].username %>,
+    </div>
+    <div class="flex">
+        <p class="ts-green">Name: </p>&nbsp;<%= users[i].name %>,&nbsp;
+    </div>
+    <div class="flex">
+        <p class="ts-green">Email:</p>&nbsp;<%= users[i].email %>,
+        <p class="ts-green">Verified:</p>&nbsp;<%= users[i].emailVerified %>
+    </div>
+
+    <% if (users[i]['discord'].access_token!== undefined){ %>
+    <div class="flex">
+        <p class="ts-green">Discord Email:</p>&nbsp;<%= users[i].discordUser.email %>,&nbsp;
+        <p class="ts-green">Discord Verified:</p>&nbsp;<%= users[i].discordUser.verified %>
+    </div>
+    <button onclick="openInNewTab(`https://discord.com/users/`+'<%= users[i].discordUser.id%>')">discord
+        profile</button>
+    <% } %>
+    <% if (!users[i].banned) { %>
+    <button onclick="openInNewTab(`/admin/user/ban/`+'<%= users[i].id%>')">Ban User</button>
+    <% } else { %>
+    <button onclick="openInNewTab(`/admin/user/ban/`+'<%= users[i].id%>')">Unban User</button>
+    <% } %>
+</div>
+<% } %>
+<script>
+    function openInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+</script>
+<style>
+    .cards {
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .ts-green {
+        color: #16e16e;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .flex {
+        display: flex;
+    }
+</style>
+
+</html>

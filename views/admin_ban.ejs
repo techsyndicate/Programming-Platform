@@ -1,0 +1,9 @@
+<html>UserID:<input id='id'><br>
+<button onclick="redirect()">ban/unban</button>
+<script>
+    function redirect() {
+        window.location.href = "/admin/user/ban/"+document.getElementById('id').value;
+    }
+</script>
+
+</html>

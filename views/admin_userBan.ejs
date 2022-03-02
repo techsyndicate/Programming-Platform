@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<h1>Name: <%= user.name %> </h1>
+<h1>School: <%= user.school %> </h1>
+<h1>Admin: <%= user.admin %> </h1>
+<h1>Email: <%= user.email %> </h1>
+<h1>UserName: <%= user.username %> </h1>
+<h2>Verified: <%= user.emailVerified %> </h2>
+
+<% if (!user.banned) { %>
+<label for="id">Ban This User</label><br>
+<input id="id" class="id" value="<%= userid %>"> <br>
+<button onclick="openInNewTab('/admin/user/ban_confirmed/'+'<%= userid %>')">Confirm Ban?</button>
+<% } else { %>
+<label for="id">UnBan This User</label><br>
+<input id="id" class="id" value="<%= userid %>"> <br>
+<button onclick="openInNewTab('/admin/user/unban_confirmed/'+'<%= userid %>')">Confirm UNBAN?</button>
+<% } %>
+
+</html>
+
+<script>
+    function openInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+</script>

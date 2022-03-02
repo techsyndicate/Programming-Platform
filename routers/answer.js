@@ -2,10 +2,10 @@ const express = require('express'),
     Axios = require('axios'),
     answer_router = express.Router();
 
-const { isValidObjectId } = require('mongoose');
-const AnsSchema = require('../schema/answerSchema');
-const EventSchema = require('../schema/eventSchema');
-const { QuesSchema } = require('../schema/questionSchema'),
+const { isValidObjectId } = require('mongoose'),
+    AnsSchema = require('../schema/answerSchema'),
+    EventSchema = require('../schema/eventSchema'),
+    { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
@@ -13,6 +13,9 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var input = req.body.input;
     if (!text) {
         return res.send({ "success": false, msg: "Pls fill the text code" })
+    }
+    if (req.user.banned) {
+        return res.send({ "success": false, msg: "You are banned" })
     }
     if (!req.user.discordUser.verified && req.user.emailVerified) {
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
@@ -53,6 +56,9 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var language = req.body.language;
     if (!text) {
         return res.send({ "success": false, msg: "Pls fill the text code" })
+    }
+    if (req.user.banned) {
+        return res.send({ "success": false, msg: "You are banned" })
     }
     if (!req.user.discordUser.verified && req.user.emailVerified) {
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
