@@ -61,7 +61,9 @@ npm start (to run in production etc)
 1. Redirects to /admin/user/ban/:id, id is the given quesid
 ##### /admin/user/ban/:id
 1. Confirm Ban User Associated with given id
-## We Provide No API, Any Use Of any of our services as a API is a violation or our terms and services and can, rather will result in a immediate ban. 
+
+## We Provide No API, Continued Use Of Any of Our Services as an API is a violation of our terms and services and can, rather will result in a immediate ban. 
+
 ## Client App Explained
 1. Moved To ReactApp, i.e [react-app](https://github.com/techsyndicate/Programming-Platform/tree/main/react-app)
 

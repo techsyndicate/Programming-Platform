@@ -3,7 +3,7 @@ require('dotenv').config()
 const emailQueueSchema = require('../schema/emailQueueSchema');
 const nodemailer = require('nodemailer');
 const userSchema = require('../schema/userSchema');
-
+const {checkAuthenticated} = require('../utilities/passportReuse')
 const express = require('express'),
     email_router = express.Router();
 
@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-email_router.get('/send', (req, res) => {
+email_router.get('/send', checkAuthenticated, (req, res) => {
     let email = new emailQueueSchema({
         email: req.user.email,
         status: false,
