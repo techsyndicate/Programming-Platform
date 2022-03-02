@@ -27,4 +27,4 @@ npm start
 ##### /Events/:id/:subpart
 1. Event's ``questions`` subpart shows all the questions while the ``leaderboard`` subpart shows All Users that are Actively Participating. *Note:- LeaderBoard Doesn't Update After Event Ends.
 
-## We Provide No API, Any Use Of any of our services as a API is a violation or our terms and services and can, rather will result in a immediate ban. 
+## We Provide No API, Continued Use Of Any of Our Services as an API is a violation of our terms and services and can, rather will result in a immediate ban. 
