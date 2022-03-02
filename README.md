@@ -55,8 +55,12 @@ npm start (to run in production etc)
 
 ##### /admin/question/testcase
 1. Adds A TestCase To The Question belonging to the quesid submitted.
-##### /admin/user
-1. Does Not Work Currently.
+##### /admin/user/all
+1. Lists All User With All Their Details. If Discord Is Linked, shows button to open it and Has A button to ban users.
+##### /admin/user/ban
+1. Redirects to /admin/user/ban/:id, id is the given quesid
+##### /admin/user/ban/:id
+1. Confirm Ban User Associated with given id
 
 ## Client App Explained
 1. Moved To ReactApp, i.e [react-app](https://github.com/techsyndicate/Programming-Platform/tree/main/react-app)
