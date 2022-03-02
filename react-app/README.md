@@ -1,11 +1,7 @@
 # Programming-Platform-client-app
 To UnderStand How To Start A development Server Read [CreateReactApp.md](https://github.com/techsyndicate/Programming-Platform/blob/main/react-app/CreateReactApp.md)
 
-But Really, ``¯\_(ツ)_/¯``, it's as simple as
-```
-npm install
-npm start
-```
+
 
 ## Client App Explanation
 ##### /Login, /Register
