@@ -27,8 +27,8 @@ GMAIL_PASSWORD = Gmail App Password <https://support.google.com/accounts/answer/
 4. Discord Oauth2.0
 5. Passport Js LocalAuth
 6. MongoDB -> Storing Data
-7. Heroku To Deploy FrontEnd App i.e the ReactApp+Node, Cause Azure🤑📈💵
-8. ~~Azure AD B2C~~ [money](https://www.youtube.com/watch?v=N6lYcXjd4pg)
+7. Heroku To Deploy FrontEnd App i.e the ReactApp+Node,
+8. ~~Azure AD B2C~~ 
 9. NodeMailer
 
 ### Run Application
@@ -69,7 +69,7 @@ npm start (to run in production etc)
 
 <h3> If you Face Any Issue While Deploying Your Own Version Of Our App, Please Feel Free To Start A Issue.</h3>
 
-~~Please Don't, I don't even know half the shit i wrote~~
+
 
 # Contributors
 1. [@gamer-1478](https://aayushgarg.net)
