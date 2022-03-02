@@ -69,3 +69,7 @@
     border-bottom: 4px solid #16e16e;
     transition: all 0.2s ease-out;
 }
+
+.event-title {
+    color: #16e16e;
+}

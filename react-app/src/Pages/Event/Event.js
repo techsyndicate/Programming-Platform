@@ -6,6 +6,7 @@ import { checkLoggedIn, urlPrefix } from '../../Components/reuse/Misc'
 import { Notyf } from 'notyf';
 
 import './Event.css'
+import moment from 'moment';
 
 function Event() {
   // Create an instance of Notyf
@@ -24,29 +25,42 @@ function Event() {
   }, [])
 
   return (
-    <div>
+    <div className='event-question-root'>
       {
         loaded ? (
-          <div className='submission-container'>{
-            data.map((item, index) => {
-              return (
-                <div className='submission-card'>
-                  <h1>{item.event.name}</h1>
-                  <Button
-                    onClick={() => {
-                      if (!checkLoggedIn()) {
-                        notyf.error('You must be logged in to Participate In an event');
-                      } else {
-                        window.location.href = '/Events/' + item.event.name
-                      }
-                    }}
-                    buttonStyle='btn--primary--black'>
-                    Participate In Event
-                  </Button>
-                </div>
-              )
-            })
-          }</div>
+          <div className='submissions-container'>
+            <br></br><br></br>{
+              data.map((item, index) => {
+                return (
+                  <div className='submissions-card white'>
+                    <div className='submissions-card-header'>
+                      <h2>Event: {item.event.name}</h2>
+                      <p className='submission-card-status'>
+                        Start Time: &nbsp; <div className='white'>{moment(new Date(item.event.startTime).toString()).format('DD-MM-YYYY HH:mm')}</div>&nbsp; &nbsp;
+                        End Time: &nbsp; <div className='white'>{moment(new Date(item.event.endTime).toString()).format('DD-MM-YYYY HH:mm')}</div>
+                      </p>
+                    </div>
+                    <div className='submissions-card-button'>
+                      <Button
+                        onClick={() => {
+                          let userData = JSON.parse(localStorage.getItem('User'));
+                          console.log(userData.discordUser.verified && userData.emailVerified)
+                          if (!checkLoggedIn()) {
+                            notyf.error('You must be logged in to Participate In an event');
+                          } else if (!(userData.discordUser.verified && userData.emailVerified)) {
+                            notyf.error('You must Complete Your Profile, i.e Verify Your Email On Discord and On Our platform, and Link Discord To Participate In Events');
+                          } else {
+                            window.location.href = '/Events/' + item.event.name
+                          }
+                        }}
+                        buttonStyle='btn--primary--black'>
+                        Participate In Event
+                      </Button>
+                    </div>
+                  </div>
+                )
+              })
+            }</div>
         ) : (
           <div className='loading'>
             <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />

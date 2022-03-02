@@ -21,22 +21,27 @@ function Practise() {
     }, [])
 
     return (
-        <div>
+        <div className='event-question-root'>
             {
                 loaded ? (
-                    <div className='submission-container'>{
+                    <div className='submissions-container'>
+                        <br></br><br></br>{
                         data.map((item, index) => {
                             return (
-                                <div className='submission-card'>
-                                    <h1>{item.name}</h1>
-                                    <Button onClick={() => { window.location.href = '/Practice/' + item.name }} buttonStyle='btn--primary--black'>Continue Preperation</Button>
+                                <div className='submissions-card white'>
+                                    <div className='submissions-card-header'>
+                                        <h2>Practice: {item.name}</h2>
+                                    </div>
+                                    <div className='submissions-card-button'>
+                                        <Button onClick={() => { window.location.href = '/Practice/' + item.name }} buttonStyle='btn--primary--black'>Continue Preperation</Button>
+                                    </div>
                                 </div>
                             )
                         })
                     }</div>
                 ) : (
                     <div className='loading'>
-                            <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
+                        <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
                     </div >
                 )
             }

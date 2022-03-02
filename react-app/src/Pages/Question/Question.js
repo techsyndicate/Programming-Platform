@@ -118,27 +118,26 @@ function Question() {
                 }
             }).then(async data => {
                 setExecuting(true);
-                if (data.data.success) {
-                    if (data.data.err !== undefined && data.data.err.length > 0) {
-                        document.getElementById('output-errors').value = '';
-                        document.getElementById('output-errors').value = data.data.err.join('\n');
-                    }
-                    else {
-                        document.getElementById('output-errors').value = '';
-                    }
-                    if (data.data.exit.code !== 0 && data.data.exit.code === null) {
-                        notyf.error({ dismissible: true, duration: 0, message: `Exit code: ${data.data.exit.code}, CODE DIDN'T EXECUTE IN GIVEN TIMELIMIT OF 15 SECONDS` });
-                    }
-                    if (data.data.data !== undefined && data.data.data.length > 0) {
-                        document.getElementById('output-text').value = data.data.data.join('\n');
-                    }
-                    else {
-                        document.getElementById('output-text').value = '';
-                    }
+                if (!data.data.success) {
+                    return notyf.error(data.data.msg);
+                }
+                if (data.data.err !== undefined && data.data.err.length > 0) {
+                    document.getElementById('output-errors').value = '';
+                    document.getElementById('output-errors').value = data.data.err.join('\n');
                 }
                 else {
-                    notyf.error(data.data.msg);
+                    document.getElementById('output-errors').value = '';
                 }
+                if (data.data.exit.code !== 0 && data.data.exit.code === null) {
+                    notyf.error({ dismissible: true, duration: 0, message: `Exit code: ${data.data.exit.code}, CODE DIDN'T EXECUTE IN GIVEN TIMELIMIT OF 15 SECONDS` });
+                }
+                if (data.data.data !== undefined && data.data.data.length > 0) {
+                    document.getElementById('output-text').value = data.data.data.join('\n');
+                }
+                else {
+                    document.getElementById('output-text').value = '';
+                }
+
             })
         }
     }
@@ -161,6 +160,9 @@ function Question() {
                 }
             }).then(async data => {
                 setExecuting(true);
+                if (!data.data.success) {
+                    return notyf.error(data.data.msg);
+                }
                 window.location.href = '/submissions/' + data.data.data._id;
             })
         }
