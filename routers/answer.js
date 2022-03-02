@@ -191,19 +191,4 @@ answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, 
     })
 })
 
-answer_router.get('/test', (req, res) => {
-    QuesSchema.findById('6219e65aac88c21a88220fb6').then(ques => {
-        if (ques.practise === false) {
-            EventSchema.findById(ques.prac_evenid).then(event => {
-                let data = {
-                    start: (new Date() - new Date(event.startTime)) / 60000,
-                    end: (new Date() - new Date(event.endTime)) / 60000,
-                    length: (new Date(event.endTime) - new Date(event.startTime)) / 60000
-                }
-                res.send({ data, event })
-            })
-        }
-    })
-})
-
 module.exports = answer_router;
