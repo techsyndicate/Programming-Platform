@@ -44,10 +44,10 @@ function Event() {
                       <Button
                         onClick={() => {
                           let userData = JSON.parse(localStorage.getItem('User'));
-                          console.log(userData.discordUser.verified && userData.emailVerified)
                           if (!checkLoggedIn()) {
                             notyf.error('You must be logged in to Participate In an event');
-                          } else if (!(userData.discordUser.verified && userData.emailVerified)) {
+                          }
+                          else if (!(userData.discordUser.verified && userData.emailVerified)) {
                             notyf.error('You must Complete Your Profile, i.e Verify Your Email On Discord and On Our platform, and Link Discord To Participate In Events');
                           } else {
                             window.location.href = '/Events/' + item.event.name
