@@ -63,7 +63,7 @@ npm start (to run in production etc)
 
 <h3> If you Face Any Issue While Deploying Your Own Version Of Our App, Please Feel Free To Start A Issue.</h3>
 
-~~<p style="font-size:0.5rem">Please Don't, I don't even know half the shit i wrote</p>~~
+~~Please Don't, I don't even know half the shit i wrote~~
 
 # Contributors
 1. [@gamer-1478](https://aayushgarg.net)
