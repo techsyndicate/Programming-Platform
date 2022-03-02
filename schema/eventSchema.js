@@ -23,7 +23,8 @@ const eventSchema = new mongoose.Schema({
         userid: reqStringFalse,
         points: reqStringFalse,
         time: reqStringFalse,
-        name: reqStringFalse
+        name: reqStringFalse,
+        solvedquestions: [{ questionid: reqString, points: reqString }]
     }],
 })
 

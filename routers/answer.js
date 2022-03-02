@@ -8,110 +8,151 @@ const EventSchema = require('../schema/eventSchema');
 const { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 
-//FIXME: Check Profile Completion, Give Error
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var input = req.body.input;
-    if (text) {
-        try {
-            await Axios({
-                url: 'http://'+process.env.SERVER_BACKEND_VM+'/language/' + req.params.id,
-                withCredentials: true,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    code: text,
-                    input_exec: input.split("\n"),
-                    authString: process.env.SERVER_AUTH_STRING
-                }
-            }).then(data => {
-                data.data.success = true;
-                if (data.data.data.length == 0) {
-                    data.data.data = [("No Ouput On STDOUT")];
-                }
-                res.send(data.data)
-            })
-        } catch (err) {
-            res.send({
-                "success": false,
-                "msg": "Server Error Try Again in a few minutes" + err,
-            })
-        }
+    if (!text) {
+        return res.send({ "success": false, msg: "Pls fill the text code" })
     }
-    else {
-        res.send({ "success": false, msg: "Pls fill the text code" })
+    if (!req.user.discordUser.verified && req.user.emailVerified) {
+        return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
+    }
+    try {
+        await Axios({
+            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+            withCredentials: true,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                code: text,
+                input_exec: input.split("\n"),
+                authString: process.env.SERVER_AUTH_STRING
+            }
+        }).then(data => {
+            data.data.success = true;
+            if (data.data.data.length == 0) {
+                data.data.data = [("No Ouput On STDOUT")];
+            }
+            res.send(data.data)
+        })
+    } catch (err) {
+        res.send({
+            "success": false,
+            "msg": "Server Error Try Again in a few minutes" + err,
+        })
     }
 })
 
-//FIXME: on correct submission update LeaderBoard
-//FIXME: Check Profile Completion, Give Error
 answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;
     var userid = req.user.id;
     var language = req.body.language;
-    if (text) {
-        QuesSchema.findById(quesid, async (err, ques) => {
-            var ans_schema = new AnsSchema({
-                quesid: quesid,
-                userid: userid,
-                quesName: ques.name,
-                ansPython: text,
-                language: language
-            })
-            await Promise.all(ques.testcases.map(testcase => {
-                return new Promise(async (resolve, reject) => {
-                    try {
-                        await Axios({
-                            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
-                            withCredentials: true,
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            data: {
-                                code: text,
-                                input_exec: testcase.input.split("\n"),
-                                authString: process.env.SERVER_AUTH_STRING
-                            }
-                        }).then(data => {
-                            if (data.data.data.length == 0) {
-                                data.data.data.push("No Ouput On STDOUT");
-                            }
-                            var newTestcase = {
-                                input: testcase.input,
-                                output: data.data.data,
-                                output_compare: testcase.output_compare,
-                            }
-                            if (data.data.data.join('\n') === testcase.output_compare) {
-                                newTestcase.passed = true;
-                            }
-                            resolve(newTestcase);
-                        })
-                    } catch (err) {
-                        testcase.passed = false;
-                        testcase.output = "Server Error Try Again in a few minutes";
-                        resolve(testcase);
-                    }
-                })
-            })).then(async data => {
-                ans_schema.testcases = await data;
-                if (ans_schema.testcases.every(item => item.passed)) {
-                    ans_schema.accepted = true;
-                    ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
-
-                    ques.save()
+    if (!text) {
+        return res.send({ "success": false, msg: "Pls fill the text code" })
+    }
+    if (!req.user.discordUser.verified && req.user.emailVerified) {
+        return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
+    }
+    QuesSchema.findById(quesid, async (err, ques) => {
+        var ans_schema = new AnsSchema({
+            quesid: quesid,
+            userid: userid,
+            quesName: ques.name,
+            ansPython: text,
+            language: language
+        })
+        await Promise.all(ques.testcases.map(testcase => {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await Axios({
+                        url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+                        withCredentials: true,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            code: text,
+                            input_exec: testcase.input.split("\n"),
+                            authString: process.env.SERVER_AUTH_STRING
+                        }
+                    }).then(data => {
+                        if (data.data.data.length == 0) {
+                            data.data.data.push("No Ouput On STDOUT");
+                        }
+                        var newTestcase = {
+                            input: testcase.input,
+                            output: data.data.data,
+                            output_compare: testcase.output_compare,
+                        }
+                        if (data.data.data.join('\n') === testcase.output_compare) {
+                            newTestcase.passed = true;
+                        }
+                        resolve(newTestcase);
+                    })
+                } catch (err) {
+                    testcase.toObject();
+                    testcase.serverError = true;
+                    testcase.output = "Server Error Try Again in a few minutes " + err;
+                    resolve(testcase);
                 }
-                ans_schema.save().then((ans_submit) => {
-                    res.send({ "success": true, data: ans_submit })
-                })
+            })
+        })).then(async data => {
+            ans_schema.testcases = data;
+            if (data.every(testcase => testcase.serverError)) {
+                return res.send({ "success": false, msg: data.map(testcase => { if (testcase.output[0].includes('Server Error Try Again in a few minutes')) { return testcase.output } })[0][0] })
+            }
+            if (ans_schema.testcases.every(item => item.passed)) {
+                ans_schema.accepted = true;
+                ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
+                if (ques.practise === false) {
+                    EventSchema.findById(ques.prac_evenid).then(event => {
+                        const GetPoints = () => {
+                            for (const item of event.questions) {
+                                if (item.questionid === ques.id) { return item.points }
+                            }
+                        }
+                        const Magic = () => {
+                            for (const item of event.leaderboard) {
+                                if (item.userid === req.user.id) {
+                                    let index = event.leaderboard.indexOf(item);
+                                    return { item, index }
+                                }
+                            }
+                        }
+                        let magic = Magic();
+                        if (((new Date() - new Date(event.endTime)) / 60000) < 0 && ((new Date() - new Date(event.startTime)) / 60000) > 0) {
+                            if (magic === undefined) {
+                                event.leaderboard.push({
+                                    name: req.user.username,
+                                    time: new Date().toString(),
+                                    userid: req.user.id,
+                                    points: GetPoints().toString(),
+                                    questionid: ques.id,
+                                    solvedquestions: [{ questionid: ques.id, points: GetPoints() }]
+                                })
+                            }
+                            if (magic !== undefined && !event.leaderboard[magic.index].solvedquestions.map(item => item.questionid).includes(ques.id)) {
+                                event.leaderboard[magic.index].solvedquestions.push({ questionid: ques.id, points: GetPoints() })
+                                event.leaderboard[magic.index].points = (parseInt(event.leaderboard[magic.index].points) + parseInt(GetPoints())).toString()
+                                event.leaderboard[magic.index].time = new Date().toString()
+                            }
+                            event.save().then(() => {
+                                console.log('LeaderBoard Updated')
+                            })
+                        }
+                    })
+                }
+                ques.save()
+            }
+            ans_schema.save().then((ans_submit) => {
+                res.send({ "success": true, data: ans_submit })
             })
         })
-    } else {
-        res.send({ "success": false, msg: "Pls fill the text code" })
-    }
+    })
 })
 
 answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req, res) => {
@@ -146,6 +187,21 @@ answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, 
         }
         else {
             res.send({ "success": false, msg: "You are not authorized to view this submission" })
+        }
+    })
+})
+
+answer_router.get('/test', (req, res) => {
+    QuesSchema.findById('6219e65aac88c21a88220fb6').then(ques => {
+        if (ques.practise === false) {
+            EventSchema.findById(ques.prac_evenid).then(event => {
+                let data = {
+                    start: (new Date() - new Date(event.startTime)) / 60000,
+                    end: (new Date() - new Date(event.endTime)) / 60000,
+                    length: (new Date(event.endTime) - new Date(event.startTime)) / 60000
+                }
+                res.send({ data, event })
+            })
         }
     })
 })
