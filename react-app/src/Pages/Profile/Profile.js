@@ -16,7 +16,7 @@ function Profile() {
 
         Axios({
             method: 'POST',
-            url: urlPrefix()+'auth/bio',
+            url: urlPrefix() + 'auth/bio',
             withCreadentials: true,
             headers: {
                 'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ function Profile() {
             console.log(err);
         })
     }
-    
+
     const listenStorage = () => {
         if (localStorage.getItem('User')) {
             setlogged(true);
@@ -101,8 +101,10 @@ function Profile() {
                             )
                             }
                         </div>
+                        <div className='profile-bio-text'>
+                            {data.banned && <h2 className='Not-Accepted'>You Are Banned! If You Believe This Is A Mistake, Please Contact The Mods!</h2>}
+                        </div>
                     </div>
-
                     <div className='profile-logout'>
                         <Button onClick={logout} buttonStyle='btn--primary--black'>Logout</Button>
                     </div>
