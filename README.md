@@ -48,7 +48,7 @@ npm start (to run in production etc)
 <b>/Practise/Python</b> (ID For Any Use is currently Hackily Either Obtained Through MongoDB directly or Can Be obtained Through Logs In the HTML Page)
 
 ##### /admin/event
-1. Makes A New Event On The Website, With Start Time And End Time.(ID For Any Use is currently Hackily Either Obtained Through MongoDB directly or Can Be obtained Through Logs In the HTML Page) <p style="font-size:0.7rem">FIXME: The End Time And Start Time Do Not Affect Any App Internals, i.e they have no effect.</p>
+1. Makes A New Event On The Website, With Start Time And End Time. (ID For Any Use is currently Hackily Either Obtained Through MongoDB directly or Can Be obtained Through Logs In the HTML Page).
 
 ##### /admin/question
 1. The  Question Form, Adds A Question in the practise or the event id submitted. (Again To Get The quesid, to add testcases or whatever, use the console or MongoDB directly. [Hacky Will Fix, ~~likely/prolly not~~](https://www.youtube.com/watch?v=3LtQWxhqjqI))
