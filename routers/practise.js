@@ -2,11 +2,11 @@
 const express = require('express'),
     practise_router = express.Router();
 
+// Import Files
 const practiseSchema = require('../schema/practiseSchema'),
     { QuesSchema } = require('../schema/questionSchema');
-const { checkAuthenticated } = require('../utilities/passportReuse');
 
-
+// Return All Practise Sections
 practise_router.get('/', (req, res) => {
     practiseSchema.find({}).then(practises => {
         let to_return = practises.map(practise => {
@@ -19,6 +19,7 @@ practise_router.get('/', (req, res) => {
     })
 })
 
+// Return All Practise Details For The Given practise id
 practise_router.get('/:id', async (req, res) => {
     practiseSchema.findOne({ name: req.params.id }).then(async practise => {
         if (practise) {

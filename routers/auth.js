@@ -67,6 +67,7 @@ auth_router.post('/login', (req, res, next) => {
     loginUser(req, res, next);
 })
 
+//FIXME: Public Profiles
 // Send User Data
 auth_router.get("/user", (req, res) => {
     if (req.user) {

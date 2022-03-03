@@ -54,7 +54,6 @@ passport_init(passport);
 //initializing passport
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.resolve(__dirname, './react-app/build')));
 app.use(bloatRouter);
 app.use("/auth", authRouter)
 app.use('/admin', adminRouter)
@@ -65,7 +64,7 @@ app.use('/event-back', event_router)
 app.use('/discord-back', discord_router)
 app.use('/email-back', email_router)
 
-app.get('*', (req, res, next) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
     useNewUrlParser: true,

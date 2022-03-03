@@ -1,12 +1,15 @@
+// Import Modules
 require('dotenv').config()
-
-const emailQueueSchema = require('../schema/emailQueueSchema');
-const nodemailer = require('nodemailer');
-const userSchema = require('../schema/userSchema');
-const {checkAuthenticated} = require('../utilities/passportReuse')
 const express = require('express'),
+    nodemailer = require('nodemailer'),
     email_router = express.Router();
 
+// Import Files
+const emailQueueSchema = require('../schema/emailQueueSchema'),
+    userSchema = require('../schema/userSchema'),
+    { checkAuthenticated } = require('../utilities/passportReuse');
+
+// Transport To Send Mail
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     secure: false,
@@ -20,6 +23,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Send Mail To User
 email_router.get('/send', checkAuthenticated, (req, res) => {
     let email = new emailQueueSchema({
         email: req.user.email,
@@ -44,6 +48,7 @@ email_router.get('/send', checkAuthenticated, (req, res) => {
     });
 })
 
+// Email Callback
 email_router.get('/callback/:id', (req, res) => {
     emailQueueSchema.findById(req.params.id).then((email) => {
         if (email) {

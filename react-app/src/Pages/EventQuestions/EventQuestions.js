@@ -46,8 +46,8 @@ function EventQuestions() {
 
     function showSubmission() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('submissions-container') !== null) {
-                document.getElementById('submissions-container').style.display = 'flex';
+            if (loaded === true && document.getElementById('event-submissions-container') !== null) {
+                document.getElementById('event-submissions-container').style.display = 'flex';
                 clearInterval(interval);
             }
         }, 50)
@@ -55,8 +55,8 @@ function EventQuestions() {
 
     function hideSubmission() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('submissions-container') !== null) {
-                document.getElementById('submissions-container').style.display = 'none';
+            if (loaded === true && document.getElementById('event-submissions-container') !== null) {
+                document.getElementById('event-submissions-container').style.display = 'none';
                 clearInterval(interval);
             }
         }, 50)
@@ -154,7 +154,11 @@ function EventQuestions() {
                                     })}
                                 </div>
 
-                                <div id='submissions-container' className='submissions-container'>
+                                <div id='event-submissions-container' className='event-submissions-container'>
+                                    {!data.event.leaderboard.length > 0 && (
+                                        <div style={{width:'80vw'}}>
+                                            <h1 className='event-title'>No Subssions That Have Passed Yet</h1>
+                                        </div>)}
                                     {data.event.leaderboard.map((item, index) => {
                                         return (
                                             <div className='submissions-card white'>

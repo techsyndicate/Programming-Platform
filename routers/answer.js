@@ -1,13 +1,16 @@
+// Import Modules
 const express = require('express'),
     Axios = require('axios'),
     answer_router = express.Router();
 
+// Import Files
 const { isValidObjectId } = require('mongoose'),
     AnsSchema = require('../schema/answerSchema'),
     EventSchema = require('../schema/eventSchema'),
     { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 
+// Run Code Endpoint
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var input = req.body.input;
@@ -48,7 +51,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     }
 })
 
-// FIXME: REORDER THE LEADERBOARD
+// Submit Code Endpoint
 answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     var text = req.body.code;
     var quesid = req.body.quesid;
@@ -116,6 +119,8 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                 ans_schema.accepted = true;
                 ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
                 if (ques.practise === false) {
+
+                    // Update Leaderboard
                     EventSchema.findById(ques.prac_evenid).then(event => {
                         const GetPoints = () => {
                             for (const item of event.questions) {
@@ -147,6 +152,14 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                                 event.leaderboard[magic.index].points = (parseInt(event.leaderboard[magic.index].points) + parseInt(GetPoints())).toString()
                                 event.leaderboard[magic.index].time = new Date().toString()
                             }
+                            event.leaderboard.sort((a, b) => {
+                                if (a.points > b.points) {
+                                    return -1;
+                                }
+                                else {
+                                    return 1;
+                                }
+                            })
                             event.save().then(() => {
                                 console.log('LeaderBoard Updated')
                             })
@@ -162,39 +175,40 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     })
 })
 
+// Show All Submissions For The Given QuestionID Endpoint
 answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req, res) => {
     var quesid = req.params.questionid;
-    if (isValidObjectId(quesid)) {
-        AnsSchema.find({ quesid: quesid, userid: req.user.id }).then(answers => {
-            if (answers !== [] && answers !== null) {
-                answers = JSON.parse(JSON.stringify(answers));
-                answers = answers.map(item => {
-                    return ({
-                        quesName: item.quesName,
-                        accepted: item.accepted,
-                        language: item.language,
-                        _id: item._id
-                    })
-                })
-            }
-            res.send(answers)
-        })
-    } else {
-        res.send({ success: false, msg: "Invalid Question ID" })
+    if (!isValidObjectId(quesid)) {
+        return res.send({ success: false, msg: "Invalid Question ID" })
     }
+    AnsSchema.find({ quesid: quesid, userid: req.user.id }).then(answers => {
+        if (answers.length > 0 && answers !== null) {
+            answers = JSON.parse(JSON.stringify(answers));
+            answers = answers.map(item => {
+                return ({
+                    quesName: item.quesName,
+                    accepted: item.accepted,
+                    language: item.language,
+                    _id: item._id
+                })
+            })
+        }
+        res.send(answers)
+    })
+
 })
 
+// Show Submission In Detail For The Gven SubmissionID
 answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, res) => {
     var submissionid = req.params.submissionid;
     AnsSchema.findById(submissionid).then(answers => {
-        if (answers.userid == req.user.id) {
-            answers = JSON.parse(JSON.stringify(answers));
-            answers.success = true;
-            res.send(answers)
+        if (!(answers.userid == req.user.id)) {
+            return res.send({ "success": false, msg: "You are not authorized to view this submission" })
         }
-        else {
-            res.send({ "success": false, msg: "You are not authorized to view this submission" })
-        }
+        answers = JSON.parse(JSON.stringify(answers));
+        answers.success = true;
+        res.send(answers)
+
     })
 })
 

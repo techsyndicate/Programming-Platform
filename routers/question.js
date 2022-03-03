@@ -1,11 +1,13 @@
 // Import Modules
 const express = require('express'),
-    question_router = express.Router();
+    question_router = express.Router(),
+    { isValidObjectId } = require('mongoose');
 
-const { isValidObjectId } = require('mongoose');
-const eventSchema = require('../schema/eventSchema');
-const { QuesSchema } = require('../schema/questionSchema');
+// Import Files
+const eventSchema = require('../schema/eventSchema'),
+    { QuesSchema } = require('../schema/questionSchema');
 
+// Return Question Details For The Given Question
 question_router.post('/', (req, res) => {
     if (!isValidObjectId(req.body.id)) {
         return res.send({ "success": false })

@@ -2,11 +2,12 @@
 const express = require('express'),
     event_router = express.Router();
 
+// Import Files
 const eventSchema = require('../schema/eventSchema'),
     { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 
-
+// Send All Events
 event_router.get('/', (req, res) => {
     eventSchema.find().then(events => {
         let to_return = events.map(event => {
@@ -20,6 +21,7 @@ event_router.get('/', (req, res) => {
     })
 })
 
+// Send Event Whoose Id Is given
 event_router.get('/:id', checkAuthenticated, async (req, res) => {
     eventSchema.findOne({ name: req.params.id }).then(async event => {
         if (!event) {

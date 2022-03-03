@@ -1,12 +1,14 @@
 // Import Modules
 const express = require('express'),
-    discord_router = express.Router();
+    discord_router = express.Router(),
+    Axios = require('axios');
 
-const Axios = require('axios');
-const userSchema = require('../schema/userSchema');
-const { checkAuthenticated } = require('../utilities/passportReuse');
-const { getDiscordUser, refreshDiscordToken } = require('../utilities/misc');
+// Import Files
+const userSchema = require('../schema/userSchema'),
+    { checkAuthenticated } = require('../utilities/passportReuse'),
+    { getDiscordUser, refreshDiscordToken } = require('../utilities/misc');
 
+// Vars
 var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
 var prompt = 'none';
 
@@ -51,7 +53,7 @@ discord_router.get('/callback', checkAuthenticated, async (req, res, next) => {
             });
         })
     } catch (err) {
-        res.render('error', { error: "This Discord Code Is Expired Or Invalid, Please Retry Auth!!!", redirect:'/profile' });
+        res.render('error', { error: "This Discord Code Is Expired Or Invalid, Please Retry Auth!!!", redirect: '/profile' });
     }
 
 });
@@ -100,7 +102,7 @@ discord_router.get('/avatar', checkAuthenticated, (req, res, next) => {
     // get avatar from discord
     // cdn.discordapp.com/avatars/<user_id>/<avatar_hash>.<extension>
     // https://discord.com/developers/docs/reference#image-formatting
-    
+
     if (req.user.discord.access_token) {
         if (Math.abs(new Date() - req.user.discordUser.ISSUED_AT) > 3600000) {
             // refresh token
