@@ -26,7 +26,9 @@ async function initialize(passport) {
     }
 
     await passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    await passport.serializeUser((user, done) => done(null, user.id))
+    await passport.serializeUser((user, done) => {
+        done(null, user.id)
+    })
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
             done(null, user, { message: err });

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 import { Button } from '../button/Button';
-import { checkLoggedIn } from '../reuse/Misc';
+import { checkLoggedIn, getUser } from '../reuse/Misc';
 import './NavigationBar.css'
 
 function NavigationBar() {
@@ -19,6 +19,9 @@ function NavigationBar() {
         listenStorage();
     })
     useEffect(() => {
+        getUser().then((res)=>{
+            console.log(res)
+        });
         listenStorage();
         checkLoggedIn();
     }, []);

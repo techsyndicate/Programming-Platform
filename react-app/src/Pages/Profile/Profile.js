@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Oval } from 'react-loader-spinner'
 
 import './Profile.css'
-import { logout, urlPrefix } from '../../Components/reuse/Misc';
+import { getUser, logout, urlPrefix } from '../../Components/reuse/Misc';
 import { Button } from '../../Components/button/Button';
 import Axios from 'axios';
 
@@ -34,21 +34,16 @@ function Profile() {
         })
     }
 
-    const listenStorage = () => {
-        if (localStorage.getItem('User')) {
-            setlogged(true);
-            setData(JSON.parse(localStorage.getItem('User')));
-        }
-        else {
-            window.location.href = '/login';
-        }
-    }
-    window.addEventListener('storage', () => {
-        listenStorage();
-    })
-
     useEffect(() => {
-        listenStorage();
+        getUser().then(res => {
+            if (res.sucess) {
+                setData(JSON.parse(localStorage.getItem('User')));
+                setlogged(true);
+            }
+            else {
+                window.location.href = '/login';
+            }
+        });
     }, []);
 
     return (

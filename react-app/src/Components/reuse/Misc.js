@@ -7,9 +7,14 @@ export const getUser = () => {
         url: urlPrefix() + "auth/user",
     }).then((res) => {
         if (res.data) {
-            localStorage.setItem("User", JSON.stringify(res.data));
-            window.dispatchEvent(new Event('storage'))
-            return res.data;
+            if (res.data.sucess) {
+                localStorage.setItem("User", JSON.stringify(res.data));
+                window.dispatchEvent(new Event('storage'))
+                return res.data;
+            }
+            else {
+                return res.data;
+            }
         } else {
             logout();
             return null;
@@ -94,7 +99,7 @@ export const langParserForSubmission = (val) => {
     else if (val === 'python2') {
         return ('Python 2');
     }
-    else if (val === 'gpp'){
+    else if (val === 'gpp') {
         return ('C++');
     }
     else if (val === 'gcc') {

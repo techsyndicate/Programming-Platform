@@ -9,6 +9,8 @@ const { checkAuthenticated } = require('../utilities/passportReuse');
 const User = require('./../schema/userSchema'),
     { validateEmail } = require('../utilities/misc');
 
+var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
+
 // Register
 auth_router.post("/register", async (req, res, next) => {
     let errors = [];
@@ -65,6 +67,11 @@ auth_router.post("/register", async (req, res, next) => {
 // Login
 auth_router.post('/login', (req, res, next) => {
     loginUser(req, res, next);
+})
+
+// Discord Login
+auth_router.get('/discord-login', (req,res,next)=>{
+    res.redirect(`https://discord.com/api/oauth2/authorize?response_type=code&client_id=${process.env.DISCORD_CLIENT_ID}&scope=${encodeURI(scopes.join(' '))}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}&prompt=consent`);
 })
 
 //FIXME: Public Profiles

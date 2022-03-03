@@ -10,7 +10,6 @@ const userSchema = require('../schema/userSchema'),
 
 // Vars
 var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
-var prompt = 'none';
 
 // discord auth
 discord_router.get('/auth', checkAuthenticated, (req, res) => {
@@ -56,6 +55,39 @@ discord_router.get('/callback', checkAuthenticated, async (req, res, next) => {
         res.render('error', { error: "This Discord Code Is Expired Or Invalid, Please Retry Auth!!!", redirect: '/profile' });
     }
 
+});
+
+// discord auth Login Callback
+discord_router.get('/login-callback', async (req, res, next) => {
+    // Callback url to get the access token, refresh token to get the new access token
+    // https://discord.com/developers/docs/topics/oauth2#authorization-code-grant-redirect-url-example
+    await Axios({
+        url: `https://discord.com/api/oauth2/token`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: `client_id=${process.env.DISCORD_CLIENT_ID}&client_secret=${process.env.DISCORD_CLIENT_SECRET}&grant_type=authorization_code&code=${req.query.code}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}`
+    }).then(async (res_dis) => {
+        discordUser = await getDiscordUser(res_dis.data.access_token)
+        userSchema.find({ 'discordUser.email': discordUser.email }).then(async (user_dis) => {
+            if (user_dis.length > 0) {
+                let user = user_dis[0];
+                req.logIn(user, (err) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                    else {
+                        res.redirect('/profile');
+                    }
+                })
+            } else {
+                res.render('error', { error: "This Discord Account Is Not Linked With Any Account On Our Platform At The Moment!!", redirect: '/Register' });
+            }
+        });
+    }).catch(err => {
+        console.log(err);
+    })
 });
 
 // update current user's discord data
