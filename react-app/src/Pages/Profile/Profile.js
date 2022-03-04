@@ -5,13 +5,16 @@ import './Profile.css'
 import { getUser, logout, urlPrefix } from '../../Components/reuse/Misc';
 import { Button } from '../../Components/button/Button';
 import Axios from 'axios';
+import { Notyf } from 'notyf';
 
 function Profile() {
+    var notyf = new Notyf();
     const [logged, setlogged] = useState(false);
     const [data, setData] = useState(null);
 
+    const [emailLoad, setEmailLoad] = useState(false);
+
     function bio() {
-        console.log(document.getElementById('profile-bio').value)
         Axios.defaults.withCredentials = true;
 
         Axios({
@@ -25,7 +28,6 @@ function Profile() {
                 bio: document.getElementById('profile-bio').value
             }
         }).then(res => {
-            console.log(res)
             if (res.data.sucess === true) {
                 setData({ ...data, bio: document.getElementById('profile-bio').value });
             }
@@ -46,6 +48,26 @@ function Profile() {
         });
     }, []);
 
+    function sendEmail() {
+        setEmailLoad(true)
+        Axios({
+            url: urlPrefix() + 'email-back/send',
+            method: 'GET',
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            setEmailLoad(false)
+            if (res.data.success) {
+                notyf.success('Email sent successfully');
+            } else {
+                notyf.error('Email not sent');
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+    }
     return (
         <div className='profile-container-root'>
             {logged ? (
@@ -58,9 +80,12 @@ function Profile() {
                                 <h3 className='ts-green flex'>Username: &nbsp;<div className='white'>{data.username}</div></h3>
                                 <h3 className='ts-green flex'>Email: &nbsp;<div className='white'>{data.email}</div></h3>
                                 <h3 className='ts-green flex'>Email Verified: &nbsp;<div className='white'>{data.emailVerified ? <>Verified</> : <>Not Verified</>}</div></h3>
-                                <div className='profile-logout' style={{ visibility: data.emailVerified ? 'hidden' : 'visible' }}>
-                                    <Button onClick={() => { window.location.href = urlPrefix() + 'email-back/send' }} buttonStyle='btn--primary--black'>Send Verification Email</Button>
+                                {emailLoad ? (<div>
+                                    <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={50} width={50} />
                                 </div>
+                                ) : (<div className='profile-logout' style={{ visibility: data.emailVerified ? 'hidden' : 'visible' }}>
+                                    <Button onClick={sendEmail} buttonStyle='btn--primary--black'>Send Verification Email</Button>
+                                </div>)}
                             </div>
                             <div style={{ marginLeft: '10px' }}>
                                 <h3 className='ts-green flex'>Discord Username: &nbsp;<div className='white'>{data.discordUser.username}</div></h3>

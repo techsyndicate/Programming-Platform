@@ -26,19 +26,19 @@ function Practise() {
                 loaded ? (
                     <div className='submissions-container'>
                         <br></br><br></br>{
-                        data.map((item, index) => {
-                            return (
-                                <div className='submissions-card white'>
-                                    <div className='submissions-card-header'>
-                                        <h2>Practice: {item.name}</h2>
+                            data.map((item, index) => {
+                                return (
+                                    <div className='submissions-card white'>
+                                        <div className='submissions-card-header'>
+                                            <h2>Practice: {item.name}</h2>
+                                        </div>
+                                        <div className='submissions-card-button'>
+                                            <Button path={'/Practice/' + item.name} buttonStyle='btn--primary--black'>Continue Preperation</Button>
+                                        </div>
                                     </div>
-                                    <div className='submissions-card-button'>
-                                        <Button onClick={() => { window.location.href = '/Practice/' + item.name }} buttonStyle='btn--primary--black'>Continue Preperation</Button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }</div>
+                                )
+                            })
+                        }</div>
                 ) : (
                     <div className='loading'>
                         <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />

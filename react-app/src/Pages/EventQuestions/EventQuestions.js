@@ -144,7 +144,7 @@ function EventQuestions() {
                                                 </div>
                                                 <div className='submissions-card-button'>
                                                     <Button
-                                                        onClick={() => { window.location.href = '/question/' + item.id }}
+                                                        path={'/question/' + item.id}
                                                         buttonStyle='btn--primary--black'>
                                                         {item.accepted_code ? 'Solved!' : 'Solve!'}
                                                     </Button>
@@ -156,7 +156,7 @@ function EventQuestions() {
 
                                 <div id='event-submissions-container' className='event-submissions-container'>
                                     {!data.event.leaderboard.length > 0 && (
-                                        <div style={{width:'80vw'}}>
+                                        <div style={{ width: '80vw' }}>
                                             <h1 className='event-title'>No Subssions That Have Passed Yet</h1>
                                         </div>)}
                                     {data.event.leaderboard.map((item, index) => {
@@ -166,7 +166,7 @@ function EventQuestions() {
                                                     <h2>User: {item.name}</h2>
                                                     <p className='submission-card-status'>
                                                         Points: &nbsp; <div className='white'>{item.points}</div>&nbsp; &nbsp;
-                                                        TimeTaken: &nbsp; <div className='white'>{(new Date(item.time) - new Date(data.event.startTime)) / 60000} Minutes</div>
+                                                        TimeTaken: &nbsp; <div className='white'>{((new Date(item.time) - new Date(data.event.startTime)) / 60000).toFixed(2)} Minutes</div>
                                                     </p>
                                                 </div>
                                                 <div className='submissions-card-button'>

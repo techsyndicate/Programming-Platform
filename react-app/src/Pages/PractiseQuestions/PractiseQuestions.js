@@ -39,7 +39,7 @@ function PractiseQuestions() {
                                         <p className='submission-card-status'>Staus: &nbsp; {item.accepted_code ? (<div className='Accepted'>Solved</div>) : (<div className='Not-Accepted'>Pending Solution</div>)}</p>
                                     </div>
                                     <div className='submissions-card-button'>
-                                        <Button onClick={() => { window.location.href = '/question/' + item.id }} buttonStyle='btn--primary--black'>{item.accepted_code ? 'Solved!' : 'Solve!'}</Button>
+                                        <Button path={'/question/' + item.id} buttonStyle='btn--primary--black'>{item.accepted_code ? 'Solved!' : 'Solve!'}</Button>
                                     </div>
                                 </div>
                             )

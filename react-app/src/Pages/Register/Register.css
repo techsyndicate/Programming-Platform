@@ -3,6 +3,9 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Railway', sans-serif;
+    background-color: #000;
+    color: #16e16e;
+    min-height: 100vh;
 }
 
 .register-form-div {
@@ -34,12 +37,18 @@
 .register-submit {
     margin-top: 1.5rem;
     height: 3.5vw;
-    background-color: #1569C7;
+    background-color: #16e16e;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
     color: white;
+}
+
+.register-submit:hover {
+    background-color: #fafafa;
+    transition: 500ms;
+    color: #000;
 }
 
 @media screen and (max-width: 960px) {

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { getUser, urlPrefix } from '../../Components/reuse/Misc';
 
 import './Login.css';
-import { Button } from '../../Components/button/Button';
 
 function Login() {
     // Create an instance of Notyf
@@ -22,9 +21,9 @@ function Login() {
                 email: loginEmail
             },
             withCredentials: true,
-            url: urlPrefix() +"auth/login",
+            url: urlPrefix() + "auth/login",
         }).then((res) => {
-            if (res.data[0].sucess === true){
+            if (res.data[0].sucess === true) {
                 notyf.success('Login Successful');
                 getUser().then((res) => {
                     window.location.href = '/profile';
@@ -52,7 +51,7 @@ function Login() {
                         type={'password'}
                         onChange={(e) => setLoginPassword(e.target.value)} />
                     <button className='login-submit' onClick={login}>Login</button>
-                    <Button buttonStyle='btn--primary--black' path='/auth/discord-login'>Login With Discord <i class="fab fa-discord"></i></Button>
+                    <button className='login-submit' onClick={() => { window.location.href = '/auth/discord-login' }}>Login With Discord <i class="fab fa-discord"></i></button>
                 </form>
             </div>
             <p>Don't Have An Account? <Link to='/Register' className='register-redirect'>Register</Link></p>

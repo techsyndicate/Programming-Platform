@@ -1,9 +1,11 @@
 .login-container {
     display: flex;
-    height: 80vh;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
     font-family: 'Railway', sans-serif;
+    background-color: #000;
+    color: #16e16e;
 }
 
 .login-form-div {
@@ -36,11 +38,20 @@
 .login-submit {
     margin-top: 1.2vw;
     height: 3.5vw;
-    background-color: #1569C7;
-    border-radius: 0.4vw;
+    background-color: #16e16e;
+    border-radius: 0.4rem;
     border: none;
     font-size: 1.2rem;
     color: white;
+}
+.login-submit:hover {
+    background-color: #fafafa;
+    transition: 500ms;
+    color: #000;
+}
+
+.discord-button {
+    width: 50vw;
 }
 
 @media screen and (max-width: 960px) {
