@@ -1,6 +1,7 @@
 const discord_router = require('./routers/discord');
 const email_router = require('./routers/email');
 const event_router = require('./routers/event');
+const { ReportWebVital, ReportCrash, CheckServerHealth, ReportCodeExec } = require('./utilities/misc');
 
 require('dotenv').config()
 
@@ -54,6 +55,7 @@ passport_init(passport);
 //initializing passport
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(bloatRouter);
 app.use("/auth", authRouter)
 app.use('/admin', adminRouter)
@@ -64,14 +66,36 @@ app.use('/event-back', event_router)
 app.use('/discord-back', discord_router)
 app.use('/email-back', email_router)
 
+app.use((err, req, res, next) => {
+    ReportCrash(err.stack.toString())
+    ReportWebVital("App Has Crashed, Please Check The Logs, Trying To Restart On My Own!");
+    res.render('error.ejs', { error: err.stack.toString(), redirect: '/' })
+    next(err)
+})
+
+function serverHealth() {
+    CheckServerHealth('http://' + process.env.SERVER_BACKEND_VM + '/language').then((res) => {
+        ReportCodeExec(res.status + ' Status On Code Exec Server')
+    })
+}
+serverHealth();
+setInterval(() => {
+    serverHealth()
+}, 60000);
+
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
 
 mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
+    ReportWebVital(`Connected to Mongo DB`);
     console.log("Connected to Mongo DB")
     app.listen(port, () => {
-        console.log(`Example app listening at http://localhost:${port}`)
+        ReportWebVital(`TS Prog listening at port ${port}`);
+        console.log(`TS Prog listening at http://localhost:${port}`)
     })
-}).catch(err => console.log(err))
+}).catch(err => {
+    ReportCrash(err.stack.toString())
+    ReportWebVital("App Has Crashed, Please Check The Logs, Trying To Restart On My Own!");
+})

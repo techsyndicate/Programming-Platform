@@ -35,4 +35,40 @@ async function refreshDiscordToken(refresh_token) {
     });
 }
 
-module.exports = { validateEmail, getDiscordUser, refreshDiscordToken }
+async function ReportWebVital(content) {
+    Axios({
+        url: process.env.DISCORD_WEBHOOKS_WEB_VITALS,
+        method: 'POST',
+        data: { content }
+    })
+}
+
+async function ReportCrash(content) {
+    Axios({
+        url: process.env.DISCORD_WEBHOOKS_CRASH_REPORT,
+        method: 'POST',
+        data: { content }
+    })
+}
+
+async function ReportCodeExec(content) {
+    Axios({
+        url: process.env.DISCORD_WEBHOOKS_CODE_EXEC_VITALS,
+        method: 'POST',
+        data: { content }
+    })
+}
+
+async function CheckServerHealth(url) {
+    return await Axios({
+        url: url,
+        method: 'GET',
+        timeout: 5000
+    }).then((res) => {
+        return res;
+    }).catch((err) => {
+        return { err: err, sucess: false, msg: 'Server is down' };
+    });
+}
+
+module.exports = { CheckServerHealth, ReportCodeExec, ReportWebVital, ReportCrash, validateEmail, getDiscordUser, refreshDiscordToken }

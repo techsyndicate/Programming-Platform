@@ -30,7 +30,7 @@
     "express": "^4.17.3",
     "express-flash": "^0.0.2",
     "moment": "^2.29.1",
-    "mongoose": "^6.2.3",
+    "mongoose": "^6.2.4",
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
     "passport-discord": "^0.1.4",
