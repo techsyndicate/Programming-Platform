@@ -98,4 +98,5 @@
 
 .submission-question-root {
     background-color: #000;
+    min-width: 100vh;
 }
