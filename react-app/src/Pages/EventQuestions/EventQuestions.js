@@ -132,7 +132,10 @@ function EventQuestions() {
                                 <br></br>
                                 <div id='question-container' className='question-container'>
                                     <h1 className='event-title'>Event: {data.event.name}</h1>
-                                    <h3 className='event-title'>Event Ends On {moment(new Date(data.event.endTime).toString()).format('DD-MM-YYYY HH:mm')}</h3>
+                                    {new Date() - new Date(data.event.endTime) < 0 ?
+                                        <h3 className='event-title'>Event Ends On  {moment(new Date(data.event.endTime).toString()).format('DD-MM-YYYY HH:mm')} </h3> :
+                                        <h3 className='event-title'>Event Ended!</h3>
+                                    }
                                     <br></br>
                                     {data.questions.map((item, index) => {
                                         return (

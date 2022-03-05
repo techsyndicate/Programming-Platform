@@ -81,8 +81,16 @@ function Submission() {
                                     return (<div className='testcase-card'>
                                         <h3>Testcase {index + 1}</h3>
                                         <pre><code>
-                                            <h4 className='download-accepted-container'>Input: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.input], { type: "text/plain;charset=utf-8" }), `Input${index + 1}.txt`) }} className='download'>Download</div></h4>
-                                            <h4 className='download-accepted-container'>Expected Output: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.output_compare], { type: "text/plain;charset=utf-8" }), `ExpectedOutput${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                            {data.event && new Date() - new Date(data.event.endTime) > 0 ? (<>
+                                                <h4 className='download-accepted-container'>Input: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.input], { type: "text/plain;charset=utf-8" }), `Input${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                                <h4 className='download-accepted-container'>Expected Output: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.output_compare], { type: "text/plain;charset=utf-8" }), `ExpectedOutput${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                                <h4 className='download-accepted-container'>Your Output: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.output.join('\n')], { type: "text/plain;charset=utf-8" }), `YourOutput${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                            </>) : (<>{data.event && <h4 className='download-accepted-container'>TestCases Go Public Once The Event Ends!</h4>}</>)}
+                                            {!data.event && <>
+                                                <h4 className='download-accepted-container'>Input: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.input], { type: "text/plain;charset=utf-8" }), `Input${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                                <h4 className='download-accepted-container'>Expected Output: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.output_compare], { type: "text/plain;charset=utf-8" }), `ExpectedOutput${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                                <h4 className='download-accepted-container'>Your Output: <div onClick={() => { FileSaver.saveAs(new Blob([testcase.output.join('\n')], { type: "text/plain;charset=utf-8" }), `YourOutput${index + 1}.txt`) }} className='download'>Download</div></h4>
+                                            </>}
                                             <h4 className='accepted-container'>Passed: &nbsp;{testcase.passed ? <div className='Accepted'>Passed</div> : <div className='Not-Accepted'>Not Passed</div>}</h4>
                                         </code></pre>
                                     </div>)

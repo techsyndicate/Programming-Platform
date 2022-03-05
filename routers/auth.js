@@ -14,7 +14,7 @@ var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read
 // Register
 auth_router.post("/register", async (req, res, next) => {
     let errors = [];
-    const { username, email, password, school, name} = req.body
+    const { username, email, password, school, name } = req.body
     if (!username || !email || !password || !school || !name) {
         errors.push({ msg: "Please Fill in all the fields" })
         return res.send(errors);
@@ -70,11 +70,27 @@ auth_router.post('/login', (req, res, next) => {
 })
 
 // Discord Login
-auth_router.get('/discord-login', (req,res,next)=>{
+auth_router.get('/discord-login', (req, res, next) => {
     res.redirect(`https://discord.com/api/oauth2/authorize?response_type=code&client_id=${process.env.DISCORD_CLIENT_ID}&scope=${encodeURI(scopes.join(' '))}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}&prompt=consent`);
 })
 
-//FIXME: Public Profiles
+// Public Profiles
+auth_router.get('/public-prof/:id', (req, res) => {
+    User.findOne({ username: req.params.id }).then(user => {
+        if (!user) {
+            return res.send({ sucess: false })
+        }
+        let user_pub = {
+            sucess: true,
+            username: user.username,
+            school: user.school,
+            name: user.name,
+            bio: user.bio
+        }
+        res.send(user_pub);
+    })
+})
+
 // Send User Data
 auth_router.get("/user", (req, res) => {
     if (req.user) {
@@ -84,7 +100,7 @@ auth_router.get("/user", (req, res) => {
         res.send(user);
     }
     else {
-        res.send({sucess:false, msg:"User not found"});
+        res.send({ sucess: false, msg: "User not found" });
     }
 });
 
@@ -95,10 +111,10 @@ auth_router.get('/logout', (req, res) => {
 })
 
 // Update User Bio
-auth_router.post('/bio', checkAuthenticated , (req,res,next)=>{
-    const {bio} = req.body;
-    User.findOneAndUpdate({email:req.user.email},{$set:{bio:bio}},{new:true}).then(_=>{
-        res.send({sucess:true});
+auth_router.post('/bio', checkAuthenticated, (req, res, next) => {
+    const { bio } = req.body;
+    User.findOneAndUpdate({ email: req.user.email }, { $set: { bio: bio } }, { new: true }).then(_ => {
+        res.send({ sucess: true });
     })
 })
 

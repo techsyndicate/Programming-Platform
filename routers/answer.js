@@ -9,6 +9,7 @@ const { isValidObjectId } = require('mongoose'),
     EventSchema = require('../schema/eventSchema'),
     { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
+const eventSchema = require('../schema/eventSchema');
 
 // Run Code Endpoint
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
@@ -23,6 +24,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     if (!req.user.discordUser.verified && req.user.emailVerified) {
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
     }
+    console.log('http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id)
     try {
         await Axios({
             url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
@@ -44,6 +46,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
             res.send(data.data)
         })
     } catch (err) {
+        //console.log(err)
         res.send({
             "success": false,
             "msg": "Server Error Try Again in a few minutes" + err,
@@ -202,14 +205,39 @@ answer_router.get('/submissions/all/:questionid', checkAuthenticated, async (req
 answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, res) => {
     var submissionid = req.params.submissionid;
     AnsSchema.findById(submissionid).then(answers => {
-        if (!(answers.userid == req.user.id)) {
+        if (!answers) {
+            res.send({
+                success: false
+            })
+        }
+        if (answers && !(answers.userid == req.user.id)) {
             return res.send({ "success": false, msg: "You are not authorized to view this submission" })
         }
         answers = JSON.parse(JSON.stringify(answers));
         answers.success = true;
-        res.send(answers)
-
-    })
+        QuesSchema.findById(answers.quesid).then(ques => {
+            if (ques && !ques.practise === true) {
+                eventSchema.findById(ques.prac_evenid).then(event => {
+                    if (event) {
+                        event.leaderboard = undefined;
+                        if (new Date() - new Date(event.endTime) < 0) {
+                            answers.testcases = answers.testcases.map((item, index) => { return { passed: item.passed } })
+                        }
+                        answers.event = event;
+                        res.send(answers)
+                    }
+                })
+            } else {
+                res.send(answers)
+            }
+        }).catch(_ => {
+            res.send(answers)
+        });
+    }).catch(_ => {
+        res.send({
+            success: false
+        })
+    });
 })
 
 module.exports = answer_router;

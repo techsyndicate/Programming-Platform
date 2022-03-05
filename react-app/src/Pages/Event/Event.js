@@ -37,7 +37,11 @@ function Event() {
                       <h2>Event: {item.event.name}</h2>
                       <p className='submission-card-status'>
                         Start Time: &nbsp; <div className='white'>{moment(new Date(item.event.startTime).toString()).format('DD-MM-YYYY HH:mm')}</div>&nbsp; &nbsp;
-                        End Time: &nbsp; <div className='white'>{moment(new Date(item.event.endTime).toString()).format('DD-MM-YYYY HH:mm')}</div>
+                        End Time: &nbsp; <div className='white'>{new Date() - new Date(item.event.endTime) < 0 ?
+                          <>{moment(new Date(item.event.endTime).toString()).format('DD-MM-YYYY HH:mm')} </> :
+                          "Event Ended!"
+                        }
+                        </div>
                       </p>
                     </div>
                     <div className='submissions-card-button'>
