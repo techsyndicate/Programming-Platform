@@ -22,5 +22,7 @@ body {
 }
 
 .min-height {
-    min-height: 92vh;
+    min-height: calc(100vh + 80px);
+    margin: 0 !important;
+    background-color: #000;
 }

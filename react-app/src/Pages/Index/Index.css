@@ -1,16 +1,88 @@
-.base {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    color: #333;
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px;
-    flex-direction: column;
+#jai-3d {
+    height: 90vh;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.base-header {
-    width: 80vw;
-    align-self: flex-start;
-    color: #16e16e;
+#jai-3d img {
+    width: 32vw;
+}
+
+.main-heading {
+    margin-top: 1vw;
+    font-weight: bold;
+    font-size: 2.5vw;
+    color: rgb(22, 225, 110);
+}
+
+#jai-3d p {
+    font-size: 1.2vw;
+    font-weight: 500;
+    color: white;
+}
+
+#jai-3d div a {
+    padding: 0vw 0.2vw;
+}
+
+#guidelines {
+    width: fit-content;
+    margin: auto;
+}
+
+.rules-head {
+    margin-top: 1vh;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.rules {
+    font-size: 1.2vw;
+    width: 60vw;
+    margin-left: -1.5vw;
+    margin-bottom: 0;
+    padding-bottom: 1vw;
+}
+
+.rules li {
+    padding-top: 2vh;
+}
+
+.index-root {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#clockdiv {
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    font-size: 1.3vw;
+    margin-bottom: 1.2vw;
+    margin-left: 0.1vw;
+}
+
+#clockdiv>div {
+    padding: 0.2vw;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+#clockdiv div>span {
+    padding: 0.5vw;
+    border-radius: 3px;
+    /* border: 3px solid #16e16e; */
+    background: #333;
+    display: inline-block;
+}
+
+.smalltext {
+    padding-top: 0.2vw;
+    font-size: 0.8vw;
+    text-align: center;
 }

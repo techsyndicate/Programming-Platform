@@ -1,5 +1,6 @@
 .footer-container {
   background-color: #111111;
+  margin-top: 0;
   padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
@@ -74,5 +75,3 @@
     flex-direction: column;
   }
 }
-
-@media screen and (max-width: 768px) {}
