@@ -1,53 +1,61 @@
-#jai-3d {
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#jai-3d img {
-    width: 32vw;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
 
 .main-heading {
-    margin-top: 1vw;
+    padding-top: 1vw;
     font-weight: bold;
     font-size: 2.5vw;
     color: rgb(22, 225, 110);
 }
 
-#jai-3d p {
-    font-size: 1.2vw;
-    font-weight: 500;
-    color: white;
-}
-
-#jai-3d div a {
-    padding: 0vw 0.2vw;
+.guidelines-bg {
+    background-image: url(https://cdn.discordapp.com/attachments/859672291557638154/950758831422603305/Group_30.png);
+    background-size: 50vw;
+    background-repeat: no-repeat;
+    background-position: bottom -100px right -100px;
 }
 
 #guidelines {
-    width: fit-content;
+    width: max-content;
     margin: auto;
 }
 
 .rules-head {
-    margin-top: 1vh;
-    font-size: 2vw;
+    width: min-content;
+    padding-top: 1vh;
+    font-size: 3rem;
     font-weight: bold;
+    font-family: myFirstFont !important;
+    font-weight: 100;
+}
+
+.rules-head::after {
+    content: "";
+    display: block;
+    width: 70%;
+    height: 3px;
+    background-color: #fff;
+    margin: 0 0 0 auto;
 }
 
 .rules {
     font-size: 1.2vw;
     width: 60vw;
-    margin-left: -1.5vw;
+    margin-left: -2.5vw;
     margin-bottom: 0;
-    padding-bottom: 1vw;
+    padding-bottom: 10vw;
+    list-style-type: none;
 }
 
 .rules li {
     padding-top: 2vh;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 1rem;
+}
+
+.rules>li:before {
+    content: "-";
+    color: #16e16e;
+    margin-right: 5px;
 }
 
 .index-root {
@@ -56,33 +64,87 @@
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#clockdiv {
+.landing-container {
+    height: 40vh;
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.landing-root {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.landing-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30rem;
+    height: 30vw;
+}
+
+.landing-redirects {
+    display: flex;
+    justify-content: space-between;
+}
+
+.landing-head-img {
+    display: flex;
+    align-items: center;
+    width: 30rem;
+    justify-content: center;
+}
+
+.landing-head {
+    font-size: 5rem;
+    font-family: myFirstFont !important;
+    font-weight: bold;
+    color: #16e16e;
+}
+
+
+.landing-content a {
+    text-decoration: none;
+    border-bottom: 1px solid;
     color: #fff;
-    display: inline-block;
-    text-align: center;
-    font-size: 1.3vw;
-    margin-bottom: 1.2vw;
-    margin-left: 0.1vw;
 }
 
-#clockdiv>div {
-    padding: 0.2vw;
-    border-radius: 3px;
-    display: inline-block;
+@font-face {
+    font-family: myFirstFont;
+    src: url(https://fonts.gstatic.com/s/poppins/v19/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');
 }
 
-#clockdiv div>span {
-    padding: 0.5vw;
-    border-radius: 3px;
-    /* border: 3px solid #16e16e; */
-    background: #333;
-    display: inline-block;
-}
+@media screen and (max-width: 768px) {
+    .landing-container {
+        flex-direction: column;
+        height: 60vh;
+    }
+    .rules {
+        width: 80vw;
+        margin-left: -10vw;
+    }
 
-.smalltext {
-    padding-top: 0.2vw;
-    font-size: 0.8vw;
-    text-align: center;
+    .rules-head {
+        font-size: 2.5rem;
+    }
+
+    .rules li {
+        font-size: 1.2rem;
+    }
+
+    .guidelines-bg {
+        background-size: 100vw;
+        background-position: bottom -40px right -40px;
+    }
+
 }

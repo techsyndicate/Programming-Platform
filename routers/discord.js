@@ -9,7 +9,7 @@ const userSchema = require('../schema/userSchema'),
     { getDiscordUser, refreshDiscordToken } = require('../utilities/misc');
 
 // Vars
-var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
+var scopes = ['identify', 'email', 'guilds'];
 
 // discord auth
 discord_router.get('/auth', checkAuthenticated, (req, res) => {

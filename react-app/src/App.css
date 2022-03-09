@@ -22,7 +22,7 @@ body {
 }
 
 .min-height {
+    margin-top: 0px !important;
     min-height: calc(100vh + 80px);
-    margin: 0 !important;
     background-color: #000;
 }

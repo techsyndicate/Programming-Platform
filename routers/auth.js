@@ -9,7 +9,7 @@ const { checkAuthenticated } = require('../utilities/passportReuse');
 const User = require('./../schema/userSchema'),
     { validateEmail } = require('../utilities/misc');
 
-var scopes = ['identify', 'email', 'guilds', 'guilds.join', 'guilds.members.read', 'gdm.join'];
+var scopes = ['identify', 'email', 'guilds'];
 
 // Register
 auth_router.post("/register", async (req, res, next) => {
