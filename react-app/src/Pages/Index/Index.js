@@ -12,8 +12,8 @@ function Index() {
                 <div className='landing-container'>
                     <div className='landing-content'>
                         <div className='landing-head-img'>
-                            <img alt='im-lnd' style={{ width: '100px', height: '100px' }} src='/logo.png'></img>
-                            <h1 className='landing-head'>-Prog</h1>
+                            <img alt='im-lnd' style={{marginRight: '18px', width: '100px', height: '100px' }} src='/logo.png'></img>
+                            <h1 className='landing-head'>- Prog</h1>
                         </div>
                         <div className='landing-redirects'>
                             <a href='/FAQs'>FAQs</a>

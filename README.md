@@ -16,18 +16,21 @@ DISCORD_CLIENT_SECRET = <https://discord.com/developers/applications> New Applic
 DISCORD_REDIRECT_URI = Discord Redirect URI For Callback, i.e <your-domain>/discord-back/callback
 GMAIL_EMAIL = Your Gmail Adress For NodeMailer To Use
 GMAIL_PASSWORD = Gmail App Password <https://support.google.com/accounts/answer/185833?hl=en>
+DISCORD_WEBHOOKS_CRASH_REPORT = Webhook For Crash Reporting
+DISCORD_WEBHOOKS_WEB_VITALS = Webhook For Web Vitals
+DISCORD_WEBHOOKS_CODE_EXEC_VITALS = Webhook for Code Exec Vitals
 ```
 
 <b> In Various Places the String ts-prog.herokuapp.com may be baked into the applcation, Search for it in vsc is recommended </b>
 
 ### Services Used
 1. Azure Load Balancer|Traffic Manager -> Manage Traffic between out multiple servers in various regions. 
-2. Azure VM B1s -> Virtual Machine (750 free hours), i.e instance of [Programming-Platform-backend-vm](https://github.com/techsyndicate/Programming-Platform-backend-vm) with pre installed, gcc,gpp,mono-devel,python3,python2
+2. Azure VM B1s/Aws t1.micro EC2 -> Virtual Machine (750 free hours), i.e instance of [Programming-Platform-backend-vm](https://github.com/techsyndicate/Programming-Platform-backend-vm) with pre installed, gcc,gpp,mono-devel,python3,python2
 3. ~~Twilo Sendgrid -> Sending Emails~~
 4. Discord Oauth2.0
 5. Passport Js LocalAuth
-6. MongoDB -> Storing Data
-7. Heroku To Deploy FrontEnd App i.e the ReactApp+Node,
+6. MongoDB -> Storing Data (alternatives azure cosmos db, google firebase, DynamoDB [Not Natively Supported, But should be easy to migrate.])
+7. Heroku To Deploy FrontEnd App i.e the ReactApp+Node, (can use azure or aws for this too)
 8. ~~Azure AD B2C~~ 
 9. NodeMailer
 
