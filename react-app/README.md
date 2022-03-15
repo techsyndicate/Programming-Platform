@@ -25,6 +25,7 @@ npm start
 2. There are 2 subparts that are Problem, and Submissions, i.e problem shows the problem while submissions show all the submissions the user has made.
 
 ##### /Events/:id/:subpart
-1. Event's ``questions`` subpart shows all the questions while the ``leaderboard`` subpart shows All Users that are Actively Participating. *Note:- LeaderBoard Doesn't Update After Event Ends.
+1. Event's ``questions`` subpart shows all the questions while the ``leaderboard`` subpart shows All Users that are Actively Participating.
+Leaderboard gives first prefference to points, second to time! Is automatically locked after event ends and testcases are automatically made public!
 
 ## We Provide No API, Continued Use Of Any of Our Services as an API is a violation of our terms and services and can, rather will result in a immediate ban. 

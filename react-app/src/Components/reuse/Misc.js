@@ -89,6 +89,9 @@ export const langParser = (val) => {
     else if (val === 'mcs') {
         return ('csharp');
     }
+    else if (val === 'javascript') {
+        return ('javascript');
+    }
     else return (val);
 }
 
@@ -98,6 +101,9 @@ export const langParserForSubmission = (val) => {
     }
     else if (val === 'python2') {
         return ('Python 2');
+    }
+    else if (val === 'javascript'){
+        return ('JavaScript');
     }
     else if (val === 'gpp') {
         return ('C++');

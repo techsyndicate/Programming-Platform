@@ -259,6 +259,7 @@ function Question() {
                                     <option value="gpp">C++</option>
                                     <option value="gcc">C</option>
                                     <option value="mcs">C#</option>
+                                    <option value="javascript">JavaScript</option>
                                 </select>
                             </div>
                         </div>
