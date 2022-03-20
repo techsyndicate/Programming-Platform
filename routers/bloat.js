@@ -27,8 +27,11 @@ bloat_router.use(cors(corsOptions))
 // Allowed hosts
 const allowedHosts = ['localhost', 'herokuapp.com'];
 const checkHosts = (req, res, next) => {
-    if (allowedHosts.includes(req.hostname)) {
-        return next();
+    console.log(req.hostname)
+    for (i in allowedHosts) {
+        if (req.hostname.includes(allowedHosts[i])) {
+            return next();
+        }
     }
     return res.sendStatus(403);
 }
@@ -39,6 +42,7 @@ bloat_router.use(bodyParser.json({
     parameterLimit: 100000,
     limit: '50mb'
 }));
+
 bloat_router.use(bodyParser.urlencoded({
     parameterLimit: 100000,
     limit: '50mb',
