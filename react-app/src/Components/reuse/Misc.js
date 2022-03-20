@@ -50,7 +50,7 @@ export const urlPrefix = () => {
         return "http://localhost:3200/"
     }
     else {
-        return "https://ts-prog.herokuapp.com/"
+        return window.location.origin + "/";
     }
 };
 
