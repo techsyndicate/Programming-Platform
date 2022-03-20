@@ -1,7 +1,8 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
-    path = require('path')
-cors = require('cors');
+    url = require('url'),
+    cors = require('cors');
+
 
 const bloat_router = express.Router();
 
@@ -10,10 +11,24 @@ bloat_router.use(express.static('public'));
 bloat_router.use(express.static('react-app/build'));
 
 //cors middleware
-const whitelist = ['http://ts-prog-frontend.trafficmanager.net', 'https://ts-prog-frontend.trafficmanager.net', 'http://localhost:3000', 'http://localhost:3200', 'http://ts-prog1.herokuapp.com', 'https://ts-prog1.herokuapp.com'];
+const whitelist = ['ts-prog1.herokuapp.com', 'localhost'];
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || whitelist.indexOf(origin) !== -1) {
+        if (origin) {
+            var urlParsed = url.parse(origin, true)
+            var included = false;
+            for (i in whitelist) {
+                if (urlParsed.hostname.includes(whitelist[i])) {
+                    included = true;
+                    callback(null, true);
+                }
+                else if (i == whitelist.length - 1 && !included) {
+                    console.log("not allowed", urlParsed.hostname);
+                    callback(new Error("Not allowed by CORS ORIGIN: " + urlParsed.hostname))
+                }
+            }
+        }
+        else if (!origin) {
             callback(null, true)
         } else {
             console.log(origin, "Not allowed by CORS ORIGIN policy")
@@ -25,9 +40,8 @@ const corsOptions = {
 bloat_router.use(cors(corsOptions))
 
 // Allowed hosts
-const allowedHosts = ['localhost', 'herokuapp.com','trafficmanager.net'];
+const allowedHosts = ['localhost', 'herokuapp.com'];
 const checkHosts = (req, res, next) => {
-    console.log(req.hostname)
     for (i in allowedHosts) {
         if (req.hostname.includes(allowedHosts[i])) {
             return next();
