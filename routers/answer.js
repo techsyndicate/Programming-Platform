@@ -24,34 +24,31 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     if (!req.user.discordUser.verified && req.user.emailVerified) {
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
     }
-    console.log('http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id)
-    try {
-        await Axios({
-            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
-            withCredentials: true,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: {
-                code: text,
-                input_exec: input.split("\n"),
-                authString: process.env.SERVER_AUTH_STRING
-            }
-        }).then(data => {
-            data.data.success = true;
-            if (data.data.data.length == 0) {
-                data.data.data = [("No Ouput On STDOUT")];
-            }
-            res.send(data.data)
-        })
-    } catch (err) {
+    await Axios({
+        url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+        withCredentials: true,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: {
+            code: text,
+            input_exec: input.split("\n"),
+            authString: process.env.SERVER_AUTH_STRING
+        }
+    }).then(data => {
+        data.data.success = true;
+        if (data.data.data.length == 0) {
+            data.data.data = [("No Ouput On STDOUT")];
+        }
+        res.send(data.data)
+    }).catch(err => {
         //console.log(err)
         res.send({
             "success": false,
             "msg": "Server Error Try Again in a few minutes" + err,
         })
-    }
+    })
 })
 
 // Submit Code Endpoint
