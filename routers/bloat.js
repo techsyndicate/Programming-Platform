@@ -10,7 +10,7 @@ bloat_router.use(express.static('public'));
 bloat_router.use(express.static('react-app/build'));
 
 //cors middleware
-const whitelist = ['http://localhost:3000', 'http://localhost:3200', 'https://ts-prog.herokuapp.com', 'https://ts-prog1.herokuapp.com/'];
+const whitelist = ['https://ts-prog-frontend.trafficmanager.net/', 'http://localhost:3000', 'http://localhost:3200', 'https://ts-prog.herokuapp.com', 'https://ts-prog1.herokuapp.com/'];
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -25,7 +25,7 @@ const corsOptions = {
 bloat_router.use(cors(corsOptions))
 
 // Allowed hosts
-const allowedHosts = ['localhost', 'herokuapp.com'];
+const allowedHosts = ['localhost', 'herokuapp.com','trafficmanager.net'];
 const checkHosts = (req, res, next) => {
     console.log(req.hostname)
     for (i in allowedHosts) {
