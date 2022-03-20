@@ -12,6 +12,12 @@ import Axios from 'axios';
 import './Question.css'
 import { Notyf } from 'notyf';
 
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+
+import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
+
+
 function Question() {
     const notyf = new Notyf();
     const { questionid, questPart } = useParams();
@@ -243,7 +249,7 @@ function Question() {
                         <br></br>
                         <div className='question-problem-markdown' id='question-problem-markdown'>
                             <div className='question-markdown-comp'>
-                                <ReactMarkdown children={data.ques} remarkPlugins={[remarkGfm]} />
+                                <ReactMarkdown children={data.ques} remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex]} />
                                 <br></br>
                                 <br></br>
                             </div>
