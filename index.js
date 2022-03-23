@@ -69,13 +69,14 @@ app.use('/email-back', email_router)
 app.use((err, req, res, next) => {
     ReportCrash(err.stack.toString())
     ReportWebVital("App Has Crashed, Please Check The Logs, Trying To Restart On My Own!");
-    res.render('error.ejs', { error: err.stack.toString(), redirect: '/' })
     next(err)
 })
 
 function serverHealth() {
     CheckServerHealth('http://' + process.env.SERVER_BACKEND_VM + '/language').then((res) => {
-        ReportCodeExec(res.status + ' Status On Code Exec Server')
+        if (res.status !== 200) {
+            ReportCodeExec('Code Execution Service Has Crashed Please Check <@823237564130525184>')
+        }
     })
 }
 serverHealth();
