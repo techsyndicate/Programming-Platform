@@ -110,10 +110,6 @@ auth_router.get('/logout', (req, res) => {
     res.send("Successfully Logged Out");
 })
 
-auth_router.get('/crashme', (req, res) => {
-    throw new ReferenceError("This Is A Test I'm Crashing!")
-})
-
 // Update User Bio
 auth_router.post('/bio', checkAuthenticated, (req, res, next) => {
     const { bio } = req.body;
