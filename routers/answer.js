@@ -21,7 +21,8 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
     if (req.user.banned) {
         return res.send({ "success": false, msg: "You are banned" })
     }
-    if (!req.user.discordUser.verified && req.user.emailVerified) {
+    if (!req.user.discordUser.verified || !req.user.emailVerified) {
+        console.log()
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
     }
     await Axios({
@@ -43,7 +44,6 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
         }
         res.send(data.data)
     }).catch(err => {
-        //console.log(err)
         res.send({
             "success": false,
             "msg": "Server Error Try Again in a few minutes" + err,

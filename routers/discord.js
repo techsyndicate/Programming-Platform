@@ -10,6 +10,7 @@ const userSchema = require('../schema/userSchema'),
 
 // Vars
 var scopes = ['identify', 'email', 'guilds'];
+var prompt = 'none';
 
 // discord auth
 discord_router.get('/auth', checkAuthenticated, (req, res) => {

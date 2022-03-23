@@ -22,7 +22,7 @@ auth_router.post("/register", async (req, res, next) => {
     if (username.length < 3 || username.length > 64) {
         errors.push({ msg: "username should be in between 4 and 64 characters" })
     }
-    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~/\s/g]/;
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~/\s+]/;
     if (specialChars.test(username)) {
         errors.push({ msg: "username should not contain special characters or spaces" })
     }
@@ -71,7 +71,7 @@ auth_router.post('/login', (req, res, next) => {
 
 // Discord Login
 auth_router.get('/discord-login', (req, res, next) => {
-    res.redirect(`https://discord.com/api/oauth2/authorize?response_type=code&client_id=${process.env.DISCORD_CLIENT_ID}&scope=${encodeURI(scopes.join(' '))}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}&prompt=consent`);
+    res.redirect(`https://discord.com/api/oauth2/authorize?response_type=code&client_id=${process.env.DISCORD_CLIENT_ID}&scope=${encodeURI(scopes.join(' '))}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}&prompt=none`);
 })
 
 // Public Profiles
