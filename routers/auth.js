@@ -112,6 +112,9 @@ auth_router.get('/logout', (req, res) => {
 
 // Update User Bio
 auth_router.post('/bio', checkAuthenticated, (req, res, next) => {
+    if (req.user.bio){
+        res.send({'sucess': false, 'msg': 'Bio already Set'});
+    }
     const { bio } = req.body;
     User.findOneAndUpdate({ email: req.user.email }, { $set: { bio: bio } }, { new: true }).then(_ => {
         res.send({ sucess: true });

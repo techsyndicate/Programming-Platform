@@ -13,14 +13,13 @@ const ansSchema = new mongoose.Schema({
         type: String,
         default: dateStringWithTime
     },
-    input: reqString,
-    quesid: reqString,
+    input: {type: String, required: false},
     userid: reqString,
     ansPython: reqString,
     language: { type: String, required: false, default: "python3" }
 })
 
-var AnsSchema = mongoose.model("Answer", ansSchema);
+var RunSchema = mongoose.model("Running", ansSchema);
 
 // Export Schema
-module.exports = AnsSchema
+module.exports = RunSchema

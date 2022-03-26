@@ -10,6 +10,7 @@ const { isValidObjectId } = require('mongoose'),
     { QuesSchema } = require('../schema/questionSchema'),
     { checkAuthenticated } = require('../utilities/passportReuse');
 const eventSchema = require('../schema/eventSchema');
+const RunSchema = require('../schema/runningSchema');
 
 // Run Code Endpoint
 answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
@@ -25,28 +26,38 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
         console.log()
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
     }
-    await Axios({
-        url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
-        withCredentials: true,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: {
-            code: text,
-            input_exec: input.split("\n"),
-            authString: process.env.SERVER_AUTH_STRING
-        }
-    }).then(data => {
-        data.data.success = true;
-        if (data.data.data.length == 0) {
-            data.data.data = [("No Ouput On STDOUT")];
-        }
-        res.send(data.data)
-    }).catch(err => {
-        res.send({
-            "success": false,
-            "msg": "Server Error Try Again in a few minutes" + err,
+    await new RunSchema({
+        input: input,
+        userid: req.user.id,
+        ansPython: text,
+        language: req.params.id
+    }).save().then(async (dock) => {
+        await Axios({
+            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+            withCredentials: true,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                code: text,
+                input_exec: input.split("\n"),
+                authString: process.env.SERVER_AUTH_STRING
+            }
+        }).then(async (data) => {
+            data.data.success = true;
+            if (data.data.data.length == 0) {
+                data.data.data = [("No Ouput On STDOUT")];
+            }
+            await RunSchema.findByIdAndDelete(dock._id).then(() => {
+                console.log('Successfully Ran Code in ' + dock.language);
+            })
+            res.send(data.data)
+        }).catch(err => {
+            res.send({
+                "success": false,
+                "msg": "Server Error Try Again in a few minutes" + err,
+            })
         })
     })
 })

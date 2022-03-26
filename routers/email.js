@@ -25,6 +25,9 @@ const transporter = nodemailer.createTransport({
 
 // Send Mail To User
 email_router.get('/send', checkAuthenticated, (req, res) => {
+    if (req.user.emailVerified === true) {
+        return res.send({ success: false, msg: 'email already verified' });
+    }
     let email = new emailQueueSchema({
         email: req.user.email,
         status: false,
