@@ -24,7 +24,7 @@ function PublicProfile() {
             setData(res.data);
             setlogged(true);
         })
-    });
+    },[]);
 
     return (
         <div className='profile-container-root'>

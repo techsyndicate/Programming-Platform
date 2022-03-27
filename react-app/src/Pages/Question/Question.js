@@ -147,6 +147,10 @@ function Question() {
             })
         }
     }
+    const openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
+    }
 
     async function submitCode() {
         if (verifyLogged(true) === true) {
@@ -169,7 +173,7 @@ function Question() {
                 if (!data.data.success) {
                     return notyf.error(data.data.msg);
                 }
-                window.location.href = '/submissions/' + data.data.data._id;
+                openInNewTab('/submissions/' + data.data.data._id);
             })
         }
     }
@@ -277,7 +281,8 @@ function Question() {
                                 defaultValue={code}
                                 onChange={(newValue) => { setCode(newValue); }}
                                 theme="vs-dark"
-                                style={{ borderRadius: '5px' }}
+                                options={{fontSize: '18px', letterSpacing: '0.5px'}}
+                                style={{ borderRadius: '5px'}}
                             />
                         </div>
                         <div className='question-input'>
