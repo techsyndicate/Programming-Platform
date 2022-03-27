@@ -46,7 +46,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
             }
         }).then(async (data) => {
             data.data.success = true;
-            if (data.data.data.length == 0) {
+            if (data.hasOwnProperty('data') && data.data.hasOwnProperty('data') && data.data.data.length == 0) {
                 data.data.data = [("No Ouput On STDOUT")];
             }
             await RunSchema.findByIdAndDelete(dock._id).then(() => {
