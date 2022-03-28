@@ -28,6 +28,11 @@
     border-radius: 0.4vw;
     font-size: 1.2rem;
     margin-bottom: 1.5vw;
+    padding: 1vw;
+}
+
+.login-input:focus {
+    outline: none;
 }
 
 .login-input-text {

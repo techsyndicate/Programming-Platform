@@ -15,6 +15,15 @@
     align-items: center;
 }
 
+.register-redirect {
+    text-decoration: none;
+    color: #f9f9f9;
+}
+
+.register-redirect:hover {
+    text-decoration: underline#16e16e;
+}
+
 .register-form {
     display: flex;
     flex-direction: column;
@@ -25,8 +34,13 @@
     height: 2.5vw;
     border: 0.1vh solid #d3d3d3;
     border-radius: 0.4vw;
+    padding: 1vw;
     font-size: 1.2rem;
     margin-bottom: 0.5vw;
+}
+
+.register-input:focus {
+    outline: none;
 }
 
 .register-input-text {
