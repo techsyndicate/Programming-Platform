@@ -63,7 +63,7 @@ function NavigationBar() {
                         <li>
                             <HashLink to='/login'
                                 className='nav-links-mobile' onClick={closeMobileMenu}>
-                                SingIn/SingUp
+                                SignIn
                             </HashLink>
                         </li>
                     )}
@@ -74,7 +74,7 @@ function NavigationBar() {
                     </div>
                     :
                     <div className='button-show-mobile'>
-                        <Button buttonStyle='btn--primary--black' offset='80' path='/login'>SignIn/SignUp</Button>
+                        <Button buttonStyle='btn--primary--black' offset='80' path='/login'>SignIn</Button>
                     </div>
                 }
             </div>
