@@ -31,12 +31,12 @@ function Index() {
                         GUIDELINES
                     </div>
                     <ul className="rules">
-                        <li>To Practise or participate in a event, you must create a profile on our platform and link the same with discord and verify your email on both discord and our platform.</li>
-                        <li>Submit Code, Run Code Etc Won't Work Until The Above Condition is met.</li>
-                        <li>To Participate in a event, you must be on that event's discord server. Feel Free To Practise as much as you like!</li>
-                        <li>The Submissions, i.e output of your code is case sensitive, i.e "Hello" And "hello" Will be interpreted differently.</li>
+                        <li>To practice or participate in an event, you must create a profile on our platform and link the same with discord and verify your email on both discord and our platform.</li>
+                        <li>You will not be able to run or submit your code until the verifications are completed.</li>
+                        <li>To participate in an event, you must be on that event's discord server. Feel free to practice as much as you like!</li>
+                        <li>The output of your code is case sensitive, "Hello" And "hello" will be interpreted differently.</li>
                         <li>We have a zero-tolerance policy for cheating, and anyone found doing so will be disqualified immediately.</li>
-                        <li>If you're new to the concept of Programming, check out the learning resource <a rel="noreferrer" href="https://techsyndicate.club/resources/programming" target="_blank" style={{ color: "#16e16e" }}>here</a>.</li>
+                        <li>If you're new to the concept of programming, check out the learning resource <a rel="noreferrer" href="https://techsyndicate.club/resources/programming" target="_blank" style={{ color: "#16e16e" }}>here</a>.</li>
                     </ul>
                 </div>
             </div>

@@ -79,7 +79,7 @@ function Register() {
                     <button className='register-submit' onClick={register}>Submit</button>
                 </form>
             </div>
-            <p className='register-redirect-p'>Don't Have An Account? <Link to='/Login' className='register-redirect'>Login</Link></p>
+            <p className='register-redirect-p'>Already Have An Account? <Link to='/Login' className='register-redirect'>Login</Link></p>
         </div>
     )
 }
