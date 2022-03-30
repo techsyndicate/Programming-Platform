@@ -2,7 +2,7 @@
     background-color: #1e1e1e;
     border-radius: 6px;
     display: block;
-    font-size: 85%;
+    font-size: 1vw;
     line-height: 1.45;
     overflow: auto;
     padding: 16px;
@@ -17,6 +17,10 @@
     word-spacing: normal;
 }
 
+.question-markdown-comp p, .question-markdown-comp li {
+    font-size: 1vw;
+}
+
 p>code,
 li>code,
 dd>code,
@@ -25,30 +29,31 @@ td>code {
     color: #f9f9f9f9;
     word-wrap: break-word;
     box-decoration-break: clone;
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
+    padding: .1vw .3vw .2vw;
+    border-radius: .2vw;
     width: 75vw;
 }
 
 .navar-min-80 {
     width: 80vw;
+    font-size: 1vw;
 }
 
 .question-all-root h3 {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     color: #fff;
 }
 
 .question-all-root h4 {
-    font-size: 1.2rem;
+    font-size: 1.2vw;
 }
 
 .question-all-root h5 {
-    font-size: 1rem;
+    font-size: 1vw;
 }
 
 .question-navbar {
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     top: 0;
     z-index: 999;
     font-family: 'Roboto', 'PT sans', sans-serif;
@@ -59,14 +64,14 @@ td>code {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 80px;
+    height: 8vw;
     max-width: 100vw;
 }
 
 .question-nav-menu {
     display: grid;
     grid-template-columns: repeat(5, auto);
-    grid-gap: 10px;
+    grid-gap: 1vw;
     list-style: none;
     text-align: center;
     width: 60vw;
@@ -74,7 +79,7 @@ td>code {
 }
 
 .question-nav-item {
-    height: 80px;
+    height: 8vw;
 }
 
 .question-nav-links {
@@ -82,12 +87,12 @@ td>code {
     display: flex;
     align-items: center;
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5vw 1vw;
     height: 100%;
 }
 
 .question-nav-links:hover {
-    border-bottom: 4px solid #16e16e;
+    border-bottom: 4vw solid #16e16e;
     transition: all 0.2s ease-out;
 }
 
@@ -115,10 +120,20 @@ td>code {
     padding: 1.5vw;
     border-radius: 1vw;
     background-color: #1e1e1e;
+    font-size: 1vw;
+}
+
+.question-problem-markdown h4 {
+    font-size: 1.2vw;
+}
+
+.question-problem-markdown h5 {
+    font-size: 1vw;
 }
 
 .question-title {
     width: 80vw;
+    font-size: 2.5vw;
 }
 
 .question-buttons {
@@ -128,18 +143,25 @@ td>code {
 
 .question-buttons Button {
     margin-right: 1vw;
+    width: max-content;
+    font-size: 1vw;
 }
 
 .question-input {
     width: 80vw;
     display: flex;
     flex-direction: column;
+    font-size: 1vw;
 }
 
 .problem-outputs {
     width: 80vw;
     display: flex;
     flex-direction: column;
+}
+
+.problem-outputs p {
+    font-size: 1vw;
 }
 
 .submissions-card {
@@ -163,9 +185,9 @@ td>code {
     margin-right: 4vw;
 }
 
-.submissions-card-header h4 {
+.submissions-card-header h4, .submissions-card-header h2 {
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
 }
 
 .submissions-card-button {
@@ -179,6 +201,7 @@ td>code {
 
 .submissions-card p {
     color: #fff;
+    font-size: 1vw;
 }
 
 .submission-card-status {
@@ -213,7 +236,7 @@ select::-ms-expand {
     border: 1px solid var(--select-border);
     border-radius: 0.25em;
     padding: 0.25em 0.5em;
-    font-size: 1.25rem;
+    font-size: 1.25vw;
     cursor: pointer;
     line-height: 1.1;
     color: #f1f1f1;
@@ -260,6 +283,7 @@ option {
 
 .question-all-root h2 {
     color: #fff;
+    font-size: 1.5vw;
 }
 
 .question-all-root h1 {
@@ -286,10 +310,26 @@ textarea {
     background-color: #121212;
     color: #f1f1f1;
     padding: 1vw;
+    font-size: 1vw;
+}
+
+.question-nav-menu {
+    font-size: 1.5vw;
 }
 
 @media screen and (max-width: 760px) {
     .select {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .submissions-card-header h4, .submissions-card-header h2 {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+    .submissions-card p {
+        color: #fff;
+        font-size: 1rem;
     }
 }

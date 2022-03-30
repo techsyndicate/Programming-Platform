@@ -12,7 +12,7 @@ function Index() {
                 <div className='landing-container'>
                     <div className='landing-content'>
                         <div className='landing-head-img'>
-                            <img alt='im-lnd' style={{marginRight: '18px', width: '100px', height: '100px' }} src='/logo.png'></img>
+                            <img alt='im-lnd' class='im-lnd' src='/logo.png'></img>
                             <h1 className='landing-head'>- Prog</h1>
                         </div>
                         <div className='landing-redirects'>
@@ -21,7 +21,7 @@ function Index() {
                         </div>
                     </div>
                     <div>
-                        <img alt='group 27' style={{ width: '350px' }} src='https://cdn.discordapp.com/attachments/859672291557638154/950773947752910930/Group_27.png'></img>
+                        <img alt='group 27' className='group-27' style={{ width: '20vw' }} src='https://cdn.discordapp.com/attachments/859672291557638154/950773947752910930/Group_27.png'></img>
                     </div>
                 </div>
             </div>

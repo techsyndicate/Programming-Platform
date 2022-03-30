@@ -1,6 +1,6 @@
 .navbar {
   background: linear-gradient(90deg, rgb(2, 2, 2) 0%, rgb(2, 2, 2) 100%);
-  font-size: 1.2rem;
+  font-size: 1.2vw;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 6vw;
   max-width: 100vw;
 }
 
@@ -21,7 +21,7 @@
   justify-self: start;
   cursor: pointer;
   text-decoration: none;
-  font-size: 2rem;
+  font-size: 2vw;
   display: flex;
   align-items: center;
 }
@@ -43,7 +43,7 @@
 }
 
 .nav-item {
-  height: 80px;
+  height: 8vw;
   width: 100%;
 }
 
@@ -73,11 +73,26 @@
   display: none;
 }
 
+.button-show-mobile Button {
+  font-size: 1.2vw !important;
+}
+
 @media screen and (max-width: 960px) {
-  .button-show-mobile{
+
+  .nav-item, .navbar-container {
+    font-size: 1.2rem;
+    height: 80px;
+  }
+
+  .navbar-logo {
+    font-size: 2rem;
+  }
+
+  .button-show-mobile {
     display: none;
   }
-   .NavbarItems {
+
+  .NavbarItems {
     position: relative;
   }
 

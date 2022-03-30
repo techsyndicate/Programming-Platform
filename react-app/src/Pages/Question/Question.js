@@ -282,7 +282,7 @@ function Question() {
                                 defaultValue={code}
                                 onChange={(newValue) => { setCode(newValue); }}
                                 theme="vs-dark"
-                                options={{fontSize: '18px', letterSpacing: '0.5px'}}
+                                options={{fontSize: '20vw', letterSpacing: '0.5px'}}
                                 style={{ borderRadius: '5px'}}
                             />
                         </div>

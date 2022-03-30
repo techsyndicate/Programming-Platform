@@ -4,20 +4,15 @@
     align-items: center;
 }
 
-.submission-card {
-    margin: 3vh;
+.submissions-card {
+    padding: 3vw;
     display: flex;
-    width: 80vw;
+    height: 4vw;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #d6d6d6;
 }
 
-.submission-card Button {
+.submissions-card Button {
     margin-right: 4vw;
-}
-
-.submission-card H1{
-    margin-left: 4vw;
 }
