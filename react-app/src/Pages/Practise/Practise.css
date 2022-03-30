@@ -5,14 +5,15 @@
 }
 
 .submissions-card {
-    padding: 3vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
     display: flex;
-    height: 4vw;
+    min-height: 2vw;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 .submissions-card Button {
-    margin-right: 4vw;
+    margin-right: 1vw;
 }

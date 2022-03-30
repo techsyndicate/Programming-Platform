@@ -18,6 +18,7 @@
 .register-redirect {
     text-decoration: none;
     color: #f9f9f9;
+    font-size: 1.2vw;
 }
 
 .register-redirect:hover {
@@ -35,7 +36,7 @@
     border: 0.1vh solid #d3d3d3;
     border-radius: 0.4vw;
     padding: 1vw;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     margin-bottom: 0.5vw;
 }
 
@@ -45,7 +46,7 @@
 
 .register-input-text {
     margin-bottom: 0.5vw;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
 }
 
 .register-submit {
@@ -55,7 +56,7 @@
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     color: white;
 }
 
@@ -65,7 +66,16 @@
     color: #000;
 }
 
+.register-redirect-p {
+    font-size: 1.2vw;
+}
+
 @media screen and (max-width: 960px) {
+
+    .register-input-text, .register-redirect, .register-redirect-p {
+        font-size: 1.2rem;
+    }
+
     .register-input {
         height: 8vw;
         border-radius: 2vw;
@@ -77,5 +87,6 @@
 
     .register-submit {
         height: 10vw;
+        font-size: 1.2rem;
     }
 }

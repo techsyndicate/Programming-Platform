@@ -54,7 +54,7 @@ function Login() {
                     <button className='login-submit' onClick={() => { window.location.href = '/auth/discord-login' }}>Login With Discord <i class="fab fa-discord"></i></button>
                 </form>
             </div>
-            <p>Don't Have An Account? <Link to='/Register' className='register-redirect'>Register</Link></p>
+            <p className='register-redirect-p'>Don't Have An Account? <Link to='/Register' className='register-redirect'>Register</Link></p>
         </div>
     )
 }

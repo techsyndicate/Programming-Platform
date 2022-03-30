@@ -48,7 +48,9 @@ async function ReportCrash(content) {
         url: process.env.DISCORD_WEBHOOKS_CRASH_REPORT,
         method: 'POST',
         data: { content }
-    })
+    }).then((res) => { }).catch((err) => {
+        console.log(err);
+    });
 }
 
 async function ReportCodeExec(content) {
@@ -56,7 +58,9 @@ async function ReportCodeExec(content) {
         url: process.env.DISCORD_WEBHOOKS_CODE_EXEC_VITALS,
         method: 'POST',
         data: { content }
-    })
+    }).then((res) => { }).catch((err) => {
+        console.log(err);
+    });
 }
 
 async function CheckServerHealth(url) {

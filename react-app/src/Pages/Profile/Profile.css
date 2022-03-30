@@ -34,6 +34,11 @@
 
 .profile-bio-text h2 {
     margin-right: 10px;
+    font-size: 1.5vw;
+}
+
+.profile-info-div h3 {
+    font-size: 1.2vw;
 }
 
 .flex-center {
@@ -57,7 +62,7 @@
 }
 
 .profile-title {
-    font-size: 2.5rem;
+    font-size: 2.5vw;
     color: #16e16e;
 }
 

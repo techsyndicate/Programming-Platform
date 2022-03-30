@@ -28,22 +28,24 @@ function PractiseQuestions() {
         <div className='practise-questions-root'>
             {
                 loaded ? (
-                    <div className='submission-container'>
-                        <h1 className='title-ohk'>Practice {practiceid}!</h1>
-                        <br></br>
-                        {data.data.map((item, index) => {
-                            return (
-                                <div className='submissions-card white'>
-                                    <div className='submissions-card-header'>
-                                        <h2>{item.name}</h2>
-                                        <p className='submission-card-status'>Staus: &nbsp; {item.accepted_code ? (<div className='Accepted'>Solved</div>) : (<div className='Not-Accepted'>Pending Solution</div>)}</p>
+                    <div className='pract-content'>
+                        <div className='submission-container'>
+                            <h1 className='title-ohk'>Practice {practiceid}!</h1>
+                            <br></br>
+                            {data.data.map((item, index) => {
+                                return (
+                                    <div className='submissions-card white'>
+                                        <div className='submissions-card-header'>
+                                            <h2>{item.name}</h2>
+                                            <p className='submission-card-status'>Staus: &nbsp; {item.accepted_code ? (<div className='Accepted'>Solved</div>) : (<div className='Not-Accepted'>Pending Solution</div>)}</p>
+                                        </div>
+                                        <div className='submissions-card-button'>
+                                            <Button path={'/question/' + item.id} buttonStyle='btn--primary--black'>{item.accepted_code ? 'Solved!' : 'Solve!'}</Button>
+                                        </div>
                                     </div>
-                                    <div className='submissions-card-button'>
-                                        <Button path={'/question/' + item.id} buttonStyle='btn--primary--black'>{item.accepted_code ? 'Solved!' : 'Solve!'}</Button>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
+                        </div>
                     </div>
                 ) : (
                     <div className='loading'>

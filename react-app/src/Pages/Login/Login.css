@@ -26,7 +26,7 @@
     height: 2.5vw;
     border: 0.1vh solid #d3d3d3;
     border-radius: 0.4vw;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     margin-bottom: 1.5vw;
     padding: 1vw;
 }
@@ -37,7 +37,7 @@
 
 .login-input-text {
     margin-bottom: 0.5vw;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
 }
 
 .login-submit {
@@ -46,9 +46,10 @@
     background-color: #16e16e;
     border-radius: 0.4rem;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.2vw;
     color: white;
 }
+
 .login-submit:hover {
     background-color: #fafafa;
     transition: 500ms;
@@ -60,6 +61,11 @@
 }
 
 @media screen and (max-width: 960px) {
+
+    .login-input-text, .login-input, .login-submit {
+        font-size: 1.2rem;
+    }
+
     .login-input {
         height: 8vw;
         border-radius: 2vw;
