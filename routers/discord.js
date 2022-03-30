@@ -83,7 +83,7 @@ discord_router.get('/login-callback', async (req, res, next) => {
                     }
                 })
             } else {
-                res.render('error', { error: "This Discord Account Is Not Linked With Any Account On Our Platform At The Moment!!", redirect: '/Register' });
+                res.render('error', { error: "Please create an account and link your discord before trying to login!", redirect: '/Register' });
             }
         });
     }).catch(err => {
