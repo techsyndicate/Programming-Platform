@@ -72,22 +72,7 @@ function EventQuestions() {
         }
     }
 
-    function getPractises() {
-        Axios({ url: urlPrefix() + 'event-back/' + eventid, withCredentials: true }).then(res => {
-            console.log(res.data);
-            if (res.data.success !== true) {
-                alert(res.data.msg);
-                window.location.href = '/Events'
-            }
-            setData(res.data);
-            setLoaded(true);
-        })
-    }
-
-    if (eventpart.toLowerCase() === "questions") {
-        showProblem()
-        hideSubmission()
-    } else if (eventpart.toLowerCase() === "leaderboard") {
+    function showLeaderboard() {
         if (logged === true) {
             hideProblem()
             showSubmission()
@@ -99,8 +84,27 @@ function EventQuestions() {
         } else {
             window.location.href = `/Events/${eventid}/Questions`;
         }
-    } else {
-        window.location.href = `/Events/${eventid}/Questions`;
+    }
+
+    function getPractises() {
+        Axios({ url: urlPrefix() + 'event-back/' + eventid, withCredentials: true }).then(res => {
+            console.log(res.data);
+            if (res.data.success !== true) {
+                alert(res.data.msg);
+                window.location.href = '/Events'
+            }
+            setData(res.data);
+            setLoaded(true);
+            if (eventpart.toLowerCase() === "questions") {
+                showProblem()
+                hideSubmission()
+            } else if (eventpart.toLowerCase() === "leaderboard") {
+                showLeaderboard()
+            } else {
+                window.location.href = `/Events/${eventid}/Questions`;
+            }
+
+        })
     }
 
     return (
@@ -115,13 +119,13 @@ function EventQuestions() {
                                         <ul className='question-nav-menu'>
                                             <li className='question-nav-item'>
                                                 <Link
-                                                    to={`/Events/${eventid}/Questions`} className='question-nav-links'>
+                                                    to={`/Events/${eventid}/Questions`} className='question-nav-links' onClick={()=>{showProblem(); hideSubmission();}}>
                                                     Questions
                                                 </Link>
                                             </li >
                                             <li className='question-nav-item'>
                                                 <Link
-                                                    to={`/Events/${eventid}/LeaderBoard`} className='question-nav-links'>
+                                                    to={`/Events/${eventid}/LeaderBoard`} className='question-nav-links' onClick={() => showLeaderboard()}>
                                                     Leaderboard
                                                 </Link>
                                             </li>
@@ -147,7 +151,7 @@ function EventQuestions() {
                                                 </div>
                                                 <div className='submissions-card-button'>
                                                     <Button
-                                                        path={'/question/' + item.id}
+                                                        path={'/question/' + item.id + '/Problem '}
                                                         buttonStyle='btn--primary--black'>
                                                         {item.accepted_code ? 'Solved!' : 'Solve!'}
                                                     </Button>

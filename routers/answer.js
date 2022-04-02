@@ -77,6 +77,8 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
     if (!req.user.discordUser.verified && req.user.emailVerified) {
         return res.send({ "success": false, msg: "Pls Complete Profile, i.e Link Discord, Verify Email And Make Sure Email Is Verified On Discord." })
     }
+
+    // Check if Question is Valid
     QuesSchema.findById(quesid, async (err, ques) => {
         var ans_schema = new AnsSchema({
             quesid: quesid,
@@ -86,59 +88,67 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
             language: language
         })
         await Promise.all(ques.testcases.map(testcase => {
+            // Make API Call to Run Code and Return the output
             return new Promise(async (resolve, reject) => {
-                try {
-                    await Axios({
-                        url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
-                        withCredentials: true,
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            code: text,
-                            input_exec: testcase.input.split("\n"),
-                            authString: process.env.SERVER_AUTH_STRING
-                        }
-                    }).then(data => {
-                        if (data.data.data.length == 0) {
-                            data.data.data.push("No Ouput On STDOUT");
-                        }
-                        var newTestcase = {
-                            input: testcase.input,
-                            output: data.data.data,
-                            output_compare: testcase.output_compare,
-                        }
-                        if (data.data.data.join('\n') === testcase.output_compare) {
-                            newTestcase.passed = true;
-                        }
-                        resolve(newTestcase);
-                    })
-                } catch (err) {
+                await Axios({
+                    url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+                    withCredentials: true,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        code: text,
+                        input_exec: testcase.input.split("\n"),
+                        authString: process.env.SERVER_AUTH_STRING
+                    }
+                }).then(data => {
+                    if (data.data.data.length == 0) {
+                        data.data.data.push("No Ouput On STDOUT");
+                    }
+                    var newTestcase = {
+                        input: testcase.input,
+                        output: data.data.data,
+                        output_compare: testcase.output_compare,
+                    }
+                    if (data.data.data.join('\n') === testcase.output_compare) {
+                        newTestcase.passed = true;
+                    }
+                    resolve(newTestcase);
+                }).catch((err) => {
                     testcase.toObject();
                     testcase.serverError = true;
                     testcase.output = "Server Error Try Again in a few minutes " + err;
                     resolve(testcase);
-                }
+                })
             })
         })).then(async data => {
             ans_schema.testcases = data;
-            if (data.every(testcase => testcase.serverError)) {
+
+            // Check if server failed on any request
+            if (data.some(testcase => testcase.serverError)) {
                 return res.send({ "success": false, msg: data.map(testcase => { if (testcase.output[0].includes('Server Error Try Again in a few minutes')) { return testcase.output } })[0][0] })
             }
+
+            // Check if all testcases passed
             if (ans_schema.testcases.every(item => item.passed)) {
                 ans_schema.accepted = true;
                 ques.accepted_submissions.push({ submissionid: ans_schema._id.toString(), userid: userid.toString() });
+
+                // If question is of event type
                 if (ques.practise === false) {
 
-                    // Update Leaderboard
+                    // Get the event
                     EventSchema.findById(ques.prac_evenid).then(event => {
+                        // Get Points of the current question
                         const GetPoints = () => {
                             for (const item of event.questions) {
                                 if (item.questionid === ques.id) { return item.points }
                             }
                         }
-                        const Magic = () => {
+
+                        // Check if user is already in leaderboard
+                        const CheckIfUserExistsInLb = () => {
                             for (const item of event.leaderboard) {
                                 if (item.userid === req.user.id) {
                                     let index = event.leaderboard.indexOf(item);
@@ -146,9 +156,12 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                                 }
                             }
                         }
-                        let magic = Magic();
+                        let checkIfUserExistsInLb = CheckIfUserExistsInLb();
+
+                        // if the event has not ended
                         if (((new Date() - new Date(event.endTime)) / 60000) < 0 && ((new Date() - new Date(event.startTime)) / 60000) > 0) {
-                            if (magic === undefined) {
+                            // if user is not already in lb add him
+                            if (checkIfUserExistsInLb === undefined) {
                                 event.leaderboard.push({
                                     name: req.user.username,
                                     time: new Date().toString(),
@@ -158,19 +171,24 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                                     solvedquestions: [{ questionid: ques.id, points: GetPoints() }]
                                 })
                             }
-                            if (magic !== undefined && !event.leaderboard[magic.index].solvedquestions.map(item => item.questionid).includes(ques.id)) {
-                                event.leaderboard[magic.index].solvedquestions.push({ questionid: ques.id, points: GetPoints() })
-                                event.leaderboard[magic.index].points = (parseInt(event.leaderboard[magic.index].points) + parseInt(GetPoints())).toString()
-                                event.leaderboard[magic.index].time = new Date().toString()
+                            // if user is already in lb update him and add his solved question
+                            if (checkIfUserExistsInLb !== undefined && !event.leaderboard[checkIfUserExistsInLb.index].solvedquestions.map(item => item.questionid).includes(ques.id)) {
+                                event.leaderboard[checkIfUserExistsInLb.index].solvedquestions.push({ questionid: ques.id, points: GetPoints() })
+                                event.leaderboard[checkIfUserExistsInLb.index].points = (parseInt(event.leaderboard[checkIfUserExistsInLb.index].points) + parseInt(GetPoints())).toString()
+                                event.leaderboard[checkIfUserExistsInLb.index].time = new Date().toString()
                             }
-                            event.leaderboard.sort((a, b) => {
-                                if (a.points > b.points) {
+                            // sort the leaderboard
+                            event.leaderboard = event.leaderboard.sort((a, b) => {
+                                let a1 = parseInt(a.points);
+                                let b2 = parseInt(b.points);
+                                if (a1 > b2) {
                                     return -1;
                                 }
                                 else {
                                     return 1;
                                 }
                             })
+                            // save the event
                             event.save().then(() => {
                                 console.log('LeaderBoard Updated')
                             })
@@ -179,6 +197,8 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                 }
                 ques.save()
             }
+
+            // Save the answer
             ans_schema.save().then((ans_submit) => {
                 res.send({ "success": true, data: ans_submit })
             })
@@ -214,11 +234,11 @@ answer_router.get('/submissions/:submissionid', checkAuthenticated, async (req, 
     var submissionid = req.params.submissionid;
     AnsSchema.findById(submissionid).then(answers => {
         if (!answers) {
-            res.send({
+            return res.send({
                 success: false
             })
         }
-        if (answers && !(answers.userid == req.user.id)) {
+        if (answers.userid !== req.user.id && !req.user.admin) {
             return res.send({ "success": false, msg: "You are not authorized to view this submission" })
         }
         answers = JSON.parse(JSON.stringify(answers));

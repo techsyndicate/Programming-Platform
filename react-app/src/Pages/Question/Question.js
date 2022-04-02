@@ -62,16 +62,6 @@ function Question() {
         })
     }
 
-    useEffect(() => {
-        checkQuestion();
-        setInterval(() => {
-            if (document.getElementById('question-container') !== null) {
-                setLoaded(true);
-            }
-        }, 500);
-        verifyLogged(false)
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
     function showProblem() {
         if (loaded === true) {
             document.getElementById('question-container').style.display = 'flex';
@@ -147,7 +137,7 @@ function Question() {
             })
         }
     }
-    
+
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
         if (newWindow) newWindow.opener = null
@@ -180,7 +170,7 @@ function Question() {
     }
 
     async function getSubmissions() {
-        if (questPart.toLowerCase() === 'submissions' && submissionData === null) {
+        if (submissionData === null) {
             Axios({
                 url: urlPrefix() + 'ans/submissions/all/' + questionid,
                 method: 'GET',
@@ -199,25 +189,35 @@ function Question() {
         setLanguage(langParser(val));
     }
 
-    if (questPart.toLowerCase() === "problem") {
-        showProblem()
-        hideSubmission()
-    } else if (questPart.toLowerCase() === "submissions") {
-        if (logged === true) {
-            hideProblem()
-            showSubmission()
-            getSubmissions()
-        }
-        else if (verifyLogged(false) === true) {
-            hideProblem()
-            showSubmission()
-            getSubmissions()
+    useEffect(() => {
+        checkQuestion();
+        getSubmissions();
+        setInterval(() => {
+            if (document.getElementById('question-container') !== null) {
+                setLoaded(true);
+            }
+        }, 500);
+        verifyLogged(false)
+        if (questPart.toLowerCase() === "problem") {
+            showProblem()
+            hideSubmission()
+        } else if (questPart.toLowerCase() === "submissions") {
+            if (logged === true) {
+                hideProblem()
+                showSubmission()
+            }
+            else if (verifyLogged(false) === true) {
+                hideProblem()
+                showSubmission()
+            } else {
+                window.location.href = `/question/${questionid}/Problem`;
+            }
         } else {
             window.location.href = `/question/${questionid}/Problem`;
         }
-    } else {
-        window.location.href = `/question/${questionid}/Problem`;
-    }
+
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
     return (
         <div className='question-all-root'>
@@ -228,14 +228,14 @@ function Question() {
                             <ul className='question-nav-menu'>
                                 <li className='question-nav-item'>
                                     <Link
-                                        to={`/question/${questionid}/Problem`} className='question-nav-links'>
+                                        to={`/question/${questionid}/Problem`} className='question-nav-links' onClick={()=>{ showProblem(); hideSubmission();}}>
                                         Problem
                                     </Link>
                                 </li >
                                 {logged ? (
                                     <li className='question-nav-item'>
                                         <Link
-                                            to={`/question/${questionid}/Submissions`} className='question-nav-links'>
+                                            to={`/question/${questionid}/Submissions`} className='question-nav-links' onClick={() => {hideProblem(); showSubmission()}}>
                                             Submissions
                                         </Link>
                                     </li>
@@ -282,8 +282,8 @@ function Question() {
                                 defaultValue={code}
                                 onChange={(newValue) => { setCode(newValue); }}
                                 theme="vs-dark"
-                                options={{fontSize: '20vw', letterSpacing: '0.5px'}}
-                                style={{ borderRadius: '5px'}}
+                                options={{ fontSize: '20vw', letterSpacing: '0.5px' }}
+                                style={{ borderRadius: '5px' }}
                             />
                         </div>
                         <div className='question-input'>

@@ -53,7 +53,7 @@ function Event() {
                           } else if (!(userData.discordUser.verified && userData.emailVerified)) {
                             notyf.error('You must complete your profile i.e link your Discord and verify your email on both Discord and our platform to participate In events.');
                           } else {
-                            window.location.href = '/Events/' + item.event.name
+                            window.location.href = '/Events/' + item.event.name + '/Questions'
                           }
                         }}
                         buttonStyle='btn--primary--black'>
