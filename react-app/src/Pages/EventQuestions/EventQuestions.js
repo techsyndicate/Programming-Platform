@@ -6,6 +6,7 @@ import { Button } from '../../Components/button/Button';
 import { checkLoggedIn, urlPrefix } from '../../Components/reuse/Misc';
 import './EventQuestions.css'
 import moment from 'moment';
+var loadedv = false;
 
 function EventQuestions() {
     const [data, setData] = useState(null);
@@ -23,7 +24,7 @@ function EventQuestions() {
 
     function showProblem() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('question-container') !== null) {
+            if (loadedv === true && document.getElementById('question-container') !== null) {
                 document.getElementById('question-container').style.display = 'flex';
                 clearInterval(interval);
             }
@@ -32,7 +33,7 @@ function EventQuestions() {
 
     function hideProblem() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('question-container') !== null) {
+            if (loadedv === true && document.getElementById('question-container') !== null) {
                 document.getElementById('question-container').style.display = 'none';
                 clearInterval(interval);
             }
@@ -46,7 +47,7 @@ function EventQuestions() {
 
     function showSubmission() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('event-submissions-container') !== null) {
+            if (loadedv === true && document.getElementById('event-submissions-container') !== null) {
                 document.getElementById('event-submissions-container').style.display = 'flex';
                 clearInterval(interval);
             }
@@ -55,7 +56,7 @@ function EventQuestions() {
 
     function hideSubmission() {
         let interval = setInterval(() => {
-            if (loaded === true && document.getElementById('event-submissions-container') !== null) {
+            if (loadedv === true && document.getElementById('event-submissions-container') !== null) {
                 document.getElementById('event-submissions-container').style.display = 'none';
                 clearInterval(interval);
             }
@@ -92,18 +93,20 @@ function EventQuestions() {
             if (res.data.success !== true) {
                 alert(res.data.msg);
                 window.location.href = '/Events'
-            }
-            setData(res.data);
-            setLoaded(true);
-            if (eventpart.toLowerCase() === "questions") {
-                showProblem()
-                hideSubmission()
-            } else if (eventpart.toLowerCase() === "leaderboard") {
-                showLeaderboard()
             } else {
-                window.location.href = `/Events/${eventid}/Questions`;
-            }
+                setData(res.data);
+                setLoaded(true);
+                loadedv = true;
 
+                if (eventpart.toLowerCase() === "questions") {
+                    showProblem();
+                    hideSubmission();
+                } else if (eventpart.toLowerCase() === "leaderboard") {
+                    showLeaderboard()
+                } else {
+                    window.location.href = `/Events/${eventid}/Questions`;
+                }
+            }
         })
     }
 
@@ -119,13 +122,13 @@ function EventQuestions() {
                                         <ul className='question-nav-menu'>
                                             <li className='question-nav-item'>
                                                 <Link
-                                                    to={`/Events/${eventid}/Questions`} className='question-nav-links' onClick={()=>{showProblem(); hideSubmission();}}>
+                                                    to={`/Events/${eventid}/Questions`} className='question-nav-links' onClick={() => { showProblem(); hideSubmission(); }}>
                                                     Questions
                                                 </Link>
                                             </li >
                                             <li className='question-nav-item'>
                                                 <Link
-                                                    to={`/Events/${eventid}/LeaderBoard`} className='question-nav-links' onClick={() => showLeaderboard()}>
+                                                    to={`/Events/${eventid}/LeaderBoard`} className='question-nav-links' onClick={() => { showLeaderboard(); }}>
                                                     Leaderboard
                                                 </Link>
                                             </li>
