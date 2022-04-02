@@ -157,7 +157,7 @@ function EventQuestions() {
                                     })}
                                 </div>
 
-                                <div id='event-submissions-container' className='event-submissions-container'>
+                                <div id='event-submissions-container' className='event-submissions-container' style={{ justifyContent: 'start !important' }}>
                                     {!data.event.leaderboard.length > 0 && (
                                         <div style={{ width: '80vw' }}>
                                             <h1 className='event-title'>No Subssions That Have Passed Yet</h1>
