@@ -21,6 +21,7 @@ import Submission from "./Pages/Submission/Submission";
 import Footer from "./Components/footer/Footer";
 import EventQuestions from "./Pages/EventQuestions/EventQuestions";
 import PublicProfile from "./Pages/PublicProfile/PublicProfile";
+import LoginCallback from "./Pages/Login/LoginCallback";
 
 function App() {
   function QuesRedirect() {
@@ -52,6 +53,7 @@ function App() {
             <Route path={process.env.PUBLIC_URL + '/practice/:practiceid'} element={<PractiseQuestions />} />
             <Route path={process.env.PUBLIC_URL + '/question/:questionid'} element={<QuesRedirect />} />
             <Route path={process.env.PUBLIC_URL + '/question/:questionid/:questPart'} element={<Question />} />
+            <Route path={process.env.PUBLIC_URL + '/login-callback'} element={<LoginCallback />} />
             <Route path="*" element={<Fourzerofour />} />
           </Routes>
         </div>

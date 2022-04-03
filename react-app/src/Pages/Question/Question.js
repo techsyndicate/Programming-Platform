@@ -17,13 +17,13 @@ import rehypeKatex from 'rehype-katex'
 
 import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
 
+var loadedv = false;
 
 function Question() {
     const notyf = new Notyf();
     const { questionid, questPart } = useParams();
     const [questionExist, setQuestionExist] = useState(false);
     const [data, setData] = useState(null);
-    const [loaded, setLoaded] = useState(false);
     const [code, setCode] = useState('');
     const [logged, setLogged] = useState(false);
     const [practise, setPractise] = useState('Practice');
@@ -63,24 +63,24 @@ function Question() {
     }
 
     function showProblem() {
-        if (loaded === true) {
+        if (loadedv === true) {
             document.getElementById('question-container').style.display = 'flex';
         }
     }
     function hideProblem() {
-        if (loaded === true) {
+        if (loadedv === true) {
             document.getElementById('question-container').style.display = 'none';
         }
     }
 
     function showSubmission() {
-        if (loaded === true && document.getElementById('submissions-container') !== null) {
+        if (loadedv === true && document.getElementById('submissions-container') !== null) {
             document.getElementById('submissions-container').style.display = 'flex';
         }
     }
 
     function hideSubmission() {
-        if (loaded === true && document.getElementById('submissions-container') !== null) {
+        if (loadedv === true && document.getElementById('submissions-container') !== null) {
             document.getElementById('submissions-container').style.display = 'none';
         }
     }
@@ -194,7 +194,7 @@ function Question() {
         getSubmissions();
         setInterval(() => {
             if (document.getElementById('question-container') !== null) {
-                setLoaded(true);
+                loadedv = true;
             }
         }, 500);
         verifyLogged(false)

@@ -1,7 +1,9 @@
 // Import Modules
 const express = require('express'),
     discord_router = express.Router(),
-    Axios = require('axios');
+    cookieParser = require("cookie-parser");
+
+Axios = require('axios');
 
 // Import Files
 const userSchema = require('../schema/userSchema'),
@@ -12,6 +14,7 @@ const userSchema = require('../schema/userSchema'),
 var scopes = ['identify', 'email', 'guilds'];
 var prompt = 'none';
 
+discord_router.use(cookieParser())
 // discord auth
 discord_router.get('/auth', checkAuthenticated, (req, res) => {
     if (req.user.discord.access_token) {
@@ -59,7 +62,7 @@ discord_router.get('/callback', checkAuthenticated, async (req, res, next) => {
 });
 
 // discord auth Login Callback
-discord_router.get('/login-callback', async (req, res, next) => {
+discord_router.post('/login-callback', async (req, res, next) => {
     // Callback url to get the access token, refresh token to get the new access token
     // https://discord.com/developers/docs/topics/oauth2#authorization-code-grant-redirect-url-example
     await Axios({
@@ -68,7 +71,7 @@ discord_router.get('/login-callback', async (req, res, next) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data: `client_id=${process.env.DISCORD_CLIENT_ID}&client_secret=${process.env.DISCORD_CLIENT_SECRET}&grant_type=authorization_code&code=${req.query.code}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}`
+        data: `client_id=${process.env.DISCORD_CLIENT_ID}&client_secret=${process.env.DISCORD_CLIENT_SECRET}&grant_type=authorization_code&code=${req.body.code}&redirect_uri=${process.env.DISCORD_REDIRECT_URI_LOGIN}`
     }).then(async (res_dis) => {
         discordUser = await getDiscordUser(res_dis.data.access_token)
         userSchema.find({ 'discordUser.email': discordUser.email }).then(async (user_dis) => {
@@ -79,7 +82,8 @@ discord_router.get('/login-callback', async (req, res, next) => {
                         console.log(err)
                     }
                     else {
-                        res.redirect('/profile');
+                        res.send({ msg: "Successfully Authenticated", sucess: true });
+                        next();
                     }
                 })
             } else {

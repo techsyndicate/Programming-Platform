@@ -22,7 +22,13 @@ const port = process.env.PORT || 3200,
     answerRouter = require('./routers/answer'),
     authRouter = require("./routers/auth");
 
-app.enable('trust proxy');
+
+if (process.env.NODE_ENV === 'production') {
+    app.enable('trust proxy');
+}
+else {
+    app.disable('trust proxy');
+}
 
 app.use((req, res, next) => {
     if (req.headers.hasOwnProperty('x-forwarded-proto') && req.headers['x-forwarded-proto'].toString() !== 'https' && process.env.NODE_ENV === 'production') {
@@ -44,6 +50,7 @@ const MONGO_DATABASE_NAME = process.env.MONGO_DATABASE_NAME
 const db = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER_URL}/${MONGO_DATABASE_NAME}?retryWrites=true&w=majority`
 
 //passportJs
+if (process.env.NODE_ENV === 'production') {
 app.use(session({
     secret: process.env.SECRET,
     resave: true,
@@ -53,6 +60,17 @@ app.use(session({
     secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
 }));
+} else {
+    app.use(session({
+        secret: process.env.SECRET,
+        resave: true,
+        saveUninitialized: true,
+        sameSite: 'none',
+        overwrite: true,
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }));
+}
 
 app.use(cookieParser(process.env.SECRET));
 
@@ -90,8 +108,9 @@ setInterval(() => {
     serverHealth()
 }, 60000);
 
-app.get('/:id', (req, res) => {
-    res.redirect(process.env.FRONT_END_URL + req.params.id)
+app.get('*', (req, res) => {
+    console.log(req.url)
+    res.redirect(process.env.FRONT_END_URL + req.url);
 });
 
 mongoose.connect(db, {

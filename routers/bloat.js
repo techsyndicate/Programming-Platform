@@ -8,7 +8,6 @@ const bloat_router = express.Router();
 
 //serve public folder
 bloat_router.use(express.static('public'));
-bloat_router.use(express.static('react-app/build'));
 
 //cors middleware
 const whitelist = ['ts-prog1.herokuapp.com', 'localhost', 'netlify.app', 'techsyndicate.us'];
