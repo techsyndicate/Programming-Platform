@@ -84,7 +84,7 @@ setInterval(() => {
     serverHealth()
 }, 60000);
 
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, './react-app/build', 'index.html')));
+app.get('*', (req, res) => res.redirect(process.env.FRONT_END_URL));
 
 mongoose.connect(db, {
     useNewUrlParser: true,
