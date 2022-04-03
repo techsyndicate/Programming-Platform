@@ -11,7 +11,7 @@ bloat_router.use(express.static('public'));
 bloat_router.use(express.static('react-app/build'));
 
 //cors middleware
-const whitelist = ['ts-prog1.herokuapp.com', 'localhost'];
+const whitelist = ['ts-prog1.herokuapp.com', 'localhost', 'netlify.app', 'techsyndicate.us'];
 const corsOptions = {
     origin: (origin, callback) => {
         if (origin) {
@@ -40,7 +40,7 @@ const corsOptions = {
 bloat_router.use(cors(corsOptions))
 
 // Allowed hosts
-const allowedHosts = ['localhost', 'herokuapp.com'];
+const allowedHosts = whitelist;
 const checkHosts = (req, res, next) => {
     for (i in allowedHosts) {
         if (req.hostname.includes(allowedHosts[i])) {
