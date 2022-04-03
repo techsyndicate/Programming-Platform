@@ -45,7 +45,11 @@ const db = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER_URL}/$
 app.use(session({
     secret: process.env.SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    sameSite: 'none',
+    secure: true,
+    overwrite: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7
 }));
 
 app.use(cookieParser(process.env.SECRET));
