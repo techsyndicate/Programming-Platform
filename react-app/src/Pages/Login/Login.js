@@ -51,7 +51,7 @@ function Login() {
                         type={'password'}
                         onChange={(e) => setLoginPassword(e.target.value)} />
                     <button className='login-submit' onClick={login}>Login</button>
-                    <button className='login-submit' onClick={() => { window.location.href = '/auth/discord-login' }}>Login With Discord <i class="fab fa-discord"></i></button>
+                    <button className='login-submit' onClick={() => { window.location.href = urlPrefix() + '/auth/discord-login' }}>Login With Discord <i class="fab fa-discord"></i></button>
                 </form>
             </div>
             <p className='register-redirect-p'>Don't Have An Account? <Link to='/Register' className='register-redirect'>Register</Link></p>
