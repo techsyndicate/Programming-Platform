@@ -22,6 +22,8 @@ const port = process.env.PORT || 3200,
     answerRouter = require('./routers/answer'),
     authRouter = require("./routers/auth");
 
+app.enable('trust proxy');
+
 app.use((req, res, next) => {
     if (req.headers.hasOwnProperty('x-forwarded-proto') && req.headers['x-forwarded-proto'].toString() !== 'https' && process.env.NODE_ENV === 'production') {
         res.redirect('https://' + req.headers.host + req.url);
@@ -48,6 +50,7 @@ app.use(session({
     saveUninitialized: true,
     sameSite: 'none',
     overwrite: true,
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
 }));
 
