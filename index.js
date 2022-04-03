@@ -90,7 +90,9 @@ setInterval(() => {
     serverHealth()
 }, 60000);
 
-app.get('*', (req, res) => res.redirect(process.env.FRONT_END_URL));
+app.get('/:id', (req, res) => {
+    res.redirect(process.env.FRONT_END_URL + req.params.id)
+});
 
 mongoose.connect(db, {
     useNewUrlParser: true,
