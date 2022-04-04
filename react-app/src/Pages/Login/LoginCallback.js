@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import React, { useEffect } from 'react'
+import { Oval } from 'react-loader-spinner';
 import { urlPrefix } from '../../Components/reuse/Misc'
 
 function LoginCallback() {
@@ -22,7 +23,9 @@ function LoginCallback() {
         })
     }, []);
     return (
-        <h1>Loading</h1>
+        <div className='loading'>
+            <Oval color="var(--loading)" secondaryColor="var(--loading)" ariaLabel='loading' height={100} width={100} />
+        </div >
     )
 }
 
