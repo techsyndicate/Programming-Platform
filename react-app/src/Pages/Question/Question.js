@@ -63,26 +63,42 @@ function Question() {
     }
 
     function showProblem() {
-        if (loadedv === true) {
-            document.getElementById('question-container').style.display = 'flex';
-        }
+        let interval = setInterval(() => {
+            if (loadedv === true) {
+                document.getElementById('question-container').style.display = 'flex';
+                clearInterval(interval);
+            }
+        }, 100)
     }
+    
     function hideProblem() {
-        if (loadedv === true) {
-            document.getElementById('question-container').style.display = 'none';
-        }
+        let interval = setInterval(() => {
+            if (loadedv === true) {
+                document.getElementById('question-container').style.display = 'none';
+                clearInterval(interval);
+            }
+        }, 100);
+
     }
 
     function showSubmission() {
-        if (loadedv === true && document.getElementById('submissions-container') !== null) {
-            document.getElementById('submissions-container').style.display = 'flex';
-        }
+        let interval = setInterval(() => {
+            if (loadedv === true && document.getElementById('submissions-container') !== null) {
+                document.getElementById('submissions-container').style.display = 'flex';
+                clearInterval(interval);
+            }
+
+        }, 100);
+
     }
 
     function hideSubmission() {
-        if (loadedv === true && document.getElementById('submissions-container') !== null) {
-            document.getElementById('submissions-container').style.display = 'none';
-        }
+        let interval = setInterval(() => {
+            if (loadedv === true && document.getElementById('submissions-container') !== null) {
+                document.getElementById('submissions-container').style.display = 'none';
+                clearInterval(interval);
+            }
+        }, 100);
     }
 
     function verifyLogged(redirect) {
@@ -228,14 +244,14 @@ function Question() {
                             <ul className='question-nav-menu'>
                                 <li className='question-nav-item'>
                                     <Link
-                                        to={`/question/${questionid}/Problem`} className='question-nav-links' onClick={()=>{ showProblem(); hideSubmission();}}>
+                                        to={`/question/${questionid}/Problem`} className='question-nav-links' onClick={() => { showProblem(); hideSubmission(); }}>
                                         Problem
                                     </Link>
                                 </li >
                                 {logged ? (
                                     <li className='question-nav-item'>
                                         <Link
-                                            to={`/question/${questionid}/Submissions`} className='question-nav-links' onClick={() => {hideProblem(); showSubmission()}}>
+                                            to={`/question/${questionid}/Submissions`} className='question-nav-links' onClick={() => { hideProblem(); showSubmission() }}>
                                             Submissions
                                         </Link>
                                     </li>

@@ -65,10 +65,6 @@ app.use(session({
         secret: process.env.SECRET,
         resave: true,
         saveUninitialized: true,
-        sameSite: 'none',
-        overwrite: true,
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24 * 7
     }));
 }
 
