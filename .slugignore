@@ -1,2 +1,4 @@
 ./react-app
 ./.test.env
+./.gitignore
+./README.md
