@@ -24,7 +24,8 @@ event_router.get('/', (req, res) => {
 // Send Event Whoose Id Is given
 event_router.get('/:id', checkAuthenticated, async (req, res) => {
     // Find Event
-    eventSchema.findOne({ name: req.params.id }).then(async event => {
+    var time = new Date();
+    eventSchema.findOne({ name: req.params.id }).then(async event => { // 90 ms to get event
 
         if (!event) {
             return res.send({ "success": false, msg: "Event not found" })
@@ -57,7 +58,7 @@ event_router.get('/:id', checkAuthenticated, async (req, res) => {
             });
             return data;
         })
-    
+
         // Reorder leaderboard
         event.leaderboard = event.leaderboard.sort((a, b) => {
             let a1 = parseInt(a.points);
@@ -75,7 +76,8 @@ event_router.get('/:id', checkAuthenticated, async (req, res) => {
             success: true,
             event: event,
             started: true,
-            questions: await Promise.all(questions)
+            questions: await Promise.all(questions),
+            time: (new Date() - time).toString()
         })
     })
 })

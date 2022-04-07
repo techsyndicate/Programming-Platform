@@ -21,6 +21,8 @@ practise_router.get('/', (req, res) => {
 
 // Return All Practise Details For The Given practise id
 practise_router.get('/:id', async (req, res) => {
+    var time = new Date();
+
     practiseSchema.findOne({ name: req.params.id }).then(async practise => {
         if (practise) {
             var practice = practise.questions.map(async item => {
@@ -50,7 +52,8 @@ practise_router.get('/:id', async (req, res) => {
             });
             let to_return = {
                 success: true,
-                data: practice_data
+                data: practice_data,
+                time: (new Date() - time).toString()
             }
             //console.log(await to_return)
             res.send(to_return)
