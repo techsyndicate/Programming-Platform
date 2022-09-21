@@ -25,7 +25,7 @@
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "ejs": "^3.1.6",
+    "ejs": "^3.1.7",
     "express": "^4.17.3",
     "express-flash": "^0.0.2",
     "moment": "^2.29.4",
