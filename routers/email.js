@@ -39,7 +39,7 @@ email_router.get('/send', checkAuthenticated, (req, res) => {
             from: process.env.GMAIL_EMAIL,
             to: req.user.email,
             subject: 'Verify Account For Ts-Prog',
-            html: `<html><h2>Verify Account For Ts-Prog</h2><br><a href='https://ts-prog1.herokuapp.com/email-back/callback/${res_mongo._id}'>https://ts-prog1.herokuapp.com/email-back/callback/${res_mongo._id}</a></html>`
+            html: `<html><h2>Verify Account For Ts-Prog</h2><br><a href='https://progbackend.techsyndicate.us/email-back/callback/${res_mongo._id}'>https://progbackend.techsyndicate.us/email-back/callback/${res_mongo._id}</a></html>`
         };
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
