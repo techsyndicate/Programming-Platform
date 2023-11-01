@@ -18,18 +18,6 @@ const corsOptions = {
 }
 bloat_router.use(cors(corsOptions))
 
-// Allowed hosts
-const allowedHosts = whitelist;
-const checkHosts = (req, res, next) => {
-    for (i in allowedHosts) {
-        if (req.hostname.includes(allowedHosts[i])) {
-            return next();
-        }
-    }
-    return res.sendStatus(403);
-}
-bloat_router.use(checkHosts);
-
 //body parsers 
 bloat_router.use(bodyParser.json({
     parameterLimit: 100000,
