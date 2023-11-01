@@ -64,6 +64,7 @@ async function ReportCodeExec(content) {
 }
 
 async function CheckServerHealth(url) {
+    console.log(url)
     return await Axios({
         url: url,
         method: 'GET',
@@ -71,6 +72,7 @@ async function CheckServerHealth(url) {
     }).then((res) => {
         return res;
     }).catch((err) => {
+        console.log(err)
         return { err: err, sucess: false, msg: 'Server is down' };
     });
 }

@@ -33,7 +33,7 @@ answer_router.post('/run/:id', checkAuthenticated, async (req, res) => {
         language: req.params.id
     }).save().then(async (dock) => {
         await Axios({
-            url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+            url: process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
             withCredentials: true,
             method: 'POST',
             headers: {
@@ -91,7 +91,7 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
             // Make API Call to Run Code and Return the output
             return new Promise(async (resolve, reject) => {
                 await Axios({
-                    url: 'http://' + process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
+                    url: process.env.SERVER_BACKEND_VM + '/language/' + req.params.id,
                     withCredentials: true,
                     method: 'POST',
                     headers: {
@@ -111,6 +111,7 @@ answer_router.post('/submit/:id', checkAuthenticated, async (req, res) => {
                         output: data.data.data,
                         output_compare: testcase.output_compare,
                     }
+                    console.log(data.data.data)
                     if (data.data.data.join('\n') === testcase.output_compare) {
                         newTestcase.passed = true;
                     }

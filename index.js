@@ -43,11 +43,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 
 //mongo
-const MONGO_PASSWORD = process.env.MONGO_PASSWORD
-const MONGO_USER = process.env.MONGO_USER
-const MONGO_CLUSTER_URL = process.env.MONGO_CLUSTER_URL
-const MONGO_DATABASE_NAME = process.env.MONGO_DATABASE_NAME
-const db = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER_URL}/${MONGO_DATABASE_NAME}?retryWrites=true&w=majority`
+const db = process.env.MONGO_URI;
 
 //passportJs
 if (process.env.NODE_ENV === 'production') {
@@ -92,13 +88,14 @@ app.use((err, req, res, next) => {
     next(err)
 })
 
-function serverHealth() {
-    CheckServerHealth('http://' + process.env.SERVER_BACKEND_VM + '/language').then((res) => {
+async function serverHealth() {
+    CheckServerHealth(process.env.SERVER_BACKEND_VM + '/language').then(async (res) => {
         if (res.status !== 200) {
-            ReportCodeExec('Code Execution Service Has Crashed Please Check <@823237564130525184>')
+            ReportCodeExec('Code Execution Service Has Crashed Please Check')
         }
     })
 }
+
 serverHealth();
 setInterval(() => {
     serverHealth()

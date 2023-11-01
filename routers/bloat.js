@@ -10,29 +10,9 @@ const bloat_router = express.Router();
 bloat_router.use(express.static('public'));
 
 //cors middleware
-const whitelist = ['ts-prog1.herokuapp.com', 'localhost', 'netlify.app', 'techsyndicate.us'];
 const corsOptions = {
     origin: (origin, callback) => {
-        if (origin) {
-            var urlParsed = url.parse(origin, true)
-            var included = false;
-            for (i in whitelist) {
-                if (urlParsed.hostname.includes(whitelist[i])) {
-                    included = true;
-                    callback(null, true);
-                }
-                else if (i == whitelist.length - 1 && !included) {
-                    console.log("not allowed", urlParsed.hostname);
-                    callback(new Error("Not allowed by CORS ORIGIN: " + urlParsed.hostname))
-                }
-            }
-        }
-        else if (!origin) {
-            callback(null, true)
-        } else {
-            console.log(origin, "Not allowed by CORS ORIGIN policy")
-            callback(new Error("Not allowed by CORS ORIGIN: " + origin))
-        }
+        callback(null, true);
     },
     credentials: true
 }
