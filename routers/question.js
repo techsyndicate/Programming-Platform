@@ -26,8 +26,8 @@ question_router.post('/', (req, res) => {
                 if (!event) {
                     return res.send({ "success": false, msg: "You are not allowed to view this question" })
                 }
-                if (new Date(Date()) < new Date(event.startTime)) {
-                    return res.send({ "success": false, msg: "You are not allowed to view this question" })
+                if (new Date(Date()) < new Date(event.startTime) && req.user.admin != true) {
+                    return res.send({ "success": false, msg: "You are not allowed to view this qsuestion" })
                 }
                 res.send(ques)
             })
