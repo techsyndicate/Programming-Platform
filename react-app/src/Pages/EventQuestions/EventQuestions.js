@@ -170,24 +170,28 @@ function EventQuestions() {
                                             <h1 className='event-title'>No Subssions That Have Passed Yet</h1>
                                         </div>)}
                                     {data.event.leaderboard.map((item, index) => {
-                                        return (
-                                            <div className='submissions-card white'>
-                                                <div className='submissions-card-header'>
-                                                    <h2>User: {item.name}</h2>
-                                                    <p className='submission-card-status'>
-                                                        Points: &nbsp; <div className='white'>{item.points}</div>&nbsp; &nbsp;
-                                                        TimeTaken: &nbsp; <div className='white'>{((new Date(item.time) - new Date(data.event.startTime)) / 60000).toFixed(2)} Minutes</div>
-                                                    </p>
+                                        if (item.name !== "gamer1478" && item.name !== "PianoPianist" && item.name !== "FutureTonyStark") {
+                                            return (
+                                                <div className='submissions-card white'>
+                                                    <div className='submissions-card-header'>
+                                                        <h2>User: {item.name}</h2>
+                                                        <p className='submission-card-status'>
+                                                            Points: &nbsp; <div className='white'>{item.points}</div>&nbsp; &nbsp;
+                                                            TimeTaken: &nbsp; <div className='white'>{((new Date(item.time) - new Date(data.event.startTime)) / 60000).toFixed(2)} Minutes</div>
+                                                        </p>
+                                                    </div>
+                                                    <div className='submissions-card-button'>
+                                                        <Button
+                                                            onClick={() => { openInNewTab('/Profile/' + item.name) }}
+                                                            buttonStyle='btn--primary--black'>
+                                                            View Profile
+                                                        </Button>
+                                                    </div>
                                                 </div>
-                                                <div className='submissions-card-button'>
-                                                    <Button
-                                                        onClick={() => { openInNewTab('/Profile/' + item.name) }}
-                                                        buttonStyle='btn--primary--black'>
-                                                        View Profile
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        )
+                                            )
+                                        } else {
+                                            return (<></>)
+                                        }
                                     })}
                                 </div>
                             </>
